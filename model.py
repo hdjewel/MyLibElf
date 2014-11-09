@@ -13,7 +13,7 @@ Base = declarative_base()
 
 Base.query = session.query_property()
 
-### Class declarations go here
+### Begin Class declarations
 
 class Author(Base):
     """docstring for Author"""
@@ -23,11 +23,13 @@ class Author(Base):
     name = Column(String(100), nullable = True)
     fname = Column(String(40), nullable = True)
     lname = Column(String(40), nullable = True)
+
     books = relationship("Book_Author")
 
 class Biblio(Base):
     """docstring for Biblio"""
     __tablename__ = "biblios"
+
     id = Column(Integer, primary_key = True)
     book_id = Column(Integer, ForeignKey('books.id'), nullable = False)
     date = Column(Date, nullable = True)
@@ -53,6 +55,7 @@ class Book(Base):
 class Checked_Out_Book(Base):
     """docstring for Checked_Out_Book"""
     __tablename__ = "checked_out_books"
+
     id = Column(Integer, primary_key = True)
     book_id = Column(Integer, ForeignKey('books.id'), nullable = False)
     date = Column(Date, nullable = True)
@@ -60,6 +63,7 @@ class Checked_Out_Book(Base):
 class Finished_Book(Base):
     """docstring for Finished_Book"""
     __tablename__ = "finished_books"
+
     id = Column(Integer, primary_key = True)
     book_id = Column(Integer, ForeignKey('books.id'), nullable = False)
     date = Column(Date, nullable = True)
@@ -67,6 +71,7 @@ class Finished_Book(Base):
 class Hold(Base):
     """docstring for Hold"""
     __tablename__ = "holds"
+
     id = Column(Integer, primary_key = True)
     book_id = Column(Integer, ForeignKey('books.id'), nullable = False)
     date = Column(Date, nullable = True)
@@ -78,7 +83,7 @@ class Library(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(40), nullable = True)
     url = Column(String(40), nullable = True)
-    card_nbr = Column(Integer, nullable = True)
+    card_nmbr = Column(Integer, nullable = True)
     pin = Column(Integer, nullable = True)
     login_id = Column(String(32), nullable = True)
     password = Column(String(18), nullable = True)
@@ -95,12 +100,13 @@ class Patron(Base):
     email = Column(String(64), nullable = True)
     cell = Column(String(10), nullable = True)
 
-    notes = relationship("Patron_Book_Note")
+    notes = relationship("Book_Patron_Note")
     libraries = relationship("Patron_Library")
 
 class Wish(Base):
     """docstring for Wish"""
     __tablename__ = "wish"
+
     id = Column(Integer, primary_key = True)
     book_id = Column(Integer, ForeignKey('books.id'), nullable = False)
     date = Column(Date, nullable = True)
@@ -108,6 +114,7 @@ class Wish(Base):
 class Book_Author(Base):
     """docstring for Book_Author"""
     __tablename__ = "books_authors"
+
     id = Column(Integer, primary_key = True)
     book_id = Column(Integer, ForeignKey('books.id'), nullable = False)
     author_id = Column(Integer, ForeignKey('authors.id'), nullable = False)
@@ -118,10 +125,10 @@ class Book_Author(Base):
 class Book_Library(Base):
     """docstring for Book_Library"""
     __tablename__ = "books_libraries"
+
     id = Column(Integer, primary_key = True)
     book_id = Column(Integer, ForeignKey('books.id'), nullable = False)
     library_id = Column(Integer, ForeignKey('libraries.id'), nullable = False)
-    note = Column(String(4000), nullable = True)
 
     book = relationship("Book", backref=backref("books_libraries", order_by=id))
     library = relationship("Library", backref=backref("books_libraries", order_by=id))
@@ -129,9 +136,11 @@ class Book_Library(Base):
 class Book_Patron_Note(Base):
     """docstring for Book_Patron_Note"""
     __tablename__ = "books_patrons_notes"
+
     id = Column(Integer, primary_key = True)
     book_id = Column(Integer, ForeignKey('books.id'), nullable = False)
     patron_id = Column(Integer, ForeignKey('patrons.id'), nullable = False)
+    note = Column(String(4000), nullable = True)
 
     book = relationship("Book", backref=backref("books_patrons_notes", order_by=id))
     patron = relationship("Patron", backref=backref("books_patrons_notes", order_by=id))
@@ -139,14 +148,18 @@ class Book_Patron_Note(Base):
 class Patron_Library(Base):
     """docstring for Patron_Library"""
     __tablename__ = "patrons_libraries"
+
     id = Column(Integer, primary_key = True)
     patron_id = Column(Integer, ForeignKey('patrons.id'), nullable = False)
     library_id = Column(Integer, ForeignKey('libraries.id'), nullable = False)
 
     patron = relationship("Patron", backref=backref("patrons_libraries", order_by=id))
-    library = relationship("Library", backref=backref("books_libraries", order_by=id))
+    library = relationship("Library", backref=backref("patrons_libraries", order_by=id))
 
-### End class declarations
+### End Class declarations
+
+### Begin Function definitions
+
 def connect():
 
     ENGINE = create_engine("sqlite:///bookblend.db", echo=False)
@@ -157,7 +170,12 @@ def connect():
 
 def main():
     pass
-    # return session
+
+### End Function definitions 
+
+### Begin Program
 
 if __name__ == "__main__":
     main()
+
+### End of Program
