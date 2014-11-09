@@ -22,17 +22,8 @@ def import_read_books(session):
                 else:
                     data_ok = edit_key_data(row)
                     if data_ok == True:
+                        """ book """
                         book, main_author, sub_author = add_book(session, row)
-                        # isbn_10, isbn_13, isbn, barcode_nbr, main_author, sub_author, title = row[0:]
-                        # title = parse_book_title(title)
-                        # book = Book(
-                        #     isbn_10 = isbn_10,
-                        #     isbn_13=isbn_13, 
-                        #     isbn=isbn, 
-                        #     barcode_nbr=barcode_nbr, 
-                        #     title=title
-                        #     )
-                        # session.add(book)
 
                         """ main_author """
                         author = add_author(session, main_author)
@@ -77,6 +68,8 @@ def add_book(session, row):
 #end def
 
 def add_book_author(session, Book, book, author):
+    # This is the logic to get data into the associative data set when
+    #  the relationship is a many to many.
     book_author = Book_Author()
     book_author.book = session.query(Book).filter_by(id = book.id).one()
     with session.no_autoflush:
