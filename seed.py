@@ -1,13 +1,15 @@
 import model   # if you do it this way, model.Patron, model.connect
 import csv
 import sys
-from model import Book, Patron, Author
+from model import Book, Patron, Author, Book_Author
 from datetime import datetime
 import re
 
 def import_read_books(session):
 
-    filename = './seed_data/booklist.csv'
+    # filename = './seed_data/booklist.csv'
+    filename = './seed_data/test_books.txt'
+    # filename = './seed_data/books.txt'
 
     print (0, "file name = ", filename)
 
@@ -15,44 +17,87 @@ def import_read_books(session):
         reader = csv.reader(f, delimiter ='\t')
         try:
             for row in reader:
-                # print "each row = ", row
                 if row[0] == 'ISBN-10':
-                    isbn_10, isbn_13, isbn, barcode_nbr, main_author, sub_author, title = row[0:]
-                    title = parse_book_title(title)
-                    book = Book(
-                        isbn_10 = isbn_10,
-                        isbn_13=isbn_13, 
-                        isbn=isbn, 
-                        barcode_nbr=barcode_nbr, 
-                        title=title
-                        )
-                    session.add(book)
-                    print "what is in book id after a add =", book.id
-                    author = Author(
-                        name=main_author
-                        )
-                    session.add(author)
-                    print "what is in book id after a main author add =", author.id
-                    # author_book = Author_Book(
-                    #     author_id=author.id
-                    #     book_id=book.id
-                    #     )
-                    # session.add(author_book)
-                    author = Author(
-                        name=sub_author
-                        )
-                    session.add(author)
-                    print "what is in author id after a sub author add =", author.id
-                    # author_book = Author_Book(
-                    #     author_id=author.id
-                    #     book_id=book.id
-                    #     )
-                    # session.add(author_book)
+                    pass
+                else:
+                    data_ok = edit_key_data(row)
+                    if data_ok == True:
+                        book, main_author, sub_author = add_book(session, row)
+                        # isbn_10, isbn_13, isbn, barcode_nbr, main_author, sub_author, title = row[0:]
+                        # title = parse_book_title(title)
+                        # book = Book(
+                        #     isbn_10 = isbn_10,
+                        #     isbn_13=isbn_13, 
+                        #     isbn=isbn, 
+                        #     barcode_nbr=barcode_nbr, 
+                        #     title=title
+                        #     )
+                        # session.add(book)
+
+                        """ main_author """
+                        author = add_author(session, main_author)
+                        add_book_author(session, Book, book, author)
+
+                        """ sub_author """
+                        if sub_author == "" or sub_author == "N/A":
+                            pass
+                        else:
+                            author = add_author(session, sub_author)
+                            add_book_author(session, Book, book, author)
+                        #end if
+                    #end if
                 #end if
 
             #end for            
         except csv.Error as e:
             sys.exit('file %s, line %d: %s' % (filename, reader.line_num, e))   
+#end def
+
+def add_author(session, name):
+    author = Author(
+        name=name
+        )
+    session.add(author)
+    session.flush()
+    return author
+#end def
+
+def add_book(session, row):
+    isbn_10, isbn_13, isbn, barcode_nbr, main_author, sub_author, title = row[0:]
+    title = parse_book_title(title)
+    book = Book(
+        isbn_10 = isbn_10,
+        isbn_13=isbn_13, 
+        isbn=isbn, 
+        barcode_nbr=barcode_nbr, 
+        title=title
+        )
+    session.add(book)
+    return book, main_author, sub_author
+#end def
+
+def add_book_author(session, Book, book, author):
+    book_author = Book_Author()
+    book_author.book = session.query(Book).filter_by(id = book.id).one()
+    with session.no_autoflush:
+        book.authors.append(book_author)
+        author.books.append(book_author)
+    #end with
+    session.add(book)
+#end def
+
+def edit_key_data(row):
+    cnt = 0
+    for i in row:
+        if i == "N/A":
+            row[cnt] = ""
+        #end if
+        if cnt < 4:
+            row[cnt] = re.sub('\s+', '-', row[cnt])
+        #end if
+        cnt = cnt + 1
+    #end for
+    return True
 #end def
 
 def parse_book_title(title):

@@ -40,6 +40,7 @@ class Book(Base):
     published_dt = Column(Date, nullable = True)
     genre = Column(String(50), nullable = True)
     barcode_nbr = Column(Integer, nullable = True)
+    authors = relationship("Book_Author")
 
 class Author(Base):
     """docstring for Author"""
@@ -49,22 +50,22 @@ class Author(Base):
     name = Column(String(100), nullable = True)
     # fname = Column(String(40), nullable = True)
     # lname = Column(String(40), nullable = True)
-    books = relationship("Author_Book")
+    books = relationship("Book_Author")
 
-class Author_Book(Base):
-    """docstring for Author_Book"""
-    __tablename__ = "authors_books"
+class Book_Author(Base):
+    """docstring for Book_Author"""
+    __tablename__ = "books_authors"
     id = Column(Integer, primary_key = True)
-    author_id = Column(Integer, ForeignKey('authors.id'), nullable = False)
     book_id = Column(Integer, ForeignKey('books.id'), nullable = False)
+    author_id = Column(Integer, ForeignKey('authors.id'), nullable = False)
 
-    author = relationship("Author", backref=backref("authors_books", order_by=id))
-    book = relationship("Book", backref=backref("authors_books", order_by=id))
+    author = relationship("Author", backref=backref("books_authors", order_by=id))
+    book = relationship("Book", backref=backref("books_authors", order_by=id))
 
 ### End class declarations
 def connect():
 
-    ENGINE = create_engine("sqlite:///bookblend.db", echo=True)
+    ENGINE = create_engine("sqlite:///bookblend.db", echo=False)
     Session = sessionmaker(bind=ENGINE)
     Base.metadata.create_all(ENGINE)
 
