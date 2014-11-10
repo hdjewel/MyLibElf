@@ -1,7 +1,7 @@
 import model   # if you do it this way, model.Patron, model.connect
 import csv
 import sys
-from model import Book, Patron, Author, Book_Author
+from model import Book, Patron, Author, Book_Author, Finished_Book
 from datetime import datetime
 import re
 
@@ -35,6 +35,9 @@ def import_read_books(session):
                         else:
                             author = add_author(session, sub_author)
                             add_book_author(session, Book, book, author)
+
+                        """ finished """
+                        add_finished_record_to_database(session, book)
                         #end if
                     #end if
                 #end if
@@ -77,6 +80,19 @@ def add_book_author(session, Book, book, author):
         author.books.append(book_author)
     #end with
     session.add(book)
+#end def
+
+def add_finished_record_to_database(session, book):
+    finished_book = Finished_Book()
+    date = "2014-01-01"
+    finished_book.date = datetime.strptime(date, "%Y-%m-%d")
+    # finished_book.book = session.query(Book).filter_by(id = book.id).one()
+    with session.no_autoflush:
+        book.finished_book.append(finished_book)
+    #end with
+    print "has the finished date field been set? = ", finished_book.date 
+    session.add(book)
+    #end with
 #end def
 
 def edit_key_data(row):

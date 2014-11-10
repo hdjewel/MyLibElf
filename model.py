@@ -51,6 +51,7 @@ class Book(Base):
 
     authors = relationship("Book_Author")
     libraries = relationship("Book_Library")
+    finished_book = relationship("Finished_Book")
 
 class Checked_Out_Book(Base):
     """docstring for Checked_Out_Book"""
