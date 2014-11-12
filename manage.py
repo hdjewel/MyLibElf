@@ -9,6 +9,7 @@ app.secret_key='\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\
 
 @app.route("/", methods=["GET"])
 def get_patron_login():
+        # I need to get the user login information from the login.html file
         return render_template("login.html")
 
 @app.route("/", methods=["POST"])
@@ -55,11 +56,13 @@ def library():
     return render_template("library.html")
 #end app.route
 
-@app.route("/search")
+@app.route("/process_search")
 def search_results():
     search_result = ["animal farm", "George Orwell"]
     return render_template("book_list.html")
 #end app.route
+
+
 
 @app.route("/register")
 def register():
