@@ -1,3 +1,5 @@
+""" This module seed.py populates the data base with book titles from 
+       a csv file.                                                    """
 import model   # if you do it this way, model.Patron, model.connect
 import csv
 import sys
@@ -7,34 +9,33 @@ import re
 
 def import_read_books(session):
 
-    # filename = './seed_data/booklist.csv'
     filename = './seed_data/test_books.txt'
     # filename = './seed_data/books.txt'
-
-    print (0, "file name = ", filename)
+    # filename = './seed_data/booklist.csv'
 
     with open(filename, 'rb') as f:
         reader = csv.reader(f, delimiter ='\t')
         try:
             for row in reader:
+                """ Do not process header records.  """
                 if row[0] == 'ISBN-10':
                     pass
                 else:
-                    data_ok = edit_key_data(row)
+                    data_ok = edit_imported_book_data(row)
                     if data_ok == True:
                         """ book """
                         book, main_author, sub_author = add_book(session, row)
 
                         """ main_author """
                         author = add_author(session, main_author)
-                        add_book_author(session, Book, book, author)
+                        add_book_author(session, book, author)
 
                         """ sub_author """
                         if sub_author == "" or sub_author == "N/A":
                             pass
                         else:
                             author = add_author(session, sub_author)
-                            add_book_author(session, Book, book, author)
+                            add_book_author(session, book, author)
 
                         """ finished """
                         add_finished_record_to_database(session, book)
@@ -70,11 +71,10 @@ def add_book(session, row):
     return book, main_author, sub_author
 #end def
 
-def add_book_author(session, Book, book, author):
+def add_book_author(session, book, author):
     # This is the logic to get data into the associative data set when
     #  the relationship is a many to many.
     book_author = Book_Author()
-    book_author.book = session.query(Book).filter_by(id = book.id).one()
     with session.no_autoflush:
         book.authors.append(book_author)
         author.books.append(book_author)
@@ -86,16 +86,14 @@ def add_finished_record_to_database(session, book):
     finished_book = Finished_Book()
     date = "2014-01-01"
     finished_book.date = datetime.strptime(date, "%Y-%m-%d")
-    # finished_book.book = session.query(Book).filter_by(id = book.id).one()
     with session.no_autoflush:
         book.finished_book.append(finished_book)
     #end with
-    print "has the finished date field been set? = ", finished_book.date 
     session.add(book)
     #end with
 #end def
 
-def edit_key_data(row):
+def edit_imported_book_data(row):
     cnt = 0
     for i in row:
         if i == "N/A":
@@ -116,11 +114,10 @@ def parse_book_title(title):
     return title
 #end def
 
+"""
 def import_patron(session):
 
     filename = './seed_data/u.item'
-    
-    print (0, "file name = ", filename)
 
     with open(filename, 'rb') as f:
         reader = csv.reader(f, delimiter ='|')
@@ -141,6 +138,7 @@ def import_patron(session):
         except csv.Error as e:
             sys.exit('file %s, line %d: %s' % (filename, reader.line_num, e))   
 #end def
+"""
 
 def main(session):
     import_read_books(session)

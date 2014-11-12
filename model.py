@@ -1,3 +1,5 @@
+""" This module model.py defines the database structure to be used by
+      by SQLAlchemy to build and interact with the databse.           """
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey

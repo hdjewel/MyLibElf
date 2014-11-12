@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+    {% block title%}
+
+        <title>Registeration</title>
+        <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
+    {% endblock %}
+
+
+{%  block body %}
+    <form class="form-register" method="POST" action="/process_registration">
+        <h2 class="form-register-heading">Please enter the following information</h2>
+
+        <div id = "fname"><label for = "fname-field"> First name </label>
+                        <input type="text" name="fname" id="fname-field"
+                               placeholder="First name" 
+                                ></input> </div>
+        <div id ="lname"><label for = "lname-field"> Last name </label>
+                         <input type="text" title="Lname"
+                                name="lname" class="form-control"
+                                placeholder="Last name"
+                                required autofocus
+                                ></input> </div>
+        <div id="email"><label for = "email-field"> email </label>
+                        <input type="text" title="Email"
+                               name="email" class="form-control"
+                               placeholder="email address"
+                               required autofocus
+                               ></input> </div>
+        <div id="password"><label for = "password-field"> password </label>
+                           <input type="text" title="Password"
+                                  name="password" class="form-control"
+                                  placeholder="password"
+                                  required autofocus
+                                  ></input>  * </div>
+        <div id="confirm_password"><label for = "confirm-password-field">
+                                     confirm password </label>
+                                   <input type="text" 
+                                          title="Confirm password" 
+                                          name="confirm_password" 
+                                          class="form-control"
+                                          placeholder="repeat password"
+                                          required autofocus
+                                          ></input>  * </div>
+        <div id="cell"><label for = "cell-field"> cell phone </label>
+                       <input type="text" title="Cell" name="cell" 
+                              class="form-control" placeholder="xxx-xxx-xxxx"
+                              required autofocus
+                              ></input>  * </div>
+
+        <button type="btn btn-lg btn-primary btn-block" 
+                type="submit">Enter</button>    * required for notification
+        <br>
+        <div class="container">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <ul class="flashes">
+                        <li>{{message}}</li>
+                    </ul>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </form>
+{%  endblock %}

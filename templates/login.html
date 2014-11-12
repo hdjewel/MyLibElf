@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{%  block body %}
+    <form class="form-signin" method="POST">
+        <h2 class="form-signin-heading">Welcome to BookBlend</h2>
+
+        <ul>
+        	<li>let's keep some book titles</li>
+        	<li> search for books to read </li>
+        	<li> check out some books </li>
+        	<li> manage our library accounts </li>
+        	<li> and much much more </li>
+        </ul>
+        <input type="email" title="Email" name="email" class="form-control" placeholder="Email Address" required autofocus />
+        <br>
+        <input type="password" title="Password" name="password" class="form-control" placeholder="Password" required />
+
+        <button type="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+        <br>
+    	<br>
+        Not Registered?
+        <br>		
+        <br>
+        <a class="btn btn-primary" href="/register">sign up here!</a>
+    </form>
+{%  endblock %}

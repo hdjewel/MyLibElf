@@ -1,0 +1,34 @@
+#fname {
+    margin-right: 40px;
+    color: red;
+
+}
+
+#lname {
+    margin-right: 40px;
+    color: blue;
+
+}
+
+#email {
+    margin-right: 25px;
+
+}
+
+.form-control {
+    margin-right: 65px;
+    color: yellow;
+}
+.library {
+	display: inline-block;
+}
+
+label {
+    width: 250px;
+    display: inline-block;
+}
+
+blockquote {
+    width: 200px;
+    border: solid 1px black;
+}

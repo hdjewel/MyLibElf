@@ -1,0 +1,36 @@
+<html>
+    <head>
+    This is from the base
+    {% block title%}{% endblock %}
+
+    </head>
+    <body>
+        {% block body_header %}
+
+
+
+        {% endblock %}
+        {% block body %}{% endblock %}
+        {% block trailer %}
+          <div class="container">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <ul class="flashes">
+                        <li>{{message}}</li>
+                    </ul>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+          </div>
+        {% endblock %}
+        <!--
+        <script type="text/javascript" src="jquery"></script>
+        <script type="text/javascript">
+            actual javascript
+            add click handler
+        </script>
+    -->
+    </body>
+</html>
+

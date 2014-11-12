@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+    {% block title%}
+
+        <title>Library Configuration</title>
+    
+    {% endblock %}
+
+        <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
+
+
+
+{%  block body %}
+    <form class="form-library" method="POST" action="/process_library">
+        <h2 class="form-rlibrary-heading">Please enter the Library information</h2>
+
+        Library             Card
+        <br>
+        Name                Number              Pin     URL            
+        <div id = "lib-name" class="library"><label for = "lib-name-field"> </label>
+                        <input type="text" name="lib-name" id="lib-name-field"
+                               placeholder="Library name" 
+                               ></input>
+            </div><div id ="card_nbr" class="library"><label for = "card_nbr-field"></label>
+                         <input type="text" title="Card_nbr"
+                                name="card_nbr" class="form-control"
+                                placeholder="card number"
+                                required autofocus
+                                ></input> </div>
+        <div id="pin" class="library"><label for = "pin-field"></label>
+                        <input type="text" title="Pin"
+                               name="pin" class="form-control"
+                               placeholder="pin"
+                               required autofocus
+                               ></input> </div>
+        <div id="url" class="library"><label for = "url-field"></label>
+                           <input type="text" title="URL"
+                                  name="url" class="form-control"
+                                  placeholder="url"
+                                  required autofocus
+                                  ></input>  </div>
+
+        <button type="btn btn-lg btn-primary btn-block" 
+                type="submit">Submit</button>
+        <br>
+        <div class="container">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <ul class="flashes">
+                        <li>{{message}}</li>
+                    </ul>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </form>
+{%  endblock %}
