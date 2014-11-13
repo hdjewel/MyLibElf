@@ -2,6 +2,7 @@
       put, and post request for the web app.                              """
 from flask import Flask, render_template, redirect, request, flash
 from sqlalchemy import desc
+import itertools
 import model
 
 app = Flask(__name__)
@@ -58,11 +59,70 @@ def library():
 
 @app.route("/process_search")
 def search_results():
-    search_result = ["animal farm", "George Orwell"]
-    return render_template("book_list.html")
+    x = request.args.get("source")
+
+    # search_result = (model.session.query(model.Book_Author)
+    #                              .join(model.Book)
+    #                              .join(model.Author)
+    #                              .join(model.Finished_Book)
+    #                              .order_by(model.Book.title).all())
+
+    """can I create a variable called tables and assign model.Finished_Book,
+        model.Book, model.Book_Author, model.Author to it , then use it in
+        the query? This will allow me to use the query for all the searches.
+        Maybe I do not need to do this.?????
+    """
+    search_result = (model.session.query(model.Finished_Book,
+                                         model.Book,
+                                         model.Book_Author,
+                                         model.Author)
+                                   .filter(model.Finished_Book.book_id == model.Book.id,
+                                           model.Book.id == model.Book_Author.book_id,
+                                           model.Book_Author.author_id == model.Author.id)
+                                   .order_by(model.Book.title).all())
+    
+    # for finished_book, book, book_author, author in search_result:
+    #     print book.title
+    #     print author.name
+    #     print finished_book.date
+
+    books_grouped_by_id = itertools.groupby(search_result, lambda x: x[1].id)
+    # x[1] is the book object 
+    # [ (1, [fb, b, ba, a]),
+    #   (2, [fb, b, ba, a])]
+    # where fb = finished_book
+    #       b = book
+    #       ba = book_author
+    #       a = author
+    new_row = []
+    for book_id, result_set in books_grouped_by_id:
+        # print book_id, result_set
+        # r[3] in the result_set is the author object.
+
+        # print book_id, ", ".join(r[3].name for r in result_set)
+
+        for d in result_set:
+            # new_row += [(str(d[1].title), str(d[0].date), str(d[3].name),
+            #           str("".join(r[3].name for r in result_set)))]
+            new_row += [(d[1].title, d[0].date, d[3].name,
+                      "".join(r[3].name for r in result_set))]
+    print "new row == ", new_row
+
+
+    # print search_result
+
+    # print "Calling source of this route / function is == ", x
+    # search_result = (model.session.query(model.Book)
+    #                              .join(model.Book_Author)
+    #                              .join(model.Author)
+    #                              .order_by(model.Book.title).limit(15).all())
+    # print "search_result contains == " , search_result
+    # for book_author in search_result:
+    #     print "author found ", book_author.author.name
+    #     print "date found ", book_author.book.finished_book.date
+    return render_template("book_list.html", books=new_row)
+    # return render_template("book_list.html")
 #end app.route
-
-
 
 @app.route("/register")
 def register():

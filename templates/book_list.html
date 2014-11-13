@@ -1,17 +1,54 @@
-% extends "base.html" %}
-    {% block title%}
+{% extends "base.html" %}
+    {% block title %}
 
         <title>Book list</title>
         <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
     {% endblock %}
 
+	{% block body %}
+	<br> books contain ===>
+	{{ books }}
+		<h2>Search Results</h2>
+		    <form class="form-book_list">
+		      <div class="row">
+		        <div class="col-md-6">
+		          <table class="table">
+		            <thead>
+		              <tr>
+		                <th>Title</th>
+		                <th>Author</th>
+		                <th>Read Date</th>
+		                <th>Delete Book</th>
+		              </tr>
+		            </thead>
+		            <tbody>
+		            {% for book in books %}
+		              <tr>
+		                <td>{{ book[0] }}</td>
+		                <td>{{ book[2] + ", " + book[3] }}</td>
+		                <td>{{ book[1] }}</td>
+		                <td>{{ "blank" }}</td>
+		              </tr>
+		            {% else %}
+		              <li>No results :(</li>
+		            {% endfor %}
+		            </tbody>
+		          </table>
+		        </div>
+		      </div>
+			</form>
 
-{%  block body %}
-    <form class="form-register" method="POST" action="/process_search">
-        
-        <ul>
-          <li>add the jinja logic to print the retrieved data</li>
-        </ul>
-  
-    </form>
-{%  endblock %}
+    {% endblock %}
+
+
+<!-- replace blank with a check box -->
+
+			<h2>Search Again</h2>
+			<a class="btn btn-primary" 
+			   href="{{ url_for('search_results') }}"><button>Search</button></a
+			<form action="{{ url_for('search_results') }}" method="POST">
+			    <input type="text" name="query">
+			    <input type="submit">
+			</form>
+
+method="POST" action="/process_search"

@@ -26,7 +26,8 @@ class Author(Base):
     fname = Column(String(40), nullable = True)
     lname = Column(String(40), nullable = True)
 
-    books = relationship("Book_Author")
+    # booksauthors = relationship("Book_Author")   [BA, BA, Ba[]]
+    books = relationship("Book", secondary="books_authors")  #[B, B, B]
 
 class Biblio(Base):
     """docstring for Biblio"""
@@ -51,9 +52,10 @@ class Book(Base):
     genre = Column(String(50), nullable = True)
     barcode_nbr = Column(Integer, nullable = True)
 
-    authors = relationship("Book_Author")
+    # bookauthors = relationship("Book_Author")
+    authors = relationship("Author", secondary="books_authors")
     libraries = relationship("Book_Library")
-    finished_book = relationship("Finished_Book")
+    finished_book = relationship("Finished_Book", uselist=False, backref='book')
 
 class Checked_Out_Book(Base):
     """docstring for Checked_Out_Book"""

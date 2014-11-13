@@ -2,23 +2,36 @@
     {% block title%}
 
         <title>Main Page</title>
-        <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
+        <link rel = "stylesheet" type = "text/css" 
+              href = "static/css/stylesheet.css"/>
     {% endblock %}
 
 
 {%  block body %}
-    <form class="form-register">
+    <form class="form-register" method="GET" 
+          action="/process_search?source=newbooks">
         <h2 class="form-register-heading">Hi, What can I help you with?</h2>
 
         <ul>
-          <li>Books you've read</li>
-          <li><a class="btn btn-primary" href="/search">Search for a new book to read </a></li>
-            <input  type="text" title="Search" name="search" class="form-control" placeholder="Key words, author, title" required autofocus />
-            <a class="btn btn-primary" href="{{ url_for('search_results') }}"><button>Search</button></a>
-          <ul><li>May I make a recommendation? </li>
-          </ul>
-          <li>Wish list </li>
-          <li>Books on hold </li>
+          <li><a class="btn btn-primary" 
+                  href="/process_search?source=booksRead">
+                        Books you've read</a></li>
+          <li><a >Search for a new book to read </a></li>
+            <input type="text" title="Search" name="search" 
+                   class="form-control" placeholder="Key words, author, title" 
+                   required autofocus />
+            <a class="btn btn-primary" ><button>Search</button></a>
+            <ul><li><a class="btn btn-primary" 
+                       href="/process_search?source=suggestion">
+                       May I make a recommendation? </a></li>
+            </ul>
+          <li><a class="btn bth-primary" 
+                 href="/process_search?source=checkedOut">
+                       Checked out bools</a></li>
+          <li><a class="btn bth-primary" 
+                 href="/process_search?source=wishList">Wish list </a></li>
+          <li><a class="btn bth-primary" 
+                 href="/process_search?source=holdList">Books on hold </a></li>
         </ul>
   
     </form>
