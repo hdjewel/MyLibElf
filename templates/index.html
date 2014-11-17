@@ -4,35 +4,50 @@
         <title>Main Page</title>
         <link rel = "stylesheet" type = "text/css" 
               href = "static/css/stylesheet.css"/>
+
     {% endblock %}
 
 
 {%  block body %}
     <form class="form-register" method="GET" 
           action="/process_search?source=newbooks">
-        <h2 class="form-register-heading">Hi, What can I help you with?</h2>
+        <div class="box">
+          <div class="content-wrap">
+            <div class="text-left"><h2 class="form-register-heading">Hi, What can I help you with?</h2>
 
-        <ul>
-          <li><a class="btn btn-primary" 
-                  href="/process_search?source=booksRead">
-                        Books you've read</a></li>
-          <li><a >Search for a new book to read </a></li>
-            <input type="text" title="Search" name="search" 
-                   class="form-control" placeholder="Key words, author, title" 
-                   required autofocus />
-            <a class="btn btn-primary" ><button>Search</button></a>
-            <ul><li><a class="btn btn-primary" 
-                       href="/process_search?source=suggestion">
-                       May I make a recommendation? </a></li>
-            </ul>
-          <li><a class="btn bth-primary" 
-                 href="/process_search?source=checkedOut">
-                       Checked out bools</a></li>
-          <li><a class="btn bth-primary" 
-                 href="/process_search?source=wishList">Wish list </a></li>
-          <li><a class="btn bth-primary" 
-                 href="/process_search?source=holdList">Books on hold </a></li>
-        </ul>
-  
+              <ul>
+                <li><a class="btn btn-primary" 
+                        href="/process_search?source=booksRead">
+                              Books you've read</a></li>
+                <li><a >Search for a new book to read </a></li>
+                  <input type="text" title="Search" name="search" 
+                         class="form-control" placeholder="Key words, author, title" 
+                         autofocus />
+                  <a class="btn btn-primary" ><button>Search</button></a>
+                  <ul><li><a class="btn btn-primary" 
+                             href="/process_search?source=suggestion">
+                             May I make a recommendation? </a></li>
+                  </ul>
+                <li><a class="btn bth-primary" 
+                       href="/process_search?source=checkedOut">
+                             Checked out books</a></li>
+                <li><a class="btn bth-primary" 
+                       href="/process_search?source=wishList">Wish list </a></li>
+                <li><a class="btn bth-primary" 
+                       href="/process_search?source=holdList">Books on hold </a></li>
+                       <br><br>
+                <li><a class="btn bth-primary" 
+                       href="/patron">Manage My BookBlend Account Info </a></li>
+                <li><a class="btn bth-primary" 
+                       href="/library">Manage My Library Access </a></li>
+              </ul>
+          </div><div>
+                   <p class="pad10tb">
+                            <a  href="/logout" 
+                                ><button>Cancel</button></a>
+                        </p>
+                </div>
+        </div>
+      </div>
     </form>
 {%  endblock %}

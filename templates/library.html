@@ -11,36 +11,43 @@
 {%  block body %}
     <form class="form-library" method="POST" action="/process_library">
         <h2 class="form-rlibrary-heading">Please enter the Library information</h2>
-
-        Library             Card
-        <br>
-        Name                Number              Pin     URL            
-        <div id = "lib-name" class="library"><label for = "lib-name-field"> </label>
-                        <input type="text" name="lib-name" id="lib-name-field"
-                               placeholder="Library name" 
-                               ></input>
-            </div><div id ="card_nbr" class="library"><label for = "card_nbr-field"></label>
-                         <input type="text" title="Card_nbr"
-                                name="card_nbr" class="form-control"
-                                placeholder="card number"
-                                required autofocus
-                                ></input> </div>
-        <div id="pin" class="library"><label for = "pin-field"></label>
-                        <input type="text" title="Pin"
-                               name="pin" class="form-control"
-                               placeholder="pin"
-                               required autofocus
-                               ></input> </div>
-        <div id="url" class="library"><label for = "url-field"></label>
-                           <input type="text" title="URL"
-                                  name="url" class="form-control"
-                                  placeholder="url"
-                                  required autofocus
-                                  ></input>  </div>
+        <form class="form-book_list">
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Library Name</th>
+                    <th>Card Number</th>
+                    <th>Pin</th>
+                    <th>URL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for library in libraries %}
+                <tr>
+                    <td>{{ library[0] }}</td>
+                    <td>{{ library[1] }}</td>
+                    <td>{{ library[2] }}</td>
+                    <td>{{ library[3] }}</td>
+                    </tr>                
+                {% else %}
+                  <li>No results :(</li>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </form>
 
         <button type="btn btn-lg btn-primary btn-block" 
                 type="submit">Submit</button>
-        <br>
+        <br><div>
+              <p class="pad10tb">
+                <a  href="/main" 
+                    ><button>Cancel</button></a>
+              </p>
+            </div>
         <div class="container">
             {% with messages = get_flashed_messages() %}
                 {% if messages %}

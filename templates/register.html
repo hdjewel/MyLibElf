@@ -1,24 +1,334 @@
 {% extends "base.html" %}
-    {% block title%}
+<!DOCTYPE html>
+<html>
+{% block title%}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Create an account</title>
+
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
+    <style>
+        .login-bg {
+            background: url("../../img/bgs/landscape.jpg") no-repeat center center fixed;
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bgs/landscape.jpg', sizingMethod='scale');
+            -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bgs/landscape.jpg', sizingMethod='scale')";
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .login-wrapper {
+            position: absolute;
+            top: 90px;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+
+            .login-wrapper .logo {
+                margin-bottom: 45px;
+                position: relative;
+                left: -2px;
+            }
+
+            .login-wrapper .box {
+                margin: 0 auto;
+                padding: 35px 15px 30px;
+                float: none;
+                width: 600px;
+                box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+                background: rgba(255, 255, 255, 0.75);
+            }
+
+                .login-wrapper .box .content-wrap {
+                    width: 82%;
+                    margin: 0 auto;
+                }
+
+                .login-wrapper .box h6 {
+                    text-transform: uppercase;
+                    margin: 0 0 30px 0;
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+
+                .login-wrapper .box input[type="text"],
+                .login-wrapper .box input[type="password"] {
+                    font-size: 15px;
+                    height: 40px;
+                    margin-bottom: 18px;
+                    border-color: #b2bfc7;
+                    padding-left: 12px;
+                }
+
+                .login-wrapper .box input[type="password"] {
+                    margin-bottom: 10px;
+                }
+
+                .login-wrapper .box input:-moz-placeholder {
+                    color: #9ba8b6;
+                    font-size: 15px;
+                    letter-spacing: 0px;
+                    font-style: italic;
+                }
+
+                .login-wrapper .box input:-ms-input-placeholder {
+                    color: #9ba8b6;
+                    font-style: italic;
+                    letter-spacing: 0px;
+                    font-size: 15px;
+                }
+
+                .login-wrapper .box input::-webkit-input-placeholder {
+                    color: #9ba8b6;
+                    font-style: italic;
+                    letter-spacing: 0px;
+                    font-size: 15px;
+                }
+
+                .login-wrapper .box a.forgot {
+                    display: block;
+                    text-align: right;
+                    font-style: italic;
+                    text-decoration: underline;
+                    color: #3d88ba;
+                    font-size: 13px;
+                    margin-bottom: 6px;
+                }
+             
+                .login-wrapper .box .remember {
+                    display: block;
+                    overflow: hidden;
+                    margin-bottom: 20px;
+                }
+
+                    .login-wrapper .box .remember input[type="checkbox"] {
+                        float: left;
+                        margin-right: 8px;
+                    }
+
+                    .login-wrapper .box .remember label {
+                        float: left;
+                        color: #4a576a;
+                        font-size: 13px;
+                        font-weight: 600;
+                    }
+
+                .login-wrapper .box .login {
+                    text-transform: uppercase;
+                    font-size: 13px;
+                    padding: 8px 30px;
+                }
+
+            .login-wrapper .no-account {
+                margin: 0 auto;
+                float: none;
+                text-align: center;
+                font-size: 14px;
+                margin-top: 25px;
+            }
+
+                .login-wrapper .no-account p {
+                    display: inline-block;
+                    color: white;
+                }
+
+                .login-wrapper .no-account a {
+                    color: white;
+                    margin-left: 7px;
+                    border-bottom: 1px solid;
+                    transition: all .1s linear;
+                    -moz-transition: all .1s linear;
+                    /* Firefox 4 */
+                    -webkit-transition: all .1s linear;
+                    /* Safari and Chrome */
+                    -o-transition: all .1s linear;
+                    /* Opera */
+                }
+
+                    .login-wrapper .no-account a:hover {
+                        text-decoration: none;
+                        color: #fff;
+                        border-bottom-color: #fff;
+                    }
+
+        /* background switcher */
+        .bg-switch {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            top: 60px;
+            border-radius: 0px 10px 10px 0px;
+            padding: 10px 10px 0px 10px;
+            z-index: 999;
+        }
+
+            .bg-switch .bgs .bg {
+                text-align: center;
+                margin-bottom: 13px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .bg-switch .bgs .bg.active img {
+                    border-color: #000;
+                }
+
+                .bg-switch .bgs .bg img {
+                    width: 80px;
+                    height: 60px;
+                    border: 2px solid #9fcef1;
+                    cursor: pointer;
+                }
+
+        /* responsive */
+        @media (max-width: 767px) {
+            .login-wrapper .box {
+                width: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-wrapper .box {
+                width: 90%;
+            }
+        }
+        /*body
+        {
+            /*background-image:url('/Resources/images/bg.png');* /
+            background-size:cover;
+            background-attachment:fixed;
+        }*/
+        .login-wrapper .box .action {
+            background-color: #F4F5F6;
+            border-radius: 0 0 7px 7px;
+            border-top: 1px solid #D3D7DB;
+            margin: 0 -65px;
+            padding: 15px 0;
+            position: relative;
+            top: 30px;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #2F3573 0%, #2A3073 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2F3573', endColorstr='#2A3073',GradientType=0 );
+        }
+    </style>
+</head>
+{% endblock %}
+{% block body %}
+<body>
+    <div class="header">
+        <a href="/logon" title="BookBlend Home" style="font-size:30px; text-decoration:none;">
+
+        </a>
+    </div>
+    <div class="container">
+        
+<form action="/register" method="post"><input name="__RequestVerificationToken" type="hidden" value="sD-K-lOnkznhrPOcae7wEM64srjpEHamV9IQ3MoR0Igc-zPzapcsvRMFJgWwm8F18Un07EzYUbX8jsvEFsVFyJwp6QQVcyL6tBlto1AKFvE1" />    <div class="login-wrapper">
+        <div class="box">
+            <div class="content-wrap">
+                <h6>Registration</h6>
+                <div class="text-left">
+                    <div class="editor-label">
+                        <label for="email">Email Address</label>
+                    </div>
+                    <div class="editor-field">
+                        <input class="form-control" data-val="true" data-val-length="The Email Address must be between 5 - 255 characters." data-val-length-max="255" data-val-length-min="5" data-val-regex="Please enter a vali address data-val-regex-pattern="^[\w\+-\.]+@([\w-]+\.)+[\w-]{2,4}$" data-val-remote="&#39;Email Address&#39; is invalid." data-val-remote-additionalfields="*.Email" data-val-required="The Email Address field is required." id="email" name="email" placeholder="Enter Email" type="text" value="" />
+                        <span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="editor-label">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="editor-field">
+                        <input class="form-control" data-val="true" 
+                        data-val-length="The Password must be at least 8 
+                        characters long." 
+                        data-val-length-max="100" 
+                        data-val-length-min="8" 
+                        data-val-regex="Password should contain at least one 
+                        letter, one number, and one special character."
+                        data-val-required="The Password field is required." 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter Password" 
+                        type="password"  
+                        data-val-regex-pattern=
+                        "^(?=.*?[a-zA-Z]).*(?=.*?\d).*(?=.*?[!@#$%\^&amp;*\(\)\-_+=;:&#39;&quot;\/\[\]{},.&lt;>|`]).*" 
+                        />
+                        <span class="field-validation-valid" 
+                        data-valmsg-for="password" 
+                        data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="editor-label">
+                        <label for="ConfirmPassword">Confirm password</label>
+                    </div>
+                    <div class="editor-field">
+                        <input class="form-control" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Enter Password" type="password" />
+                        <span class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="editor-label">
+                        <label for="fname">First Name</label>
+                    </div>
+                    <div class="editor-field">
+                        <input class="form-control" data-val="true" data-val-length="The First Name must be between 2 - 255 characters." data-val-length-max="255" data-val-length-min="2" data-val-regex="Use letters only" data-val-regex-pattern="^[a-zA-Z. \-&#39;]+$" data-val-required="The First Name field is required." id="fname" name="fname" placeholder="Enter First Name" type="text" value="" />
+                        <span class="field-validation-valid" data-valmsg-for="fname" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="editor-label">
+                        <label for="lname">Last Name</label>
+                    </div>
+                    <div class="editor-field">
+                        <input class="form-control" data-val="true" data-val-length="The Last Name must be between 2 - 255 characters." data-val-length-max="255" data-val-length-min="2" data-val-regex="Use letters only" data-val-regex-pattern="^[a-zA-Z. \-&#39;]+$" data-val-required="The Last Name field is required." id="lname" name="lname" placeholder="Enter Last Name" type="text" value="" />
+                        <span class="field-validation-valid" data-valmsg-for="lname" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="editor-label">
+                        <label for="phone">Cell Phone</label>
+                    </div>
+                    <div class="editor-field">
+                        <input class="form-control" data-val="true" data-val-length="The Cell Phone must be between 10 - 20 characters." data-val-length-max="20" data-val-length-min="10" data-val-regex="Please enter valid phone number in XXX-XXX-XXXX format" data-val-regex-pattern="(([\(]?\d{3}[\)]?\s?)|(\d{3}[-]?))\d{3}[-\s]?\d{4}\s*(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+)\s*)?" data-val-required="The Cell Phone field is required." id="phone" name="phone" placeholder="Enter Cell Phone Number" type="text" value="" />
+                        <span class="field-validation-valid" data-valmsg-for="phone" data-valmsg-replace="true"></span>
+                    </div>
+
+                </div>
+                <div class="action">
+                    <input type="submit" value="Create" class="btn btn-primary" name="create_account" id="create_account" /> <a class="btn btn-danger" href="/" role="button">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+</body>
+{% endblock %}
+</html>
+
+
 
         <title>Registeration</title>
         <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
-    {% endblock %}
 
 
-{%  block body %}
+
     <form class="form-register" method="POST" action="/process_registration">
         <h2 class="form-register-heading">Please enter the following information</h2>
 
         <div id = "fname"><label for = "fname-field"> First name </label>
                         <input type="text" name="fname" id="fname-field"
                                placeholder="First name" 
+                               required autofocus
                                 ></input> </div>
         <div id ="lname"><label for = "lname-field"> Last name </label>
                          <input type="text" title="Lname"
                                 name="lname" class="form-control"
                                 placeholder="Last name"
-                                required autofocus
                                 ></input> </div>
         <div id="email"><label for = "email-field"> email </label>
                         <input type="text" title="Email"
@@ -62,4 +372,4 @@
             {% endwith %}
         </div>
     </form>
-{%  endblock %}
+

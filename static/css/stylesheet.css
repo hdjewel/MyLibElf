@@ -1,12 +1,10 @@
 #fname {
     margin-right: 40px;
-    color: red;
 
 }
 
 #lname {
     margin-right: 40px;
-    color: blue;
 
 }
 
@@ -17,7 +15,7 @@
 
 .form-control {
     margin-right: 65px;
-    color: yellow;
+
 }
 .library {
 	display: inline-block;
