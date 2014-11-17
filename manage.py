@@ -25,6 +25,7 @@ match, the password is correct. Otherwise, the password is incorrect.
 
 app = Flask(__name__)
 app.secret_key='\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\x03'
+Session = {}
 
 @app.route("/", methods=['GET'])
 def get_patron_login():
@@ -40,6 +41,8 @@ def process_patron_login():
     if patron is None:
         return render_template('login.html')
     else:
+        Session['patron'] = patron.login_id
+        print "Session --> ", Session
         return redirect('/main')
 
     ### for testing only
@@ -84,7 +87,8 @@ def logout():
 def search_results():
     x = request.args.get('source')
     print "source == ", x
-    patron_login_id ='dvemstr'
+    print "Session patron value ===> ", Session
+    patron_login_id = Session['patron']
     new_row = get_finished_books(patron_login_id)
 
 #    get_bookshare_books(search_criteria)

@@ -29,13 +29,10 @@ def import_read_books(db_session, patron, input_login_id):
                     data_ok = edit_imported_book_data(row)
                     if data_ok == True:
 
-                        """ add logic to check if the book is already on the 
-                            database and associated with this logon_id 
+                        # print "\nbook title -> ", row[6]
+                        # print "\n"
 
-                            if book exists then just add finished_books and
-                              notes.  """
-                        book, patron = check_for_patron_book(db_session, 
-                            input_login_id, row)
+                        book = check_for_book(db_session, row)
                         
                         print_stmt = ""
                         if book is None:
@@ -53,30 +50,35 @@ def import_read_books(db_session, patron, input_login_id):
                                 author = add_author(db_session, sub_author)
                                 book = add_book_author(db_session, book, author)
                         else:
-                            print_stmt = "The book %s already exists" % row[6]
+                            print_stmt = "\nThe book %s already exists" % row[6]
                         #end if
 
-                        # print "patron = ", patron
+                        patron_note = check_for_patron_note(db_session, 
+                                        input_login_id, book)
+                        
+                        # print "\n\n patron_note = ", patron_note
+                        # print "\npatron = ", patron
+                        # print "\n\n"
                         # print "dir of patron.Patron ===> ", patron.Patron
                         # print "patron.Patron.login_id =", patron.Patron.login_id
 
-                        if patron is None:
+                        if patron_note is None:
                             """ finished """
                             book = add_finished_record_to_database(db_session, book,
                                                                     patron)
 
                             """ notes """
                             book = add_notes(db_session, book, patron)
-                        else:
-                            if print_stmt != "":
-                                print_stmt = "%s for this patron %s" % (print_stmt, input_login_id)
-                            else:
-                                print_stmt = "Linked " + book.title 
-                                print_stmt = print_stmt + " to " 
-                                print_stmt = print_stmt + input_login_id
-                            #end if
+
+                            print_stmt = "\nLinked %s to %s.\n" % (book.title, 
+                                            input_login_id)
                         #end if
-                        print print_stmt + "."
+                        
+                        if print_stmt != "":
+                            print_stmt = "\n%s for this patron %s.\n" % (print_stmt, input_login_id)
+
+                        #end if
+                        print print_stmt
                     #end if
                 #end if
 
@@ -139,17 +141,20 @@ def add_finished_record_to_database(db_session, book, patron):
     # print "\n\n dir of book ----> ", dir(book)
     # print "\n\n"
     # print "dir of book.patrons ---> ", dir(book.patrons)
-    # print "\n book patron id === ", patron.id
+    # print "\n patron id === ", patron.id
+    # print "\n book id === ", book.id
     # print "\n\n\n"
     
     finished_book = Finished_Book()
     date = "2014-01-01"
     # print date
     finished_book.date = datetime.strptime(date, "%Y-%m-%d")
+    finished_book.book_id = book.id
     finished_book.patron_id = patron.id
 
     with db_session.no_autoflush:
         book.finished_book = finished_book
+        # book.append(finished_book)
     #end with
     db_session.add(book)
     return book
@@ -157,6 +162,7 @@ def add_finished_record_to_database(db_session, book, patron):
 
 def add_notes(db_session, book, patron):
     note = Note()
+    note.book_id = book.id
     note.patron_id = patron.id
     with db_session.no_autoflush:
         book.notes.append(note)
@@ -186,23 +192,24 @@ def parse_book_title(title):
     return title
 #end def
 
-def check_for_patron_book(db_session, input_login_id, row):
+def check_for_book(db_session, row):
     main_author = row[4]
     title = row[6]
 
-    book = (model.db_session.query(model.Patron, model.Note, model.Book)
+    book = model.db_session.query(model.Book).filter_by(title = title).first()
+
+    return book
+#end def
+
+def check_for_patron_note(db_session, input_login_id, book):
+
+    patron_note = (model.db_session.query(model.Patron, model.Note)
                 .filter(model.Patron.login_id == input_login_id,
                         model.Patron.id == model.Note.patron_id,
-                        model.Note.book_id == model.Book.id,
-                        model.Book.title == title)
-                .first())
-
-    patron = (model.db_session.query(model.Patron, model.Note)
-                .filter(model.Patron.login_id == input_login_id,
-                        model.Patron.id == model.Note.patron_id)
+                        model.Note.book_id == book.id)
                 .first()) 
 
-    return book, patron
+    return patron_note
 #end def
 
 def check_for_patron_login_id(db_session, input_login_id):

@@ -6,7 +6,7 @@ from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship, backref, scoped_session
 
 
-engine = create_engine('sqlite:///bookblend.db', echo=True)
+engine = create_engine('sqlite:///bookblend.db', echo=False)
 
 db_session = scoped_session(sessionmaker(bind=engine,
                                       autocommit = False,
