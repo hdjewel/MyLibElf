@@ -6,3 +6,11 @@ SQLAlchemy==0.7.9
 WTForms==1.0.2
 Werkzeug==0.8.3
 wsgiref==0.1.2
+fuzzywuzzy==0.1
+gspread==0.1.0
+gunicorn==17.5
+ipython==0.13.2
+psycopg2==2.5.1
+pyquery==1.2.2
+requests==0.14.2
+static==0.4

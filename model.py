@@ -6,7 +6,7 @@ from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship, backref, scoped_session
 
 
-engine = create_engine('sqlite:///bookblend.db', echo=False)
+engine = create_engine('sqlite:///bookblend.db', echo=True)
 
 db_session = scoped_session(sessionmaker(bind=engine,
                                       autocommit = False,
@@ -110,7 +110,7 @@ class Library(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(255), nullable = True)
     url = Column(String(255), nullable = True)
-    card_nmbr = Column(Integer, nullable = True)
+    card_nbr = Column(Integer, nullable = True)
     pin = Column(Integer, nullable = True)
     login_id = Column(String(255), nullable = True)
     password = Column(String(100), nullable = True)
@@ -196,7 +196,7 @@ class Patron_Library(Base):
 
 def connect():
 
-    ENGINE = create_engine("sqlite:///bookblend.db", echo=False)
+    ENGINE = create_engine("sqlite:///bookblend.db", echo=True)
     Session = sessionmaker(bind=ENGINE)
     Base.metadata.create_all(ENGINE)
 

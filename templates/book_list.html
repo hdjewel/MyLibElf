@@ -4,262 +4,89 @@
         <title>Book list</title>
         <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
 
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
-    <style>
-        .login-bg {
-            background: url("../../img/bgs/landscape.jpg") no-repeat center center fixed;
-            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bgs/landscape.jpg', sizingMethod='scale');
-            -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bgs/landscape.jpg', sizingMethod='scale')";
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
-
-        .login-wrapper {
-            position: absolute;
-            top: 90px;
-            left: 0;
-            right: 0;
-            text-align: center;
-        }
-
-            .login-wrapper .logo {
-                margin-bottom: 45px;
-                position: relative;
-                left: -2px;
-            }
-
-            .login-wrapper .box {
-                margin: 0 auto;
-                padding: 35px 15px 30px;
-                float: none;
-                width: 600px;
-                box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
-                border-radius: 5px;
-                background: rgba(255, 255, 255, 0.75);
-            }
-
-                .login-wrapper .box .content-wrap {
-                    width: 82%;
-                    margin: 0 auto;
-                }
-
-                .login-wrapper .box h6 {
-                    text-transform: uppercase;
-                    margin: 0 0 30px 0;
-                    font-size: 18px;
-                    font-weight: 600;
-                }
-
-                .login-wrapper .box input[type="text"],
-                .login-wrapper .box input[type="password"] {
-                    font-size: 15px;
-                    height: 40px;
-                    margin-bottom: 18px;
-                    border-color: #b2bfc7;
-                    padding-left: 12px;
-                }
-
-                .login-wrapper .box input[type="password"] {
-                    margin-bottom: 10px;
-                }
-
-                .login-wrapper .box input:-moz-placeholder {
-                    color: #9ba8b6;
-                    font-size: 15px;
-                    letter-spacing: 0px;
-                    font-style: italic;
-                }
-
-                .login-wrapper .box input:-ms-input-placeholder {
-                    color: #9ba8b6;
-                    font-style: italic;
-                    letter-spacing: 0px;
-                    font-size: 15px;
-                }
-
-                .login-wrapper .box input::-webkit-input-placeholder {
-                    color: #9ba8b6;
-                    font-style: italic;
-                    letter-spacing: 0px;
-                    font-size: 15px;
-                }
-
-                .login-wrapper .box a.forgot {
-                    display: block;
-                    text-align: right;
-                    font-style: italic;
-                    text-decoration: underline;
-                    color: #3d88ba;
-                    font-size: 13px;
-                    margin-bottom: 6px;
-                }
-             
-                .login-wrapper .box .remember {
-                    display: block;
-                    overflow: hidden;
-                    margin-bottom: 20px;
-                }
-
-                    .login-wrapper .box .remember input[type="checkbox"] {
-                        float: left;
-                        margin-right: 8px;
-                    }
-
-                    .login-wrapper .box .remember label {
-                        float: left;
-                        color: #4a576a;
-                        font-size: 13px;
-                        font-weight: 600;
-                    }
-
-                .login-wrapper .box .login {
-                    text-transform: uppercase;
-                    font-size: 13px;
-                    padding: 8px 30px;
-                }
-
-            .login-wrapper .no-account {
-                margin: 0 auto;
-                float: none;
-                text-align: center;
-                font-size: 14px;
-                margin-top: 25px;
-            }
-
-                .login-wrapper .no-account p {
-                    display: inline-block;
-                    color: white;
-                }
-
-                .login-wrapper .no-account a {
-                    color: white;
-                    margin-left: 7px;
-                    border-bottom: 1px solid;
-                    transition: all .1s linear;
-                    -moz-transition: all .1s linear;
-                    /* Firefox 4 */
-                    -webkit-transition: all .1s linear;
-                    /* Safari and Chrome */
-                    -o-transition: all .1s linear;
-                    /* Opera */
-                }
-
-                    .login-wrapper .no-account a:hover {
-                        text-decoration: none;
-                        color: #fff;
-                        border-bottom-color: #fff;
-                    }
-
-        /* background switcher */
-        .bg-switch {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            top: 60px;
-            border-radius: 0px 10px 10px 0px;
-            padding: 10px 10px 0px 10px;
-            z-index: 999;
-        }
-
-            .bg-switch .bgs .bg {
-                text-align: center;
-                margin-bottom: 13px;
-                text-decoration: none;
-                display: block;
-            }
-
-                .bg-switch .bgs .bg.active img {
-                    border-color: #000;
-                }
-
-                .bg-switch .bgs .bg img {
-                    width: 80px;
-                    height: 60px;
-                    border: 2px solid #9fcef1;
-                    cursor: pointer;
-                }
-
-        /* responsive */
-        @media (max-width: 767px) {
-            .login-wrapper .box {
-                width: 350px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .login-wrapper .box {
-                width: 90%;
-            }
-        }
-        /*body
-        {
-            /*background-image:url('/Resources/images/bg.png');* /
-            background-size:cover;
-            background-attachment:fixed;
-        }*/
-        .login-wrapper .box .action {
-            background-color: #F4F5F6;
-            border-radius: 0 0 7px 7px;
-            border-top: 1px solid #D3D7DB;
-            margin: 0 -65px;
-            padding: 15px 0;
-            position: relative;
-            top: 30px;
-        }
-
-        .header {
-            background: linear-gradient(to bottom, #2F3573 0%, #2A3073 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2F3573', endColorstr='#2A3073',GradientType=0 );
-        }
-    </style>
 
     {% endblock %}
 
 	{% block body %}
 	<br> 
-		<h2>Search Results</h2>
+		<h2>Search Results for {{ search }}: </h2>
 		    <form class="form-book_list">
 		      <div class="row">
 		        <div class="col-md-6">
 		          <table class="table">
 		            <thead>
 		              <tr>
+		                <th>Cover</th>
 		                <th>Title</th>
 		                <th>Author</th>
-		                <th>Read Date</th>
-		                <th>Delete Book</th>
 		              </tr>
 		            </thead>
 		            <tbody>
-		            {% for book in books %}
-		              <tr>
-		                <td>{{ book[0] }}</td>
-		                <td>{{ book[2] + ", " + book[3] }}</td>
-		                <td>{{ book[1] }}</td>
-		                <td><div class="editor-field">
-                        <input unchecked="unchecked" data-val="true" data-val-required="" id="notify" name="notify" type="checkbox" value="true" /><input name="notify" type="hidden" value="false" /> <label for="notify">
-                        <span class="field-validation-valid" data-valmsg-for="notify" data-valmsg-replace="true"></span>
-                    </div></td>
-		              </tr>
-		            {% else %}
-		              <li>No results :(</li>
-		            {% endfor %}
+			            {% for title, books in list_of_books | groupby('title') %}
+			              {% for book in books %}
+			              <tr>
+			              	<td> {% if book['images'] == 1 
+			              			or book['images'] == 0 %} 
+									<img class='bookImage' width=40px height=65px
+										 src="http://bestclipartblog.com/clipart-pics/book-clip-art-12.jpg" border="0" alt="book jacket" >
+								{% else %}
+				                	<img class='bookImage' width=40px height=65px
+				                		 src='{{ book['images'] }}'>
+			                    {% endif %}
+			                </td>
+			                <td>{{ book['title'] }}
+			               		<a href="/book_details/{{ book }}">
+			                </td>
+			                <td>{{ book['author'] }}</td>
+			              </tr>
+			            {% endfor %}
+			            {% else %}
+			              <li>No results :(</li>
+			              <br>
+			        {% endfor %}
 		            </tbody>
 		          </table>
 		        </div>
 		      </div>
-			</form>
 				<div>
 					<h3>Search Again</h3>
+	                  <input type="text" title="Search" name="search" 
+	                         class="form-control" href="/search_results" 
+	                         placeholder="Key words, author, title" 
+	                         autofocus />
+	                  <a class="btn btn-primary" ><button>Search</button></a><br><br>
+				</div>
+			</form>
+			<div>
+                <a class="btn btn-back" href="/main" role="button">
+                <button>Back</button></a>
+            </div>
 
-					<form action="{{ url_for('search_results') }}" 
-						method="GET">
-					    <input type="text" name="query">
-					    <input type="submit">
-					</form>
-				</div><div>
-                    <a class="btn btn-danger" href="/main" role="button">
-                    <button>Cancel</button></a>
-                </div>
+
+
+            <!-- DC Pagination:A1 Start -->
+<ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
+  <li><a href="#" class="first">First</a></li>
+  <li><a href="#" class="previous">Previous</a></li>
+  <li><a href="#">1</a></li>
+  <li><a href="#">2</a></li>
+  <li><a href="#" class="current">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
+  <li><a href="#" class="next">Next</a></li>
+  <li><a href="#" class="last">Last</a></li>
+</ul>
+<!-- DC Pagination:A1 End -->
     {% endblock %}
+
+
+
+
+
+                <li><a >To search for a new book to read, 
+                          please enter some search criteria. </a></li><br>
+                  <input type="text" title="Search" name="search" 
+                         class="form-control" 
+                         placeholder="Key words, author, title" 
+                         autofocus />
+                  <a class="btn btn-primary" ><button>Search</button></a><br><br>

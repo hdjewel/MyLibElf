@@ -3,220 +3,8 @@
 <!DOCTYPE html>
 <html>
     {% block title%}
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
 
-    <style>
-        .login-bg {
-            background: url("../../img/bgs/landscape.jpg") no-repeat center center fixed;
-            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bgs/landscape.jpg', sizingMethod='scale');
-            -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bgs/landscape.jpg', sizingMethod='scale')";
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
-
-        .login-wrapper {
-            position: absolute;
-            top: 90px;
-            left: 0;
-            right: 0;
-            text-align: center;
-        }
-
-            .login-wrapper .logo {
-                margin-bottom: 45px;
-                position: relative;
-                left: -2px;
-            }
-
-            .login-wrapper .box {
-                margin: 0 auto;
-                padding: 35px 15px 30px;
-                float: none;
-                width: 600px;
-                box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
-                border-radius: 5px;
-                background: rgba(255, 255, 255, 0.75);
-            }
-
-                .login-wrapper .box .content-wrap {
-                    width: 82%;
-                    margin: 0 auto;
-                }
-
-                .login-wrapper .box h6 {
-                    text-transform: uppercase;
-                    margin: 0 0 30px 0;
-                    font-size: 18px;
-                    font-weight: 600;
-                }
-
-                .login-wrapper .box input[type="text"],
-                .login-wrapper .box input[type="password"] {
-                    font-size: 15px;
-                    height: 40px;
-                    margin-bottom: 18px;
-                    border-color: #b2bfc7;
-                    padding-left: 12px;
-                }
-
-                .login-wrapper .box input[type="password"] {
-                    margin-bottom: 10px;
-                }
-
-                .login-wrapper .box input:-moz-placeholder {
-                    color: #9ba8b6;
-                    font-size: 15px;
-                    letter-spacing: 0px;
-                    font-style: italic;
-                }
-
-                .login-wrapper .box input:-ms-input-placeholder {
-                    color: #9ba8b6;
-                    font-style: italic;
-                    letter-spacing: 0px;
-                    font-size: 15px;
-                }
-
-                .login-wrapper .box input::-webkit-input-placeholder {
-                    color: #9ba8b6;
-                    font-style: italic;
-                    letter-spacing: 0px;
-                    font-size: 15px;
-                }
-
-                .login-wrapper .box a.forgot {
-                    display: block;
-                    text-align: right;
-                    font-style: italic;
-                    text-decoration: underline;
-                    color: #3d88ba;
-                    font-size: 13px;
-                    margin-bottom: 6px;
-                }
-             
-                .login-wrapper .box .remember {
-                    display: block;
-                    overflow: hidden;
-                    margin-bottom: 20px;
-                }
-
-                    .login-wrapper .box .remember input[type="checkbox"] {
-                        float: left;
-                        margin-right: 8px;
-                    }
-
-                    .login-wrapper .box .remember label {
-                        float: left;
-                        color: #4a576a;
-                        font-size: 13px;
-                        font-weight: 600;
-                    }
-
-                .login-wrapper .box .login {
-                    text-transform: uppercase;
-                    font-size: 13px;
-                    padding: 8px 30px;
-                }
-
-            .login-wrapper .no-account {
-                margin: 0 auto;
-                float: none;
-                text-align: center;
-                font-size: 14px;
-                margin-top: 25px;
-            }
-
-                .login-wrapper .no-account p {
-                    display: inline-block;
-                    color: white;
-                }
-
-                .login-wrapper .no-account a {
-                    color: white;
-                    margin-left: 7px;
-                    border-bottom: 1px solid;
-                    transition: all .1s linear;
-                    -moz-transition: all .1s linear;
-                    /* Firefox 4 */
-                    -webkit-transition: all .1s linear;
-                    /* Safari and Chrome */
-                    -o-transition: all .1s linear;
-                    /* Opera */
-                }
-
-                    .login-wrapper .no-account a:hover {
-                        text-decoration: none;
-                        color: #fff;
-                        border-bottom-color: #fff;
-                    }
-
-        /* background switcher */
-        .bg-switch {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            top: 60px;
-            border-radius: 0px 10px 10px 0px;
-            padding: 10px 10px 0px 10px;
-            z-index: 999;
-        }
-
-            .bg-switch .bgs .bg {
-                text-align: center;
-                margin-bottom: 13px;
-                text-decoration: none;
-                display: block;
-            }
-
-                .bg-switch .bgs .bg.active img {
-                    border-color: #000;
-                }
-
-                .bg-switch .bgs .bg img {
-                    width: 80px;
-                    height: 60px;
-                    border: 2px solid #9fcef1;
-                    cursor: pointer;
-                }
-
-        /* responsive */
-        @media (max-width: 767px) {
-            .login-wrapper .box {
-                width: 350px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .login-wrapper .box {
-                width: 90%;
-            }
-        }
-        /*body
-        {
-            /*background-image:url('/Resources/images/bg.png');* /
-            background-size:cover;
-            background-attachment:fixed;
-        }*/
-        .login-wrapper .box .action {
-            background-color: #F4F5F6;
-            border-radius: 0 0 7px 7px;
-            border-top: 1px solid #D3D7DB;
-            margin: 0 -65px;
-            padding: 15px 0;
-            position: relative;
-            top: 30px;
-        }
-
-        .header {
-            background: linear-gradient(to bottom, #2F3573 0%, #2A3073 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2F3573', endColorstr='#2A3073',GradientType=0 );
-        }
-    </style>
-</head>
 {% endblock %}
 {% block body %}
 <body>
@@ -228,25 +16,23 @@
         
 <form action="/" method="post"><input name="__RequestVerificationToken" type="hidden" value="YMxBMl0Ja1Zc5D-MBcAt_7VzLdFJFFRQEUVK09XClbKS5DLrn5I8MapZoE_hzKtSCqiyt8pAn6cgRCrg4OE272ZmgTYj19yQqd9NC-K7fVk1" /><div class="login-wrapper">
     <div class="box">
+        <div class="alert alert-info" style="color: red; font-weight: bold;">
+            <h3 style="font-size: 18px; padding-bottom: 10px;">Welcome to Bookblend!</h3>
+        </div>
         <div class="content-wrap">
- 
-            <div class="alert alert-info" style="color: red; font-weight: bold;">
-<h3 style="font-size: 18px; padding-bottom: 10px;">Welcome to Bookblend!</h3>
-</div>
-
             <div class="row" style="color: blue; font-weight: bold;">
-            <ul>
-                <li>let's keep some book titles</li>
-                <li> search for books to read </li>
-                <li> check out some books </li>
-                <li> manage our library accounts </li>
-                <li> and much much more </li>
-            </ul>                
+                <ul id="login_unnumbered_list">
+                    <li>let's keep some book titles</li>
+                    <li> search for books to read </li>
+                    <li> check out some books </li>
+                    <li> manage our library accounts </li>
+                    <li> and much much more </li>
+                </ul>                
             </div>
             <div class="text-left">
                 <label for="email">Email address</label>
                 <input class="form-control" 
-                        required autofocus
+                        autofocus
                         data-val="true" 
                         data-val-length="The Email must be between 5 - 
                                             255 characters." 
@@ -281,7 +67,7 @@
                         Don&#39;t remember your password?</a>
             <div class="action">
                 <input class="btn-glow primary login" 
-                        type="submit" value="Log In" id="LoGiN">
+                        type="submit" value="Log In" id="Login">
             </div>
             
         </div>
@@ -289,7 +75,7 @@
     <div class="already">
         Don't have an account?
         <a class="blue" href="/register" 
-            title="Create an account">Create an account</a>
+            title="Create an account"><button>Create an account</button></a>
     </div>
 </div>
 </form>

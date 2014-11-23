@@ -9,6 +9,7 @@
 
 
 {%  block body %}
+{{ libraries }}
     <form class="form-library" method="POST" action="/process_library">
         <h2 class="form-rlibrary-heading">Please enter the Library information</h2>
         <form class="form-book_list">
@@ -26,10 +27,10 @@
                 <tbody>
                 {% for library in libraries %}
                 <tr>
-                    <td>{{ library[0] }}</td>
-                    <td>{{ library[1] }}</td>
-                    <td>{{ library[2] }}</td>
-                    <td>{{ library[3] }}</td>
+                    <td>{{ library.name }}</td>
+                    <td>{{ library.card_nmbr }}</td>
+                    <td>{{ library.pin }}</td>
+                    <td>{{ library.url }}</td>
                     </tr>                
                 {% else %}
                   <li>No results :(</li>
@@ -41,11 +42,11 @@
       </form>
 
         <button type="btn btn-lg btn-primary btn-block" 
-                type="submit">Submit</button>
+                type="submit">Add</button>
         <br><div>
               <p class="pad10tb">
                 <a  href="/main" 
-                    ><button>Cancel</button></a>
+                    ><button>Back</button></a>
               </p>
             </div>
         <div class="container">

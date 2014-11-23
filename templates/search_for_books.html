@@ -1,173 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" class="no-js" id="html">
-<head><base href='http://kihd.gmu.edu'><meta name='language' content='english'><meta http-equiv='content-language' content='en'>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="keywords" content="Search, For, Book, " />
-<meta name="description" content="Search For a Book. " />
-<link rel="shortcut icon" href="/assets/images/icons/">
+{% extends "base.html" %}
 
 <title>Search For a Book</title>
-<script type="text/javascript" src="/assets/js/menuhover.js"></script>
-<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic" rel="stylesheet" type="text/css">  
-<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-<link href="/assets/swfour/bootstrap-3.0.0/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-
-<link href="/assets/css/aimva.css" rel="stylesheet" type="text/css">
-<style>
-ul.B_crumbBox li
-{
-list-style:none;
-display:inline;
-font-size:12px;
-padding-left:0;
-}
-ul.B_crumbBox
-{
-font-size:12px;
-margin-top:10px;
--webkit-padding-start:5px;
-margin-left:0px;
-color:#8EB658;
-padding-left:5px;
-}
-
-.sidebar-blog-title{font-size:18px;}
-/*******/
-li, li li { list-style-type:none; list-style-image:none; }
-ul li .dropdown-submenu2>.dropdown-menu {
-    top: 0;
-    left: 100%;
-    margin-top: -6px;
-    margin-left: -1px;
-    -webkit-border-radius: 0 6px 6px 6px;
-    -moz-border-radius: 0 6px 6px;
-    border-radius: 0 6px 6px 6px;
-}
-
-ul li .dropdown-submenu2:hover>.dropdown-menu {
-    display: block;
-}
-
-ul li .dropdown-submenu2.dropdown.arrowNav>a:after {
-    display: block;
-    content: " ";
-    float: right;
-    width: 0;
-    height: 0;
-    border-color: transparent;
-    border-style: solid;
-    border-width: 5px 0 5px 5px;
-    border-left-color: #ccc;
-    margin-top: 10px;
-    margin-right: -10px;
-}
-
-ul li .dropdown-submenu2:hover>a:after {
-    border-left-color: #fff;
-}
-
-ul li .dropdown-submenu2.pull-left {
-    float: none;
-}
-
-ul li .dropdown-submenu2.pull-left>.dropdown-menu {
-    left: -100%;
-    margin-left: 10px;
-    -webkit-border-radius: 6px 0 6px 6px;
-    -moz-border-radius: 6px 0 6px 6px;
-    border-radius: 6px 0 6px 6px;
-}
-ul.nav>li.dropdown:hover>ul.dropdown-menu, ul.nav>li.dropdown-hover>ul.dropdown-menu {
-    display: block;
-}
-.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus
-{
-    background-color:#1D97C0;
-}
-ul.nav>li.active>a
-{
-   /* background-color:#1d97c0; */
-}
-@media only screen and (max-width: 768px){.aimva-state-logo{display:none;}.B_crumbBox{display:none;}#footer-logos img{ width:80%;}.container{padding:5px;}}
-.icon-bar,navbar-toggle{background-color:#8EB658;}
-.aimva-logo{max-width:100%;}
-#footer-logos{padding-left:10%;}
-.navbar-toggle{border-color:#8EB658;}
-.navbar-nav a{color:black;}
-.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus{background-color: #283172;}
-.navbar-nav >li > a {border-right: 1px solid #a6acb4;margin-top:5px;padding-bottom:0;padding-top:0px;}
-/*.nav>li>a:hover, .nav>li>a:focus{background-color:white;border-bottom:1px*/
-.navbar-nav > li:nth-child(2):hover, .navbar-nav > li:nth-child(2).sfhover, .navbar-nav > li:nth-child(2).selected {
-  border-bottom:4px solid #bad321;
-}
-.navbar-nav > li:nth-child(3):hover, .navbar-nav > li:nth-child(3).sfhover, .navbar-nav > li:nth-child(3).selected {
-  border-bottom:4px solid #84c446;
-}
-.navbar-nav > li:nth-child(4):hover, .navbar-nav > li:nth-child(4).sfhover, .navbar-nav > li:nth-child(4).selected {
-  border-bottom:4px solid #006940;
-}
-.navbar-nav > li:nth-child(5):hover, .navbar-nav > li:nth-child(5).sfhover, .navbar-nav > li:nth-child(5).selected {
-  border-bottom:4px solid #3c6a96;
-}
-.navbar-nav > li:nth-child(6):hover, .navbar-nav > li:nth-child(6).sfhover, .navbar-nav > li:nth-child(6).selected {
-  border-bottom:4px solid #2290b5;
-}
-.navbar-nav > li:nth-child(7):hover, .navbar-nav > li:nth-child(7).sfhover, .navbar-nav > li:nth-child(7).selected {
-  border-bottom:4px solid #00bce8;
-}
-.navbar-nav>li>.dropdown-menu { padding-top:5px;}
-li.dropdown{margin-bottom:10px;}
-.navbar-nav >li > ul.dropdown-menu{margin-top:4px;}
-@media (min-width: 768px){ .container>.navbar-collapse{padding-left:0;} .navbar-nav > li > a{padding-left:5px; padding-right:5px;}}
-.navbar-nav > li > a {text-transform:uppercase; }
-/******/
-</style>
-<style type="text/css">
-
-</style>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
 
-</head>
 
 <body >
-  <div id="skip"><a href="aim/search-for-a-book#skip_nav" class="no-img">Skip navigation</a></div>
-  <div id="page-container" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 center-block">
-    <div id="header" class="clearfix">
 
-    </div>
 
 <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
 
-        </div>
 
 
 	<div id="content" class="clearfix">
       <a name="skip_nav"></a>
-      // <iframe src="frameless.html" style="width:100%;height:1000px;border:none;"></iframe>
-<style>
-            .content {
-                margin-left: 0;
-                border-left: none;
-                box-shadow: none;
-                border-bottom: none;
-            }
-            html
-            {
-                background-color:white;
-                
-            }
-        </style>
+       <iframe src="frameless.html" style="width:100%;height:1000px;border:none;"></iframe>
+
     <div class="content">
         <a name="MainContent"></a>
         
@@ -774,35 +621,5 @@ $(this).parents('li').removeClass('dropdown-hover')
 <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
 
   
-
-<script type="text/javascript">
-/* <![CDATA[ */
-var google_conversion_id = 973312942;
-var google_custom_params = window.google_tag_params;
-var google_remarketing_only = true;
-/* ]]> */
-</script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/973312942/?value=0&amp;guid=ON&amp;script=0"/>
-</div>
-</noscript>
-</div>
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-50153532-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
 </body>
 </html>
