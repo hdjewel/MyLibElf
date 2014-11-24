@@ -1,5 +1,5 @@
 # from local_settings import OD_API_KEYS
-import overdrive_apis
+# import overdrive_apis
 import bookshare_apis
 from sfpl_parse_html import get_sfpl_books
 import sfpl_parse_html
@@ -10,6 +10,7 @@ def search(search_criteria):
 
 	# book_list = overdrive_apis.search_for_books(search_criteria)
 	# if len(book_list) > 0:
+	# 	book_origin = "OverDrive"
 	# 	print "od books = \n", book_list
 	# 	print "\n"
 
@@ -19,6 +20,7 @@ def search(search_criteria):
 	if len(book_list) > 0:
 		print "bs books = \n"
 		for book in book_list:
+			book_origin = "Bookshare"
 			print "  ", book
 			print "\n"
 		#end for
@@ -29,6 +31,7 @@ def search(search_criteria):
 	if len(book_list) > 0:
 		print "sfpl books = \n"
 		for book in book_list:
+			book_origin = "SF Public Library"
 			print "  ", book
 			print "\n"
 		#end for

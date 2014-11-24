@@ -27,10 +27,70 @@
                 <tbody>
                 {% for library in libraries %}
                 <tr>
-                    <td>{{ library.name }}</td>
-                    <td>{{ library.card_nmbr }}</td>
-                    <td>{{ library.pin }}</td>
-                    <td>{{ library.url }}</td>
+                    <td>
+                    {{ library.name }}
+               <div class="editor-field">
+                 <input class="library" data-val="true" 
+                      data-val-length="The Library name can be up to  
+                                        255 characters." 
+                      data-val-length-max="255" 
+                      data-val-length-min="4" 
+                      data-val-regex="Please enter a valid Library name"
+                      data-val-required="The Library name field is required." 
+                      id="libraryname" name="libraryname" placeholder="Enter Library Name" 
+                      type="text" value="{{ library.name }}" />
+                <span class="field-validation-valid" data-valmsg-for="library_name" 
+                    data-valmsg-replace="true"></span>
+              </div>
+                    </td>
+                    <td>{{ library.card_nbr }}
+
+               <div class="editor-field">
+                 <input class="library" data-val="true" 
+                      data-val-length="The Library card number can be up to  
+                                        255 characters." 
+                      data-val-length-max="255" 
+                      data-val-length-min="4" 
+                      data-val-regex="Please enter a valid Library card number"
+                      data-val-required="The Library card number field is required." 
+                      id="librarycardnbr" name="libraryname" placeholder="Enter Library card number" 
+                      type="text" value="{{ library.card_nbr }}" />
+                <span class="field-validation-valid" data-valmsg-for="library_card_nbr" 
+                    data-valmsg-replace="true"></span>
+              </div>
+                    </td>
+                    <td>{{ library.pin }}
+               <div class="editor-field">
+                 <input class="library" data-val="true" 
+                      data-val-length="The Library Pin can be up to  
+                                        255 characters." 
+                      data-val-length-max="255" 
+                      data-val-length-min="4" 
+                      data-val-regex="Please enter a valid Library Pin"
+                      data-val-required="The Library Pin field is required." 
+                      id="librarypin" name="librarypin" placeholder="Enter Library Pin" 
+                      type="text" value="{{ library.pin }}" />
+                <span class="field-validation-valid" data-valmsg-for="library_pin" 
+                    data-valmsg-replace="true"></span>
+              </div>
+
+                    </td>
+                    <td>{{ library.url }}
+               <div class="editor-field">
+                 <input class="library" data-val="true" 
+                      data-val-length="The Library URL can be up to  
+                                        255 characters." 
+                      data-val-length-max="255" 
+                      data-val-length-min="4" 
+                      data-val-regex="Please enter a valid Library URL"
+                      data-val-required="The Library URL field is required." 
+                      id="url" name="url" placeholder="Enter Library URL" 
+                      type="text" value="{{ library.url }}" />
+                <span class="field-validation-valid" data-valmsg-for="library_URL" 
+                    data-valmsg-replace="true"></span>
+              </div>
+
+                    </td>
                     </tr>                
                 {% else %}
                   <li>No results :(</li>
@@ -62,3 +122,8 @@
         </div>
     </form>
 {%  endblock %}
+
+
+
+
+                      data-val-regex-pattern="^[\w\+-\.]+@([\w-]+\.)+[\w-]{2,4}$"

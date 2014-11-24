@@ -11,7 +11,7 @@ def log_into_overdrive():
 	# Print response_data's content and URL as well as the cookies
 	print( response_data.content)
 	print( response_data.url)
-	print (response_data.cookies)
+	print( response_data.cookies)
 
 	# Get the cookies for the cookie jar
 	cookies = requests.utils.dict_from_cookiejar(response_data.cookies)
@@ -47,22 +47,22 @@ def search_for_books(search_criteria):
 
 	"""
 	q = search_criteria
-	limit = 300		# 25 by default 300 max
+	limit = 3		# 25 by default 300 max
 	offset = 0		# number of titles to skip
 	formats = ""
 	sort = ':asc' 		# :desc
 	lastupdatetime = "" 
 	series = "" 
-	# http://api.overdrive.com/v1/collections/{collection token}/products?{parameters}
+	http://api.overdrive.com/v1/collections/{collection token}/products?{parameters}
 	# od_url=('http://api.overdrive.com/v1/collections/%s/products?%s' %
 	# 			(OD_API_KEYS, search_criteria))
-	# od_url="http://api.overdrive.com/v1/collections/v1L1BYwAAAA2Q/products"
-	# data = requests.get(od_url)
-	# status = '<Response [200]>'
-	# data = data.json()
+	od_url="http://api.overdrive.com/v1/collections/v1L1BYwAAAA2Q/products"
+	data = requests.get(od_url)
+	status = '<Response [200]>'
+	data = data.json()
 
-	data = [ { "title": "20,000 Leagues under the Sea", "primaryCreator": { "role": "Author", "name": "Jules Verne" }, "images": { "thumbnail": { "href": "http://images.contentreserve.com/ImageType-200/2389-1/{EE013A9B-53CC-45D2-95DA-EC50360B8E80\}Img200.jpg", "type": "image/jpeg" } }, "availability": { "href": "http://api.overdrive.com/v1/collections/v1L1BYwAAAA2Q/products/ee013a9b-53cc-45d2-95da-ec50360b8e80/availability", "type": "application/vnd.overdrive.api+json" } },
-		     { "title": "The Adventures of Sherlock Holmes", "primaryCreator": { "role": "Author", "name": "Sir Arthur Conan Doyle" }, "images": { "thumbnail": { "href": "http://images.contentreserve.com/ImageType-200/2389-1/{76C1B7D0-17F4-4C05-8397-C66C17411584\}Img200.jpg", "type": "image/jpeg" } }, "availability": { "href": "http://api.overdrive.com/v1/collections/v1L1BYwAAAA2Q/products/76c1b7d0-17f4-4c05-8397-c66c17411584/availability", "type": "application/vnd.overdrive.api+json" } } ]
+	# data = [ { "title": "20,000 Leagues under the Sea", "primaryCreator": { "role": "Author", "name": "Jules Verne" }, "images": { "thumbnail": { "href": "http://images.contentreserve.com/ImageType-200/2389-1/{EE013A9B-53CC-45D2-95DA-EC50360B8E80\}Img200.jpg", "type": "image/jpeg" } }, "availability": { "href": "http://api.overdrive.com/v1/collections/v1L1BYwAAAA2Q/products/ee013a9b-53cc-45d2-95da-ec50360b8e80/availability", "type": "application/vnd.overdrive.api+json" } },
+		     # { "title": "The Adventures of Sherlock Holmes", "primaryCreator": { "role": "Author", "name": "Sir Arthur Conan Doyle" }, "images": { "thumbnail": { "href": "http://images.contentreserve.com/ImageType-200/2389-1/{76C1B7D0-17F4-4C05-8397-C66C17411584\}Img200.jpg", "type": "image/jpeg" } }, "availability": { "href": "http://api.overdrive.com/v1/collections/v1L1BYwAAAA2Q/products/76c1b7d0-17f4-4c05-8397-c66c17411584/availability", "type": "application/vnd.overdrive.api+json" } } ]
 
 	list_of_books = []
 	list_book = []
@@ -92,7 +92,7 @@ def search_for_books(search_criteria):
 # end def
 
 def main():
-	list_of_books = search_for_books("A")
+	list_of_books = search_for_books("Faye Kellerman")
 
 	print "\n\n list in main = \n", list_of_books
 

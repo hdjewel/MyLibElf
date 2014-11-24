@@ -19,7 +19,6 @@ def get_bookshare_books(search_criteria):
     list_of_books = response_data['bookshare']['book']['list']['result']
     for i in range(0,len(list_of_books)):
         author = ''
-        print len(list_of_books[i]['author'])
         for n in list_of_books[i]['author']:
             author = author + ", " + n
             #end for

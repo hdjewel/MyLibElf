@@ -10,6 +10,7 @@ def get_sfpl_books(search_criteria):
     print "in sfpl_parse_html.py\n"
     list_of_books = get_books(search_criteria)
     list_of_books.sort()    
+
     return list_of_books
 #end def
 
@@ -23,27 +24,45 @@ def get_book_cnt(sfpl_books_list_html):
 		book_count = i_tags[tag_index].text.split().pop(tag_index)
 	else:
 		book_count = 0
+	#end if
 	return book_count
 #end def
 
 def parse_title_author(book_detail_html):
 	loop_cnt = 1
 	book_data = {}
+	saved_data = ''
 	html_tags = book_detail_html('td .bibInfoData strong')
+	print "html tags for title and author are ==> ", html_tags, "\n"
 	for i in html_tags:
-		if loop_cnt == 1:
+		if loop_cnt == 1 or saved_data == i.text:
+			# print "in the if statment \n"
+			saved_data = i.text	
 			i.text = i.text.strip(' / ')
 			i.text = i.text.replace(' [electronic resource]', '')
+			i.text = i.text.replace(' ebook', '')
+			i.text = i.text.replace(' eBook', '')
 			i.text = i.text.replace(' / by', '')
 			book_data['title'] = i.text
+			loop_cnt = 1
 		elif loop_cnt == 2:
-			i.text = i.text.replace(' [electronic resource]', '')			
+			print "in 2 == ", book_data, "\n"
+			print i.text, "\n"
+			print saved_data, "\n"
+			i.text = i.text.replace(' [electronic resource]', '')
+			i.text = i.text.replace(' ebook', '')
+			i.text = i.text.replace(' eBook', '')		
 			name = i.text
 		elif loop_cnt == 3:
+			print "in 3 == ", book_data, "\n"
+			print i.text, "\n"
+			print saved_data, "\n"
 			i.text = i.text.replace(' [electronic resource]', '')
+			i.text = i.text.replace(' ebook', '')
+			i.text = i.text.replace(' eBook', '')
 			book_data['author'] = name + " " + i.text
 		loop_cnt = loop_cnt + 1
-	# print "author tile = ", book_data
+	# print "author title = ", book_data, "\n"
 	return book_data
 #end def
 
@@ -94,9 +113,7 @@ def get_author_books(sfpl_books_list_html):
 		loop_cnt = loop_cnt + 1
 	#end for
 
-
 	print " sfpl book count = ", sfpl_book_cnt
-
 	return list_of_books
 #end def
 

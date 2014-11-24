@@ -26,7 +26,7 @@
                                         255 characters." 
                       data-val-length-max="255" 
                       data-val-length-min="5" 
-                      data-val-regex="Please enter a vali address" 
+                      data-val-regex="Please enter a valid Email address" 
                       data-val-regex-pattern="^[\w\+-\.]+@([\w-]+\.)+[\w-]{2,4}$" 
                       data-val-remote="&#39;Email Address&#39; is invalid." 
                       data-val-remote-additionalfields="*.Email" 
@@ -94,10 +94,14 @@
               <input type="submit" value="Update" class="btn btn-primary" 
                      name="update_account" id="update_account" 
                      method="post"/> 
+
+              <input type="submit" value="return" class="btn btn-primary" 
+                     name="update_account" id="update_account" 
+                     method="get"/> 
             
               <a class="btn btn-danger" href="/index.html" role="button"
-                 method="get">
-              <button>Cancel</button></a>
+                 method="get">Back</a>
+              
             </div>
           </div>
         </div>

@@ -44,23 +44,25 @@ def process_patron_login():
     patron_email = request.form.get('email')
     patron_password = request.form.get('password')
 
-    patron = check_for_patron(model.db_session, patron_email, patron_password)
-    print "entered email = ", patron_email
-    print "password = ", patron_password
-    print "\n\n"
-    print "patron = ", patron
+    patron = model.check_for_patron(model.db_session, 
+                                    patron_email, 
+                                    patron_password)
+    # print "entered email = ", patron_email
+    # print "password = ", patron_password
+    # print "\n\n"
+    # print "patron = ", patron
 
     if patron is None:
         flash("Please enter a valid email and password.", "error")
         return render_template('login.html')
     else:
-        print "patron id = ", patron.id
-        print "patron password = ", patron.password
+        # print "patron id = ", patron.id
+        # print "patron password = ", patron.password
         session['logged_in'] = True
         session['patron'] = patron.id
         session['fname'] = patron.fname
-        print "session --> ", session
-        print "first name == ", patron.fname
+        # print "session --> ", session
+        # print "first name == ", patron.fname
 
         return redirect('/main')
 #end app.route
@@ -104,8 +106,8 @@ def search_results():
         return render_template('book_list.html', search=search_criteria,
                                 list_of_books=list_of_books)
     elif calling_link == 'booksRead':
-        list_of_books = get_finished_books(session['patron'])
-        return render_template('finished_book_list.html', list_of_book=list_of_books)
+        list_of_books = model.get_finished_books(session['patron'])
+        return render_template('finished_book_list.html', list_of_books=list_of_books)
     elif calling_link == 'checkedOut':
         flash("The Check out process is under Construction! Please check back soon!")
         return render_template('index.html')
@@ -142,13 +144,15 @@ def delete_book():
 
 @app.route('/patron', methods=['GET'])
 def display_patron():
-    return render_template('patron.html')
+    print session
+    patron_fields = model.get_patron_info(session['patron'])
+    # print '\n patron fields = \n', patron_fields
+    return render_template('patron.html', patron_fields=patron_fields)
 #end app.route
 
 @app.route('/patron', methods=['POST'])
 def process_changes_to_patron_info():
-    patron_fields = get_patron_info(session['patron_id'])
-    print '\n patron fields = \n', patron_fields
+    # function to update patron data
     return render_template('patron.html', fields=patron_fields)
 #end app.route
 
@@ -168,11 +172,13 @@ def process_register():
     patron_cell = request.form.get('phone')
     patron_row = (patron_email, patron_password, patron_fname, patron_lname,
                     patron_cell)
-    print "patron row after join -- ", patron_row
-    patron = check_for_patron(model.db_session, patron_email, patron_password)
+    # print "patron row after join -- ", patron_row
+    patron = model.check_for_patron(model.db_session, 
+                                    patron_email, 
+                                    patron_password)
 
     if patron is None:
-        add_patron(model.db_session, patron_row)
+        model.add_patron(model.db_session, patron_row)
         return redirect('/')
 #end app.route
 
@@ -184,103 +190,11 @@ def get_password():
 @app.route('/forgot_password',methods=['POST'])
 def forgot_password():
     # code logic to send password to an email account
+    flash('An email will be sent with instructions on how to change your password')
     return redirect('/')
 #end app.route
 
-def get_patron_info(patron_id):
-    patron = (model.db_session.query(model.Patron)
-                .filter(id = patron_id)
-                .first())
-
-    patron_fields = {}
-    patron_fields['id'] = patron.id
-    patron_fields['fname'] = patron.fname
-    patron_fields['lname'] = patron.lname
-    patron_fields['cell'] = patron.cell
-    print "\n\n fields = ", patron_fields
-
-    return patron_fields
-#end def
-
-def check_for_patron(db_session, patron_email, patron_password):
-    patron = (model.db_session.query(model.Patron)
-                .filter_by(email = patron_email, 
-                        password = patron_password)
-                .first())
-    return patron
-#end def
-
-def get_finished_books(patron_id):
-    search_result = (model.db_session.query(model.Finished_Book,
-                                         model.Book,
-                                         model.Book_Author,
-                                         model.Author)
-                                   .filter(model.Finished_Book.book_id == model.Book.id,
-                                           model.Finished_Book.patron_id == patron_id,
-                                           model.Book.id == model.Book_Author.book_id,
-                                           model.Book_Author.author_id == model.Author.id)
-                                   .order_by(model.Book.title).all())
-    
-    # for finished_book, book, book_author, author in search_result:
-    #     print book.title
-    #     print author.name
-    #     print finished_book.date
-
-    books_grouped_by_id = itertools.groupby(search_result, lambda x: x[1].id)
-    # x[1] is the book object 
-    # [ (1, [fb, b, ba, a]),
-    #   (2, [fb, b, ba, a])]
-    # where fb = finished_book
-    #       b = book
-    #       ba = book_author
-    #       a = author
-    list_of_books = []
-    for book_id, result_set in books_grouped_by_id:
-
-        # r[3] in the result_set is the author object.
-
-        # print book_id, ", ".join(r[3].name for r in result_set)
-
-        for d in result_set:
-            # list_of_books += [(str(d[1].title), str(d[0].date), str(d[3].name),
-            #           str("".join(r[3].name for r in result_set)))]
-            # list_of_books += [(d[1].title, d[0].date, d[3].name,
-            # print "name = ", d[3].name
-            list_of_books += [(d[1].title, d[0].date, d[3].name,
-                      "".join(r[3].name for r in result_set),
-                      d[1].cover_png)]
-
-    return list_of_books
-#end def
-
-def add_patron(db_session, patron_row):
-
-    login_id, host = patron_row[0].split("@")
-    new_patron = model.Patron(email = patron_row[0],
-                              password = patron_row[1],
-                              fname = patron_row[2],
-                              lname = patron_row[3],
-                              cell = patron_row[4],
-                              login_id = login_id)
-    db_session.add(new_patron)
-    db_session.commit()
-
-    print "in add_patron"
-    print "\npatron_row = ", patron_row, "\n\n\n"
-#end def
-
-def setup_libraries_info(db_session, session):
-    library_list = (model.db_session.query(model.Library)
-                # .filterby(model.Patron_Library.patron == session['patron'],
-                            # model.Library.id == model.Patron_Library.library_id)
-                .all())
-    print "\n library list \n", library_list
-    return library_list
-
-#end def
-
 def get_bookshare_user_info(patron):
-
 
     print "this still needs to be coded."
     return username
