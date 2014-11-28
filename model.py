@@ -194,20 +194,44 @@ class Patron_Library(Base):
 
 ### Begin Function definitions
 
-def add_patron(db_session, patron_row):
+def add_patron(db_session, patron_fields):
 
-    login_id, host = patron_row[0].split("@")
-    new_patron = Patron(email = patron_row[0],
-                              password = patron_row[1],
-                              fname = patron_row[2],
-                              lname = patron_row[3],
-                              cell = patron_row[4],
+    login_id, host = patron_fields[0].split("@")
+    new_patron = Patron(email = patron_fields[0],
+                              password = patron_fields[1],
+                              fname = patron_fields[2],
+                              lname = patron_fields[3],
+                              cell = patron_fields[4],
                               login_id = login_id)
     db_session.add(new_patron)
     db_session.commit()
 
     print "in add_patron"
-    print "\npatron_row = ", patron_row, "\n\n\n"
+    print "\npatron_fields = ", patron_fields, "\n\n\n"
+#end def
+
+def update_patron(db_session, patron_fields):
+
+    print "fields are === ", patron_fields
+
+    patron = Patron.query.filter_by(id=patron_fields['id']).first()
+
+    if (patron.email == patron_fields['email']
+    and patron.fname == patron_fields['fname']
+    and patron.lname == patron_fields['lname']
+    and patron.cell == patron_fields['cell']):
+        flash_msg = "No change was made to your account information."
+    else:
+        """ Add the rest of the patron fields """
+        patron.email = patron_fields['email']
+        patron.fname = patron_fields['fname']
+        patron.lname = patron_fields['lname']
+        patron.cell = patron_fields['cell']
+        db_session.commit()
+        flash_msg = "Your account information was succesfully updated!"
+    #end if
+    return flash_msg
+    print "after an update = ", patron_fields, "\n"
 #end def
 
 def check_for_patron(db_session, patron_email, patron_password):
@@ -218,7 +242,27 @@ def check_for_patron(db_session, patron_email, patron_password):
     return patron
 #end def
 
-def get_finished_books(patron_id):
+def get_patron_info(patron_id):
+    # print "patron id = ", patron_id, "\n"
+    patron = (db_session.query(Patron)
+                .filter_by(id=patron_id)
+                .first())
+
+    patron_fields = {}
+    patron_fields['id'] = patron.id
+    patron_fields['email'] = patron.email
+    patron_fields['fname'] = patron.fname
+    patron_fields['lname'] = patron.lname
+    patron_fields['cell'] = patron.cell
+    print "\n\n fields = ", patron_fields
+
+    return patron_fields
+#end def
+def get_finished_books_by_criteria(search_criteria, patron_id):
+    """
+    change logic to select on search criteria
+    """
+    criteria = '%' + search_criteria + '%'
     search_result = (db_session.query(Finished_Book,
                                          Book,
                                          Book_Author,
@@ -226,13 +270,15 @@ def get_finished_books(patron_id):
                                    .filter(Finished_Book.book_id == Book.id,
                                            Finished_Book.patron_id == patron_id,
                                            Book.id == Book_Author.book_id,
-                                           Book_Author.author_id == Author.id)
-                                   .order_by(Book.title).all())
-    
+                                           Book_Author.author_id == Author.id,
+                                           Book.title.like(criteria) |
+                                           Author.name.like(criteria))
+                                   .order_by(Book.title).all())    
     for finished_book, book, book_author, author in search_result:
         print book.title
         print author.name
         print finished_book.date
+    #end for
 
     books_grouped_by_id = itertools.groupby(search_result, lambda x: x[1].id)
     # x[1] is the book object 
@@ -256,25 +302,58 @@ def get_finished_books(patron_id):
             # print "name = ", d[3].name
             list_of_books += [(d[1].title, d[1].cover_png, d[0].date, d[3].name,
                       "".join(r[3].name for r in result_set))]
-            print d
+            print "new author field = ", d[3], "\n"
+        #end for
+    #end for
 
     return list_of_books
+
 #end def
 
-def get_patron_info(patron_id):
-    # print "patron id = ", patron_id, "\n"
-    patron = (db_session.query(Patron)
-                .filter_by(id=patron_id)
-                .first())
+def get_finished_books(patron_id):
+    search_result = (db_session.query(Finished_Book,
+                                         Book,
+                                         Book_Author,
+                                         Author)
+                                   .filter(Finished_Book.book_id == Book.id,
+                                           Finished_Book.patron_id == patron_id,
+                                           Book.id == Book_Author.book_id,
+                                           Book_Author.author_id == Author.id)
+                                   .order_by(Book.title).all())
+    
+    for finished_book, book, book_author, author in search_result:
+        print book.title
+        print author.name
+        print finished_book.date
+    #end for
 
-    patron_fields = {}
-    patron_fields['id'] = patron.id
-    patron_fields['fname'] = patron.fname
-    patron_fields['lname'] = patron.lname
-    patron_fields['cell'] = patron.cell
-    # print "\n\n fields = ", patron_fields
+    books_grouped_by_id = itertools.groupby(search_result, lambda x: x[1].id)
+    # x[1] is the book object 
+    # [ (1, [fb, b, ba, a]),
+    #   (2, [fb, b, ba, a])]
+    # where fb = finished_book
+    #       b = book
+    #       ba = book_author
+    #       a = author
+    list_of_books = []
+    for book_id, result_set in books_grouped_by_id:
 
-    return patron_fields
+        # r[3] in the result_set is the author object.
+
+        # print book_id, ", ".join(r[3].name for r in result_set)
+
+        for d in result_set:
+            # list_of_books += [(str(d[1].title), str(d[0].date), str(d[3].name),
+            #           str("".join(r[3].name for r in result_set)))]
+            # list_of_books += [(d[1].title, d[0].date, d[3].name,
+            # print "name = ", d[3].name
+            list_of_books += [(d[1].title, d[1].cover_png, d[0].date, d[3].name,
+                      "".join(r[3].name for r in result_set))]
+            print "list_of_books  = ", list_of_books, "\n"
+        #end for
+    #end for
+
+    return list_of_books
 #end def
 
 def setup_libraries_info(db_session, session):
@@ -282,9 +361,33 @@ def setup_libraries_info(db_session, session):
                 # .filterby(Patron_Library.patron == session['patron'],
                             # Library.id == Patron_Library.library_id)
                 .all())
+    print "in setup library info \n"
     print "\n library list \n", library_list
     return library_list
 
+#end def
+
+def check_for_library(db_session, library_card_nbr):
+    print "in check for library \n"
+    library = (db_session.query(Library)
+                         .filter_by(card_nbr=library_card_nbr))
+
+    print "\n Library = ", library, "\n"
+    return library
+#end def
+
+def add_library(db_session, library_fields):
+
+    print "library fields = ", library_fields, "\n\n"
+    new_library = Library(name = library_fields[0],
+                         card_nbr = library_fields[1],
+                         pin = library_fields[2],
+                         url = library_fields[3])
+    db_session.add(new_library)
+    db_session.commit()
+
+    print "in add_patron"
+    print "\npatron_fields = ", patron_fields, "\n\n\n"
 #end def
 
 def connect():

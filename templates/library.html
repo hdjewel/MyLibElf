@@ -1,129 +1,95 @@
 {% extends "base.html" %}
-    {% block title%}
 
-        <title>Library Configuration</title>
- 
-        <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
-   
-    {% endblock %}
-
-
-{%  block body %}
-{{ libraries }}
-    <form class="form-library" method="POST" action="/process_library">
-        <h2 class="form-rlibrary-heading">Please enter the Library information</h2>
-        <form class="form-book_list">
-          <div class="row">
-            <div class="col-md-6">
-              <table class="table">
-                <thead>
+{% block title%}
+    <title>Main Page<</title>
+{% endblock %}
+{% block body %}
+{{ session }}
+    <div class="header" method="GET" 
+          action="/main" title="Main page" 
+           style="font-size:30px; text-decoration:none;">
+    </div>
+    <div class="container">
+      <form class="form-library" method="POST" action="/add_library">
+        <div class="login-wrapper">
+          <div class="box">
+            <div class="content-wrap">
+              <h4> Here is the list of configured Library/Libraies information</h4>
+              <div class="text-left">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Library Name</th>
+                      <th>Card Number</th>
+                      <th>Pin</th>
+                      <th>URL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for library in libraries %}
                   <tr>
-                    <th>Library Name</th>
-                    <th>Card Number</th>
-                    <th>Pin</th>
-                    <th>URL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for library in libraries %}
-                <tr>
-                    <td>
-                    {{ library.name }}
-               <div class="editor-field">
-                 <input class="library" data-val="true" 
-                      data-val-length="The Library name can be up to  
-                                        255 characters." 
-                      data-val-length-max="255" 
-                      data-val-length-min="4" 
-                      data-val-regex="Please enter a valid Library name"
-                      data-val-required="The Library name field is required." 
-                      id="libraryname" name="libraryname" placeholder="Enter Library Name" 
-                      type="text" value="{{ library.name }}" />
-                <span class="field-validation-valid" data-valmsg-for="library_name" 
-                    data-valmsg-replace="true"></span>
-              </div>
-                    </td>
-                    <td>{{ library.card_nbr }}
-
-               <div class="editor-field">
-                 <input class="library" data-val="true" 
-                      data-val-length="The Library card number can be up to  
-                                        255 characters." 
-                      data-val-length-max="255" 
-                      data-val-length-min="4" 
-                      data-val-regex="Please enter a valid Library card number"
-                      data-val-required="The Library card number field is required." 
-                      id="librarycardnbr" name="libraryname" placeholder="Enter Library card number" 
-                      type="text" value="{{ library.card_nbr }}" />
-                <span class="field-validation-valid" data-valmsg-for="library_card_nbr" 
-                    data-valmsg-replace="true"></span>
-              </div>
-                    </td>
-                    <td>{{ library.pin }}
-               <div class="editor-field">
-                 <input class="library" data-val="true" 
-                      data-val-length="The Library Pin can be up to  
-                                        255 characters." 
-                      data-val-length-max="255" 
-                      data-val-length-min="4" 
-                      data-val-regex="Please enter a valid Library Pin"
-                      data-val-required="The Library Pin field is required." 
-                      id="librarypin" name="librarypin" placeholder="Enter Library Pin" 
-                      type="text" value="{{ library.pin }}" />
-                <span class="field-validation-valid" data-valmsg-for="library_pin" 
-                    data-valmsg-replace="true"></span>
+                      <td>
+                      {{ library.name }}
+                      </td>
+                      <td>{{ library.card_nbr }}
+                      </td>
+                      <td>{{ library.pin }}
+                      </td>
+                      <td>{{ library.url }}
+                      </td>
+                      </tr>                
+                  {% else %}
+                      <li>No results :(</li>
+                  {% endfor %}
+                  <td>
+                  <div class="editor-field">
+                   <input class="library" id="libraryname" name="libraryname" 
+                          placeholder="Enter Library Name" 
+                          type="text" value="" />
+                  </div>
+                  </td>
+                  <td>
+                   <div class="editor-field">
+                   <input class="library" id="librarycardnbr" 
+                          name="librarycardnbr" 
+                          placeholder="Enter Library card number" 
+                          type="text" value="" />
+                  </div>
+                  </td>
+                  <td>
+                   <div class="editor-field">
+                   <input class="library" id="librarypin" 
+                          name="librarypin" placeholder="Enter Library Pin" 
+                          type="text" value="" />
+                  </div>
+                  </td>
+                  <td>
+                    <div class="editor-field">
+                    <input class="library" id="url" name="url" 
+                           placeholder="Enter Library URL" 
+                           type="text" value="" />
+                    </div>
+                  </td>
+                  </tbody>
+                </table>
               </div>
 
-                    </td>
-                    <td>{{ library.url }}
-               <div class="editor-field">
-                 <input class="library" data-val="true" 
-                      data-val-length="The Library URL can be up to  
-                                        255 characters." 
-                      data-val-length-max="255" 
-                      data-val-length-min="4" 
-                      data-val-regex="Please enter a valid Library URL"
-                      data-val-required="The Library URL field is required." 
-                      id="url" name="url" placeholder="Enter Library URL" 
-                      type="text" value="{{ library.url }}" />
-                <span class="field-validation-valid" data-valmsg-for="library_URL" 
-                    data-valmsg-replace="true"></span>
+              <br>
+              <div class="action">
+                <input type="submit" value="Add" class="btn btn-primary" 
+                       name="add_library_card" id="add_library" 
+                       > 
               </div>
-
-                    </td>
-                    </tr>                
-                {% else %}
-                  <li>No results :(</li>
-                {% endfor %}
-                </tbody>
-              </table>
             </div>
+          <div class="action">
+            <a  href="/main" >Back</a>   
           </div>
-      </form>
-
-        <button type="btn btn-lg btn-primary btn-block" 
-                type="submit">Add</button>
-        <br><div>
-              <p class="pad10tb">
-                <a  href="/main" 
-                    ><button>Back</button></a>
-              </p>
-            </div>
-        <div class="container">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                    <ul class="flashes">
-                        <li>{{message}}</li>
-                    </ul>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
         </div>
-    </form>
-{%  endblock %}
+      </form>
+    </div>
+
+{% endblock %}
 
 
 
 
-                      data-val-regex-pattern="^[\w\+-\.]+@([\w-]+\.)+[\w-]{2,4}$"

@@ -1,41 +1,53 @@
-# from local_settings import OD_API_KEYS
+from local_settings import OD_API_CLIENT_KEY, OD_API_SECRET_KEY
 import requests
+import base64
+import json
 
 def log_into_overdrive():
-	""" Get the OverDrive logon webpage
+	""" Get the OverDrive Client Credentials
 
 	"""
-	overdrive_logon_url = 'https://sanfrancisco.libraryreserve.com/10/50/en/SignIn.htm?URL=Default%2ehtm'
-	response_data = requests.get(overdrive_logon_url)
-	overdrive_logon = pq(response_data.content)
-	# Print response_data's content and URL as well as the cookies
-	print( response_data.content)
-	print( response_data.url)
-	print( response_data.cookies)
+	print "in log_into_overdrive function \n"
+	overdrive_oauth_headers = {}
+	# keys = '%s:%s' % (OD_API_CLIENT_KEY, OD_API_SECRET_KEY)
+	# encoded_keys = base64.b64encode(keys)
+	# overdrive_oauth_url = 'https://oauth.overdrive.com/token'
+	# overdrive_oauth_headers['Host'] = 'oauth.overdrive.com'
+	# overdrive_oauth_headers['Authorization'] = 'Basic %s' % encoded_keys
+	# overdrive_oauth_headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
-	# Get the cookies for the cookie jar
-	cookies = requests.utils.dict_from_cookiejar(response_data.cookies)
-	""" Enter the login data for the OverDrive logon webpage to log into
-		the libraries webpage.
+	# overdrive_oauth_url = 'http://localhost:5001/token'
 
-	"""
-	overdrive_login_url = 'https://sanfrancisco.libraryreserve.com/10/50/en/BANGAuthenticate.dll'
-	payload = {'LibraryCardILS' : 'sanfran', 
-			   'URL' : 'MyAccount.htm?PerPage=40',
-			   'LibraryCardNumber' : '21223200358920',
-			   'LibraryCardPIN' : '8300'}
+	# overdrive_oauth_headers = {'Host': 'oauth.overdrive.com', 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', 'Authorization': 'Basic TE9SRVRUQVBPV0VMTDpNMVQzTUl3NmF+dmNvd3hqRU1SR0s0TjZHUUx4UWpWRA=='}
+	# # overdrive_data = {'grant-type' : 'client_credentials'}
+	# print "\n\n url = ", overdrive_oauth_url, "\n data = ", overdrive_data, "\n headers = ", overdrive_oauth_headers
+	
 
-	post_response_data = requests.post(overdrive_login_url, 
-									   data=payload,
-									   cookies=cookies)
+	# response_data = requests.post(overdrive_oauth_url, data = overdrive_data,
+	# 							  headers = overdrive_oauth_headers)
 
-	""" Add logic to handle any response in the post_response_data other
-		 than the success code of 200.
 
-	"""
-	print(post_response_data)
-	print(post_response_data.url)
-	# add logic to get hold, wish, and checkout lists
+	keys = '%s:%s' % (OD_API_CLIENT_KEY, OD_API_SECRET_KEY)
+	print keys
+	encoded_keys = base64.b64encode(keys)
+	print encoded_keys
+	od_oauth_url = 'https://oauth.overdrive.com/token'
+	headers = {'Host' : 'oauth.overdrive.com',
+				'Authorization' : 'Basic %s' % encoded_keys,
+				'Content-Type' : 'application/x-www-form-urlencoded;charset=UTF-8'}
+	payload ={}
+	payload = {'grant_type' : 'client_credentials'}
+	response = requests.post(od_oauth_url, data=payload, headers=headers)
+	print response
+	response_data = json.loads(response.content)
+
+	print "\n\n data =", response_data, "\n\n"
+
+	print( "post response data for overdrive = ", response.content, "\n")
+	print( " overdrive url = ", response.url, "\n")
+	print( " overdrive access token = ", response_data['access_token'], "\n")
+
+	return response, response_data
 #end def
 
 def search_for_books(search_criteria):
@@ -53,7 +65,7 @@ def search_for_books(search_criteria):
 	sort = ':asc' 		# :desc
 	lastupdatetime = "" 
 	series = "" 
-	http://api.overdrive.com/v1/collections/{collection token}/products?{parameters}
+	# http://api.overdrive.com/v1/collections/{collection token}/products?{parameters}
 	# od_url=('http://api.overdrive.com/v1/collections/%s/products?%s' %
 	# 			(OD_API_KEYS, search_criteria))
 	od_url="http://api.overdrive.com/v1/collections/v1L1BYwAAAA2Q/products"
@@ -92,9 +104,10 @@ def search_for_books(search_criteria):
 # end def
 
 def main():
-	list_of_books = search_for_books("Faye Kellerman")
+	# list_of_books = search_for_books("Faye Kellerman")
 
-	print "\n\n list in main = \n", list_of_books
+	# print "\n\n list in main = \n", list_of_books
+	log_into_overdrive()
 
 # end def
 

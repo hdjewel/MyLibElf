@@ -1,113 +1,71 @@
 {% extends "base.html" %}
 
-<!DOCTYPE html>
-<html>
     {% block title%}
     <title>Login</title>
+    {% endblock %}   
 
-{% endblock %}
 {% block body %}
 <body>
-    <div class="header">
-        <a href="/login" title="BookBlend Home" style="font-size:30px; text-decoration:none;">
-        </a>
-    </div>
-    <div class="container">
+{{ session }}
+  <div class="header">
+    <a href="/login" title="MyLibElf Home" style="font-size:30px; text-decoration:none;">
+    </a>
+  </div>
+  <div class="container">
         
-<form action="/" method="post"><input name="__RequestVerificationToken" type="hidden" value="YMxBMl0Ja1Zc5D-MBcAt_7VzLdFJFFRQEUVK09XClbKS5DLrn5I8MapZoE_hzKtSCqiyt8pAn6cgRCrg4OE272ZmgTYj19yQqd9NC-K7fVk1" /><div class="login-wrapper">
-    <div class="box">
-        <div class="alert alert-info" style="color: red; font-weight: bold;">
-            <h3 style="font-size: 18px; padding-bottom: 10px;">Welcome to MyLibElf!</h3>
-        </div>
-        <div class="content-wrap">
+    <form action="/" method="post">
+      <div class="login-wrapper">
+        <div class="box">
+          <div class="alert alert-info" style="color: red; font-weight: bold;">
+            <h5 style="font-size: 18px; padding-bottom: 10px;">Welcome to MyLibElf!</h5>
+          </div>
+          <div class="content-wrap">
             <div class="row" style="color: blue; font-weight: bold;">
-                <ul id="login_unnumbered_list">
-                    <li>Let's see some book titles you have already read</li>
-                    <li> Search for books to read </li>
-                    <li> Check out some books </li>
-                    <li> Manage our library accounts </li>
-                    <li>    and much much more </li>
-                </ul>                
+              <ul id="login_unnumbered_list">
+                <li>Let's see some book titles you have already read</li>
+                <li> Search for books to read </li>
+                <li> Check out some books </li>
+                <li> Manage our library accounts </li>
+                <li>    and much much more </li>
+              </ul>                
             </div>
             <div class="text-left">
-                <label for="email">Email address</label>
-                <input class="form-control" 
-                        autofocus
-                        data-val="true" 
-                        data-val-length="The Email must be between 5 - 
-                                            255 characters." 
-                        data-val-length-max="255" 
-                        data-val-length-min="5" 
-                        data-val-required="Email is required." 
-                        id="email" name="email" 
-                        placeholder="Enter Email Address" 
-                        type="text" value="" />
-                <span class="field-validation-valid" 
-                        data-valmsg-for="Email" 
-                        data-valmsg-replace="true"></span>
+              <label for="email">Email address</label>
+              <input class="form-control" 
+                     autofocus
+                     id="email" name="email" 
+                     placeholder="Enter Email Address" 
+                     type="text" value="" > 
                 <br>
                 <label for="password">Password</label>
                 <input class="form-control" 
-                        data-val="true" 
-                        data-val-length="The Password must be at least 8 
-                                            characters long." 
-                        data-val-length-max="255" 
-                        data-val-length-min="8" 
-                        data-val-required="Password is required." 
                         id="password" 
                         name="password" 
                         placeholder="Enter Password" 
                         type="password" />
-                <span class="field-validation-valid" 
-                        data-valmsg-for="password" 
-                        data-valmsg-replace="true"></span>
             </div>
             <a class="forgot" href="/get_password" 
                 title="Don&#39;t remember your password?">
                         Don&#39;t remember your password?</a>
             <div class="action">
                 <input class="btn-glow primary login" 
-                        type="submit" value="Log In" id="Login">
-            </div>
-            
+                        type="submit" value="Log In" id="Login"><br>
+        <div class="btn btn-overdrive" >        
+        Connect to Overdrive
+        <a class="blue" href="/overdrive_login">Log in to Overdrive</a>    
+        </div><div class="btn btn-back" >
+        Don't have an account?
+        <a class="blue" href="/register">Create an Account</a></div><div 
+           class="btn btn-back" ></div>
         </div>
     </div>
-    <div class="already">
-        Don't have an account?
-        <a class="blue" href="/register" 
-            title="Create an account"><button>Create an account</button></a>
-    </div>
-</div>
+ 
+ 
+  </div>
 </form>
 
 </body>
 {%  endblock %}
 
 </html>
-
-
-
-
-
-    <form class="form-signin" method="POST">
-        <h2 class="form-signin-heading">Welcome to BookBlend</h2>
-
-        <ul>
-            <li>let's keep some book titles</li>
-            <li> search for books to read </li>
-            <li> check out some books </li>
-            <li> manage our library accounts </li>
-            <li> and much much more </li>
-        </ul>
-        <input type="email" title="Email" name="email" class="form-control" placeholder="Email Address" required autofocus />
-        <br>
-        <input type="password" title="Password" name="password" class="form-control" placeholder="Password" required />
-
-        <button type="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
-        <br>
-        <br>
-        Not Registered?
-        <br>        
-        <br>
-        <a class="btn btn-primary" href="/register">sign up here!</a>
-    </form>
+ß

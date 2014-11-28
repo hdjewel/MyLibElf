@@ -1,92 +1,87 @@
 {% extends "base.html" %}
-    {% block title %}
 
-        <title>Book list</title>
-        <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
-
-
-    {% endblock %}
-
-	{% block body %}
-	<br> 
-		<h2>Search Results for {{ search }}: </h2>
-		    <form class="form-book_list">
-		      <div class="row">
-		        <div class="col-md-6">
-		          <table class="table">
-		            <thead>
-		              <tr>
-		                <th>Cover</th>
-		                <th>Title</th>
-		                <th>Author</th>
-		              </tr>
-		            </thead>
-		            <tbody>
-			            {% for title, books in list_of_books | groupby('title') %}
-			              {% for book in books %}
-			              <tr>
-			              	<td> {% if book['images'] == 1 
-			              			or book['images'] == 0 %} 
-									<img class='bookImage' width=40px height=65px
-										 src="http://bestclipartblog.com/clipart-pics/book-clip-art-12.jpg" border="0" alt="book jacket" >
-								{% else %}
-				                	<img class='bookImage' width=40px height=65px
-				                		 src='{{ book['images'] }}'>
-			                    {% endif %}
-			                </td>
-			                <td>{{ book['title'] }}
-			               		<a href="/book_details/{{ book }}">
-			                </td>
-			                <td>{{ book['author'] }}</td>
-			              </tr>
-			            {% endfor %}
-			            {% else %}
-			              <li>No results :(</li>
-			              <br>
-			        {% endfor %}
-		            </tbody>
-		          </table>
-		        </div>
-		      </div>
-				<div>
-					<h3>Search Again</h3>
-	                  <input type="text" title="Search" name="search" 
-	                         class="form-control" href="/search_results" 
-	                         placeholder="Key words, author, title" 
-	                         autofocus />
-	                  <a class="btn btn-primary" ><button>Search</button></a><br><br>
-				</div>
-			</form>
-			<div>
-                <a class="btn btn-back" href="/main" role="button">
-                <button>Back</button></a>
+{% block title%}
+    <title>Book list</title>
+{% endblock %}
+{% block body %}
+{{ session }}
+    <div class="header" method="GET" 
+          action="/process_search?source=newbooks" title="Search for titles" 
+           style="font-size:30px; text-decoration:none;">
+    </div>
+    <div class="container">
+      <form action="/process_search?source=newbooks" method="get">
+        <div class="login-wrapper">
+          <div class="box">
+            <div class="content-wrap">
+              <h4>  Search Results for {{ search }}:  </h4>
+              <div class="text-left">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Cover</th>
+                      <th>Title</th>
+                      <th>Author</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for title, books in list_of_books | groupby('title') %}
+                      {% for book in books %}
+                        <tr>
+                          <td>
+                            {% if book['images'] == 1 
+                               or book['images'] == 0 %} 
+                               <img class='bookImage' width=40px height=65px
+                                    src="http://bestclipartblog.com/clipart-pics/book-clip-art-12.jpg" 
+                                    border="0" alt="book jacket" >
+                            {% else %}
+                              <img class='bookImage' width=40px height=65px
+                                       src='{{ book['images'] }}'>
+                            {% endif %}
+                          </td>
+                          <td>{{ book['title'] }}
+                            <a href="/book_details/{{ book['title'] }}">
+                          </td>
+                          <td>{{ book['author'] }}</td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <li>No results :(</li>
+                      <br>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
             </div>
-
-
-
+          </div>
+          <div>
+            <h3>Search Again</h3> 
+            <input type="text" title="Search" name="search" 
+                   class="form-control" 
+                   placeholder="Key words, author, title" 
+                   autofocus >
+            <a class="btn btn-primary" ><button>Search</button></a><br><br>
+          </div>
+          <div>
             <!-- DC Pagination:A1 Start -->
-<ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
-  <li><a href="#" class="first">First</a></li>
-  <li><a href="#" class="previous">Previous</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#" class="current">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#" class="next">Next</a></li>
-  <li><a href="#" class="last">Last</a></li>
-</ul>
-<!-- DC Pagination:A1 End -->
-    {% endblock %}
+            <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
+              <li><a href="#" class="first">First</a></li>
+              <li><a href="#" class="previous">Previous</a></li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#" class="current">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li><a href="#" class="next">Next</a></li>
+              <li><a href="#" class="last">Last</a></li>
+            </ul>
+            <!-- DC Pagination:A1 End -->
+          </div>
+          <div class="action">
+            <a class="btn btn-danger" href="/main" >Back</a>   
+          </div>
+        </div>
+      </form>
+    </div>
 
-
-
-
-
-                <li><a >To search for a new book to read, 
-                          please enter some search criteria. </a></li><br>
-                  <input type="text" title="Search" name="search" 
-                         class="form-control" 
-                         placeholder="Key words, author, title" 
-                         autofocus />
-                  <a class="btn btn-primary" ><button>Search</button></a><br><br>
+{% endblock %}

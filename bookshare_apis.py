@@ -7,28 +7,29 @@ def get_bookshare_books(search_criteria):
 
      """
     print "\n in bookshare_apis.py \n"
-    limit = 3
+    limit = 10
     bs_url=('https://api.bookshare.org/book/search/author/%s/page/1/limit/%d/format/json?api_key=%s'
         % (search_criteria, limit,  BS_API_KEY))
     status = requests.get(bs_url)
     # print "\n\n"
-    # print status
+    print status
 
     # look for a convert from unicode 
-    response_data = status.json()
+    response_data = status.json
     list_of_books = response_data['bookshare']['book']['list']['result']
     for i in range(0,len(list_of_books)):
         author = ''
         for n in list_of_books[i]['author']:
             author = author + ", " + n
-            #end for
+        #end for
+        list_of_books[i]['origin'] = 'BSORG'
         list_of_books[i]['author'] = author.lstrip(',')
     #end for
     """ The returned list of books are a dictionary of the following keys:
     
-     publisher ,  isbn13 ,  author ,  availableToDownload ,  title , 
-     briefSynopsis ,  dtbookSize ,  images ,  freelyAvailable ,  id ,
-     downloadFormat
+         publisher ,  isbn13 ,  author ,  availableToDownload ,  title , 
+         briefSynopsis ,  dtbookSize ,  images ,  freelyAvailable ,  id ,
+         downloadFormat, origin
     """
     # count = 0
     # print "bs data = " "\n"

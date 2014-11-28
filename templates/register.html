@@ -13,38 +13,28 @@
     </div>
     <div class="container">
         
-<form action="/register" method="post"><input name="__RequestVerificationToken" type="hidden" value="sD-K-lOnkznhrPOcae7wEM64srjpEHamV9IQ3MoR0Igc-zPzapcsvRMFJgWwm8F18Un07EzYUbX8jsvEFsVFyJwp6QQVcyL6tBlto1AKFvE1" />    <div class="login-wrapper">
+<form action="/register" method="post"><div class="login-wrapper">
         <div class="box">
             <div class="content-wrap">
-                <h6>Registration</h6>
+                <h2>Registration</h2>
                 <div class="text-left">
                     <div class="editor-label">
                         <label for="email">Email Address</label>
                     </div>
                     <div class="editor-field">
-                        <input class="form-control" data-val="true" data-val-length="The Email Address must be between 5 - 255 characters." data-val-length-max="255" data-val-length-min="5" data-val-regex="Please enter a vali address data-val-regex-pattern="^[\w\+-\.]+@([\w-]+\.)+[\w-]{2,4}$" data-val-remote="&#39;Email Address&#39; is invalid." data-val-remote-additionalfields="*.Email" data-val-required="The Email Address field is required." id="email" name="email" placeholder="Enter Email" type="text" value="" />
-                        <span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
+                        <input class="form-control" id="email" name="email" 
+                               placeholder="Enter Email" type="text" value="" >
                     </div>
 
                     <div class="editor-label">
                         <label for="password">Password</label>
                     </div>
                     <div class="editor-field">
-                        <input class="form-control" data-val="true" 
-                        data-val-length="The Password must be at least 8 
-                        characters long." 
-                        data-val-length-max="100" 
-                        data-val-length-min="8" 
-                        data-val-regex="Password should contain at least one 
-                        letter, one number, and one special character."
-                        data-val-required="The Password field is required." 
+                        <input class="form-control" 
                         id="password" 
                         name="password" 
                         placeholder="Enter Password" 
-                        type="password"  
-                        data-val-regex-pattern=
-                        "^(?=.*?[a-zA-Z]).*(?=.*?\d).*(?=.*?[!@#$%\^&amp;*\(\)\-_+=;:&#39;&quot;\/\[\]{},.&lt;>|`]).*" 
-                        />
+                        type="password" />
                         <span class="field-validation-valid" 
                         data-valmsg-for="password" 
                         data-valmsg-replace="true"></span>
@@ -54,38 +44,41 @@
                         <label for="ConfirmPassword">Confirm password</label>
                     </div>
                     <div class="editor-field">
-                        <input class="form-control" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Enter Password" type="password" />
-                        <span class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                        <input class="form-control" id="ConfirmPassword" 
+                               name="ConfirmPassword" 
+                               placeholder="Enter Password" type="password" />
                     </div>
 
                     <div class="editor-label">
                         <label for="fname">First Name</label>
                     </div>
                     <div class="editor-field">
-                        <input class="form-control" data-val="true" data-val-length="The First Name must be between 2 - 255 characters." data-val-length-max="255" data-val-length-min="2" data-val-regex="Use letters only" data-val-regex-pattern="^[a-zA-Z. \-&#39;]+$" data-val-required="The First Name field is required." id="fname" name="fname" placeholder="Enter First Name" type="text" value="" />
-                        <span class="field-validation-valid" data-valmsg-for="fname" data-valmsg-replace="true"></span>
+                        <input class="form-control" id="fname" name="fname" 
+                               placeholder="Enter First Name" type="text" 
+                               value="" />
                     </div>
 
                     <div class="editor-label">
                         <label for="lname">Last Name</label>
                     </div>
                     <div class="editor-field">
-                        <input class="form-control" data-val="true" data-val-length="The Last Name must be between 2 - 255 characters." data-val-length-max="255" data-val-length-min="2" data-val-regex="Use letters only" data-val-regex-pattern="^[a-zA-Z. \-&#39;]+$" data-val-required="The Last Name field is required." id="lname" name="lname" placeholder="Enter Last Name" type="text" value="" />
-                        <span class="field-validation-valid" data-valmsg-for="lname" data-valmsg-replace="true"></span>
+                        <input class="form-control" id="lname" name="lname" 
+                               placeholder="Enter Last Name" type="text" 
+                               value="" />
                     </div>
-
                     <div class="editor-label">
                         <label for="phone">Cell Phone</label>
                     </div>
                     <div class="editor-field">
-                        <input class="form-control" data-val="true" data-val-length="The Cell Phone must be between 10 - 20 characters." data-val-length-max="20" data-val-length-min="10" data-val-regex="Please enter valid phone number in XXX-XXX-XXXX format" data-val-regex-pattern="(([\(]?\d{3}[\)]?\s?)|(\d{3}[-]?))\d{3}[-\s]?\d{4}\s*(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+)\s*)?" data-val-required="The Cell Phone field is required." id="phone" name="phone" placeholder="Enter Cell Phone Number" type="text" value="" />
-                        <span class="field-validation-valid" data-valmsg-for="phone" data-valmsg-replace="true"></span>
+                        <input class="form-control" id="phone" name="phone" 
+                               placeholder="Enter Cell Phone Number" 
+                               type="text" value="" />
                     </div>
-
                 </div>
                 <div class="action">
-                    <input type="submit" value="Create" class="btn btn-primary" name="create_account" id="create_account" /> <a class="btn btn-danger" href="/" role="button">
-                    <button>Back</button></a>
+                    <input type="submit" value="Create" class="btn btn-primary" 
+                           name="create_account" id="create_account" /> 
+                    <a class="btn btn-danger" href="/" > Back</a>
                 </div>
             </div>
         </div>
@@ -94,68 +87,3 @@
 
 </body>
 {% endblock %}
-</html>
-
-
-
-        <title>Registeration</title>
-        <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
-
-
-
-    <form class="form-register" method="POST" action="/process_registration">
-        <h2 class="form-register-heading">Please enter the following information</h2>
-
-        <div id = "fname"><label for = "fname-field"> First name </label>
-                        <input type="text" name="fname" id="fname-field"
-                               placeholder="First name" 
-                               required autofocus
-                                ></input> </div>
-        <div id ="lname"><label for = "lname-field"> Last name </label>
-                         <input type="text" title="Lname"
-                                name="lname" class="form-control"
-                                placeholder="Last name"
-                                ></input> </div>
-        <div id="email"><label for = "email-field"> email </label>
-                        <input type="text" title="Email"
-                               name="email" class="form-control"
-                               placeholder="email address"
-                               required autofocus
-                               ></input> </div>
-        <div id="password"><label for = "password-field"> password </label>
-                           <input type="text" title="Password"
-                                  name="password" class="form-control"
-                                  placeholder="password"
-                                  required autofocus
-                                  ></input>  * </div>
-        <div id="confirm_password"><label for = "confirm-password-field">
-                                     confirm password </label>
-                                   <input type="text" 
-                                          title="Confirm password" 
-                                          name="confirm_password" 
-                                          class="form-control"
-                                          placeholder="repeat password"
-                                          required autofocus
-                                          ></input>  * </div>
-        <div id="cell"><label for = "cell-field"> cell phone </label>
-                       <input type="text" title="Cell" name="cell" 
-                              class="form-control" placeholder="xxx-xxx-xxxx"
-                              required autofocus
-                              ></input>  * </div>
-
-        <button type="btn btn-lg btn-primary btn-block" 
-                type="submit">Enter</button>    * required for notification
-        <br>
-        <div class="container">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                    <ul class="flashes">
-                        <li>{{message}}</li>
-                    </ul>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </div>
-    </form>
-

@@ -1,118 +1,89 @@
 {% extends "base.html" %}
-    {% block title %}
+
+{% block title%}
+    <title> Finished Book List </title>
+{% endblock %}
+{% block body %}
 {{ session }}
-{{ list_of_books }}
-        <title>Book list</title>
-        <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
-
-
-    {% endblock %}
-
-	{% block body %}
-	<br> 
-	<h2>These are the books that you have finished reading, {{ session['fname'] }}:</h2>
-    <form class="form-book_list">
-      <div class="row">
-        <div class="col-md-6">
-          <table class="table">
-            <thead>
-              <tr>
-              	<th>Cover</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Read Date</th>
-              </tr>
-            </thead>
-            <tbody>
-            {% for book in list_of_books %}
-              <tr> 
-              	<td> {% if book[1] == None %} 
-						<img class='bookImage' width=40px height=65px
-							 src="http://bestclipartblog.com/clipart-pics/book-clip-art-12.jpg" border="0" alt="book jacket" >
-						<a href="book_details">
-					{% else %}
-	                	<img class='bookImage' width=40px height=65px
-	                		 src='{{ book[1] }}'>
-                    {% endif %}
-                  </td>
-                <td>{{ book[0] }}</td>
-                <td>{{ book[3] + ", " + book[4] }}</td>
-                <td>{{ book[2] }}</td>
-
-              </tr>
-            {% else %}
-              <li>No results :(</li>
-              <br>
-            {% endfor %}
-            </tbody>
-          </table>
+    <div class="header">
+        <a href="/process_books_read" title="List Finished Books" 
+           style="font-size:30px; text-decoration:none;"></a>
+    </div>
+    <div class="container">
+      <form action="/process_books_read" method="GET" >
+        <div class="login-wrapper">
+          <div class="box">
+            <div class="content-wrap">
+              <h3>  These are the books that you have finished reading, {{ session['fname'] }}: </h3>
+              <div class="text-left">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Cover</th>
+                      <th>Title</th>
+                      <th>Author</th>
+                      <th>Read Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for book in list_of_books %}
+                    <tr> 
+                      <td>{% if book[1] == None %} 
+                            <img class='bookImage' width=40px height=65px
+                               src="http://bestclipartblog.com/clipart-pics/book-clip-art-12.jpg" 
+                               border="0" alt="book jacket" >
+                            <a href="/book_details">
+                          {% else %}
+                            <img class='bookImage' width=40px height=65px
+                               src='{{ book[1] }}'>
+                          {% endif %}
+                        </td>
+                      <td>{{ book[0] }}</td>
+                      <td>
+                          {% if book[4] != "" %}
+                              {{ book[3] + ", " + book[4] }}
+                          {% else %}
+                              {{ book[3] }}
+                          {% endif %}
+                      </td>
+                      <td>{{ book[2] }}</td>
+                    </tr>
+                  {% else %}
+                    <li>No results :(</li>
+                    <br>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div>
+          <h3>Search Again</h3> 
+          <input type="text" title="Search" name="search" 
+                 class="form-control" 
+                 placeholder="Key words, author, title" 
+                 autofocus >
+          <a class="btn btn-primary" href="/process_books_read"  ><button>Search</button></a><br><br>
         </div>
-      </div>
-      <div>
-		<h3>Search Again</h3>
 
-		<form action="" 
-			  method="GET">
-	      <input type="text" name="query">
-		  <input type="submit">
-		</form>
-	  </div>
-	  <div>
-      	<a class="btn btn-back" href="/main" role="button"
-      		align="center">
-        <button>Back</button></a>
-      </div>
-	</form>
-	<script>
-        $("#delete_button").click(delete_book);
+        <div>
+          <!-- DC Pagination:A1 Start -->
+          <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
+            <li><a href="#" class="first">First</a></li><li><a href="#" class="previous">Previous</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#" class="current">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#" class="next">Next</a></li>
+            <li><a href="#" class="last">Last</a></li>
+          </ul>
+          <!-- DC Pagination:A1 End -->
+        </div>
+        <div class="action">
+          <a class="btn btn-danger" href="/main" >Back</a>   
+        </div>
+        </div>
+      </form>
 
-        function delete_book(){
-                        $.get('/delete_book',
-	                        function (result) {
-	                                alert(result);
-	                        }
-                          )
-        }
-                                        
-	</script>
-
-<!-- DC Pagination:A1 Start -->
-<ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
-  <li><a href="#" class="first">First</a></li>
-  <li><a href="#" class="previous">Previous</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#" class="current">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#" class="next">Next</a></li>
-  <li><a href="#" class="last">Last</a></li>
-</ul>
-<!-- DC Pagination:A1 End -->
-
-
-    {% endblock %}
-
-				<dvi class="editor-field">
-	                        <input unchecked="unchecked" data-val="true" 
-	                        	   data-val-required="" id="notify" 
-	                        	   name="notify" align="right"
-	                        	   type="checkbox" value="true" />
-				<div>
-					<h3>Search Finished Books</h3>
-
-					<form action="{{ url_for('search_results') }}" 
-						method="GET">
-					    <input type="text" name="query">
-					    <input type="submit">
-					</form>
-				</div>
-
-				                <td>
-                  <form><div> 
-                	<a class="btn btn-delete" 
-                		id="delete_button"
-                	    align="center" role="button">
-                		<button>Delete</button></a>
-                  </div></form>
-                </td>
+{% endblock %}

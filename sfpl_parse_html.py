@@ -32,10 +32,14 @@ def parse_title_author(book_detail_html):
 	loop_cnt = 1
 	book_data = {}
 	saved_data = ''
+	name = ''
 	html_tags = book_detail_html('td .bibInfoData strong')
-	print "html tags for title and author are ==> ", html_tags, "\n"
+	# print "html tags for title and author are ==> ", html_tags, "\n"
 	for i in html_tags:
-		if loop_cnt == 1 or saved_data == i.text:
+		if i.text == 'eBook':
+			loop_cnt = loop_cnt - 1
+
+		elif loop_cnt == 1 or saved_data == i.text:
 			# print "in the if statment \n"
 			saved_data = i.text	
 			i.text = i.text.strip(' / ')
@@ -46,21 +50,30 @@ def parse_title_author(book_detail_html):
 			book_data['title'] = i.text
 			loop_cnt = 1
 		elif loop_cnt == 2:
-			print "in 2 == ", book_data, "\n"
-			print i.text, "\n"
-			print saved_data, "\n"
+			# print "in 2 == ", book_data, "\n"
+			# print i.text, "\n"
+			# print saved_data, "\n"
 			i.text = i.text.replace(' [electronic resource]', '')
-			i.text = i.text.replace(' ebook', '')
-			i.text = i.text.replace(' eBook', '')		
+			i.text = i.text.replace('ebook', '')
+			i.text = i.text.replace('eBook', '')		
 			name = i.text
 		elif loop_cnt == 3:
-			print "in 3 == ", book_data, "\n"
-			print i.text, "\n"
-			print saved_data, "\n"
+			# print "in 3 == ", book_data, "\n"
+			# print i.text, "\n"
+			# print saved_data, "\n"
 			i.text = i.text.replace(' [electronic resource]', '')
 			i.text = i.text.replace(' ebook', '')
 			i.text = i.text.replace(' eBook', '')
 			book_data['author'] = name + " " + i.text
+		# elif loop_cnt == 4:
+		# 	print "==%s==" % i.text
+		# 	print "==%s==" % book_data['author']
+		# 	book_data['author'] = book_data['author'].lstrip()
+		# 	i.text = i.text.replace(' [electronic resource]', '')
+		# 	i.text = i.text.replace(' ebook', '')
+		# 	i.text = i.text.replace(' eBook', '')
+		# 	book_data['author'] = name + " " + i.text
+		#end if
 		loop_cnt = loop_cnt + 1
 	# print "author title = ", book_data, "\n"
 	return book_data
@@ -81,6 +94,7 @@ def get_book_details(sfpl_book_detail_url):
 	book_data = parse_title_author(book_detail_html)
 	book_data = parse_book_cover(book_detail_html, book_data)
 	book_data['availableToDownload'] = '1'
+	book_data['origin'] = 'SFPL'
 
 	return book_data
 #end def
@@ -147,8 +161,8 @@ def get_books(search_criteria):
 
 	""" The returned list of books are a dictionary of the following keys:
 	     publisher ,  isbn13 ,  author ,  availableToDownload ,  title , 
-	 briefSynopsis ,  dtbookSize ,  images ,  freelyAvailable ,  id ,
-	 downloadFormat
+		 briefSynopsis ,  dtbookSize ,  images ,  freelyAvailable ,  id ,
+		 downloadFormat, origin
 	"""
 
 	return list_of_books
