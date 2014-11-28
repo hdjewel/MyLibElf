@@ -110,6 +110,7 @@ class Library(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(255), nullable = True)
     url = Column(String(255), nullable = True)
+    access_token = Column(String(1000), nullable = True)
     card_nbr = Column(Integer, nullable = True)
     pin = Column(Integer, nullable = True)
     login_id = Column(String(255), nullable = True)
@@ -311,6 +312,19 @@ def get_finished_books_by_criteria(search_criteria, patron_id):
 #end def
 
 def get_finished_books(patron_id):
+    search_result = (db_session.query(Patron,
+                                      Library,
+                                      Patron_Library)
+                                   .filter(Patron.id == patron_id,
+                                           Patron.id == Patron_Library.patron_id,
+                                           Patron_Library.library_id == Library.id)
+                                   .all())
+    for patron, library, patron_library in search_result:
+        print "List of Library = ", patron.id, patron.lname,
+        print library.name, library.url
+        print "\n"
+    #end for
+
     search_result = (db_session.query(Finished_Book,
                                          Book,
                                          Book_Author,
@@ -320,6 +334,8 @@ def get_finished_books(patron_id):
                                            Book.id == Book_Author.book_id,
                                            Book_Author.author_id == Author.id)
                                    .order_by(Book.title).all())
+
+
     
     for finished_book, book, book_author, author in search_result:
         print book.title
@@ -356,7 +372,32 @@ def get_finished_books(patron_id):
     return list_of_books
 #end def
 
-def setup_libraries_info(db_session, session):
+def get_patron_libraries(patron_id):
+
+    search_result = (db_session.query(Patron,
+                                      Library,
+                                      Patron_Library)
+                                   .filter(Patron.id == patron_id,
+                                           Patron.id == Patron_Library.patron_id,
+                                           Patron_Library.library_id == Library.id)
+                                   .all())
+    list_of_libraries = []
+    for patron, library, patron_library in search_result:
+        library_dict = {}
+
+        library_dict['url'] = library.url
+        library_dict['patron'] = patron_id
+        library_dict['name'] = library.name
+        library_dict['access_token'] = library.access_token
+        print "library dictionary = ", library_dict, "\n"
+        list_of_libraries.append(library_dict)
+    #end for
+
+    return list_of_libraries
+
+#end def
+
+def get_libraries_info(db_session, session):
     library_list = (db_session.query(Library)
                 # .filterby(Patron_Library.patron == session['patron'],
                             # Library.id == Patron_Library.library_id)
@@ -391,7 +432,7 @@ def add_library(db_session, library_fields):
 #end def
 
 def connect():
-
+    print "in connect"
     ENGINE = create_engine("sqlite:///bookblend.db", echo=True)
     Session = sessionmaker(bind=ENGINE)
     Base.metadata.create_all(ENGINE)

@@ -5,7 +5,7 @@ import requests
 from sqlalchemy import desc
 import itertools
 import model
-# from local_settings import BS_API_KEY
+from local_settings import APP_SECRET_KEY
 import overdrive_apis
 import booksearch
 
@@ -28,8 +28,8 @@ match, the password is correct. Otherwise, the password is incorrect.
 """
 
 app = Flask(__name__)
-app.secret_key='\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\x03'
-
+app.secret_key=APP_SECRET_KEY
+od_client_app_access_token = ""
 """ test of api calls """
 @app.route('/token', methods=['POST'])
 def test_api():
@@ -73,14 +73,11 @@ def process_patron_login():
         # print "session --> ", session
         # print "first name == ", patron.fname
         print "session dictionary === ", session, "\n"
-        response, response_data = overdrive_apis.log_into_overdrive()
-        print response_data
+        overdrive_client_app_fields, response = overdrive_apis.log_into_overdrive()
+        print "app fields = ", overdrive_client_app_fields, "\n"
+        od_client_app_access_token = overdrive_client_app_fields['access_token']
     #end if
 
-    """ Add logic to handle any response in the post_response_data other
-         than the success code of 200.
-
-    """
     print response.status_code, "  ==  ", response.reason
     if response.status_code > 201:
         flash(("Action was not successful. %s == %s\n") % 
@@ -112,6 +109,9 @@ def redirect_to_overdrive_url():
     # od_url = od_url + '&response_type=code&state=' + od_url_state 
 
     # print "Overdrive url = ", od_url, "\n"
+    """ This is the url to the OverDrive integration test system 
+
+    """
     od_url = 'https://oauth.overdrive.com/auth?clientid=LORETTAPOWELL&redirect_uri=http://localhost:5000/oauth_overdrive&scope=accountId:4425&response_type=code&state=turtlebutt'
     return redirect(od_url)
 
@@ -136,7 +136,7 @@ def main():
 @app.route('/library', methods=['GET'])
 def display_library_info():
     print "in route library \n"
-    library_list = model.setup_libraries_info(model.db_session, session)
+    library_list = model.get_libraries_info(model.db_session, session)
     return render_template('library.html', libraries=library_list)
 #end app.route
 
@@ -234,11 +234,12 @@ def get_suggestions():
 @app.route('/process_search')
 def search_results():
     search_criteria = request.args.get('search')
+    patron_id = session['patron']
     print "search == ", search_criteria
     if search_criteria != '':
         print "do a search"
         # list_of_books = search_for_books_by_criteria(search_criteria)
-        list_of_books = booksearch.search(search_criteria)
+        list_of_books = booksearch.search(search_criteria, patron_id)
         
         # for row in list_of_books:
         #   print "\n row = \n", row

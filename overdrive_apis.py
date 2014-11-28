@@ -9,6 +9,7 @@ def log_into_overdrive():
 	"""
 	print "in log_into_overdrive function \n"
 	overdrive_oauth_headers = {}
+	overdrive_client_app_fields = {}
 	# keys = '%s:%s' % (OD_API_CLIENT_KEY, OD_API_SECRET_KEY)
 	# encoded_keys = base64.b64encode(keys)
 	# overdrive_oauth_url = 'https://oauth.overdrive.com/token'
@@ -47,7 +48,16 @@ def log_into_overdrive():
 	print( " overdrive url = ", response.url, "\n")
 	print( " overdrive access token = ", response_data['access_token'], "\n")
 
-	return response, response_data
+	overdrive_client_app_fields['url'] = response.url
+	overdrive_client_app_fields['access_token'] = response_data['access_token']
+	return overdrive_client_app_fields, response
+#end def
+
+def get_od_books(search_criteria, library_fields):
+	""" get books for the given library_fields
+	"""
+	pass
+
 #end def
 
 def search_for_books(search_criteria):
@@ -59,7 +69,7 @@ def search_for_books(search_criteria):
 
 	"""
 	q = search_criteria
-	limit = 3		# 25 by default 300 max
+	limit = 10		# 25 by default 300 max
 	offset = 0		# number of titles to skip
 	formats = ""
 	sort = ':asc' 		# :desc
