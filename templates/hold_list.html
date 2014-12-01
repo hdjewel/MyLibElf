@@ -1,16 +1,26 @@
 {% extends "base.html" %}
 
 {% block title%}
-    <title>Book list</title>
+    <title>Hold list</title>
 {% endblock %}
 {% block body %}
-{{ session }}
+<br>
+session - {{ session }}
+<br>
+books - {{ books }}
+<br>
+calling from - {{ what }}
     <div class="container-fluid">
       <form action="/process_search?source=newbooks" method="get">
         <div class="book-wrapper">
           <div class="box">
             <div class="content-wrap">
-              <h4>  Search Results for {{ search }}:  </h4>
+              <h4>  {% what == hold %}
+                      List of books on hold:  
+                    {% else %}
+                      The books checkecd out are:
+                    {% endif %}
+              </h4>
               <div class="text-left">
                 <table class="table" id='content' cellspacing="10">
                   <thead>
@@ -18,7 +28,12 @@
                       <th>Cover</th>
                       <th>Title</th>
                       <th>Author</th>
-                      <th>Origin</th>
+                      <th>{% what == hold %}
+                            Hold Expires  
+                          {% else %}
+                            Checkecd Expires
+                          {% endif %}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -45,7 +60,7 @@
                             {% endif %}
                           </td>
                           <td>{{ book['author'] }}</td>
-                          <td>{{ book['origin'] }}</td>
+                          <td>{{ book['expires'] }}</td>
                         </tr>
                       {% endfor %}
                     {% else %}

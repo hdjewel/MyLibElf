@@ -13,7 +13,7 @@
   </div>
   <div class="container">
     <form action="/" method="post">
-      <div class="login-wrapper">
+      <div class="text-wrapper">
         <div class="box">
           <div class="alert alert-info" style="color: red; font-weight: bold;">
             <h5 style="font-size: 18px; padding-bottom: 10px;">Welcome to MyLibElf!</h5>
@@ -22,10 +22,14 @@
             <div class="row" style="color: blue; font-weight: bold;">
               <ul id="login_unnumbered_list">
                 <li>Let's see some book titles you have already read</li>
-                <li> Search for books to read </li>
-                <li> Check out some books </li>
-                <li> Manage your library accounts </li>
-                <li>    and much much more </li>
+                <ul id="login_unnumbered_list">
+                  <li> search for books to read </li>
+                  <li> check out some books </li>
+                  <li> manage your library accounts </li>
+                  <ul>
+                    <li>and much much more </li>
+                  </ul>   
+                </ul> 
               </ul>                
             </div>
             <div class="text-left">
@@ -43,23 +47,21 @@
                         placeholder="Enter Password" 
                         type="password" />
             </div>
-            <a class="forgot" href="/get_password" 
+
+            <a class="text-links" href="/get_password" 
                 title="Don&#39;t remember your password?">
                         Don&#39;t remember your password?</a>
-            <div class="action">
+             <br>
+             <div class="action">
                 <input class="btn-glow primary login" 
-                        type="submit" value="Log In" id="Login">
+                        type="submit" value="Log In" id="LoGiN">
             </div>
-            <br><br>
-            <div class="btn btn-overdrive" >        
-                    Connect to Overdrive
-               <a class="blue" href="/overdrive_login">Log in to Overdrive</a>    
-            </div>
+
             <br>
-            <div class="btn btn-back" >
-                Don't have an account?
-              <a class="blue" href="/register">Create an Account</a>
-            </div>  
+               <a class="text-links" title="overdrive" href="/overdrive_login" >Log in to Overdrive</a> 
+            <p>
+                   Don't have an account? <a class="already" title="Create an Account" href="/register">Create an Account</a>
+            </p>
           </div>
         </div>
       </div>

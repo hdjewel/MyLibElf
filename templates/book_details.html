@@ -1,323 +1,78 @@
-% extends "base.html" %}
-    {% block title%}
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+{% block title%}
+    <title>Show Book Details</title>
+{% endblock %}
+{% block body %}
+<body>
+<br>
+session =
+{{ session }}
+<br>
+book = 
+{{ book }}
+    <div class="container">
+      <form action="/register" method="post">
+        <div class="text-wrapper">
+          <div class="box">
+            <div class="content-wrap">
+              <h2>Show Book Details</h2>
+              <div class="text-left">
+                {% if book['images'] == 1 
+                   or book['images'] == 0 
+                   or book['images'] != 5 %} 
+                   <img class='bookImage' width=80px height=130px
+                        src="http://bestclipartblog.com/clipart-pics/book-clip-art-12.jpg" 
+                        border="0" alt="book jacket" >
+                {% else %}
+                  <img class='bookImage' width=80px height=130px
+                           src='{{ book['images'] }}'>
+                {% endif %}
+                <div class="editor-label">
+                    <label for="title">Title</label>
+                </div>
+                <div class="editor-field">
+                    <input class="form-control" id="title" name="title" 
+                           type="text" value={{ book['title'] }} />
+                </div>
+                <div class="editor-label">
+                    <label for="author">Author</label>
+                </div>
+                <div class="editor-field">
+                    <input class="form-control" 
+                    id="author" 
+                    name="author" 
+                    type="text" value={{ book['author'] }} />
+                </div>
+                <div class="editor-label">
+                    <label for="synpsis">Synopsis</label>
+                </div>
+                <div class="editor-field">
+                    <input class="form-control" id="synpsis" name="synpsis" 
+                           type="text" value="" />
+                </div>
+                <div class="editor-label">
+                    <label for="synpsis">Notes</label>
+                </div>
+                <div class="editor-field">
+                    <input class="form-control" id="synpsis" name="synpsis" 
+                           type="text" value="" />
 
-        <title>Book Details</title>
-        <link rel = "stylesheet" type = "text/css" href = "static/css/stylesheet.css"/>
-    {% endblock %}
+                </div>
+                <br>
+                <div class="action">
 
-
-{%  block body %}
-    <form class="form-register" method="POST" action="/process_registration">
-        
-        <ul>
-          <li>{{ display_book }}</li>
-
-          <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="<img class="wtil-cover" 
-          src="mages.contentreserve.com/ImageType-400/2389-1/BF6/35D/7C/%7BBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5%7DImg400.jpg" alt="Cover of The Border Legion" style="border:solid 1px #ddd;">" data-holder-rendered="true" style="width: 200px; height: 200px;">
-        </ul>
-  
-    </form>
-{%  endblock %}
-<header id="mainHead" class="">
-<section class="">
-
-<div class="row" id="fullHeader">
-
-
-<div class="six columns" id="headerLogo">
-
-  <a href="Default.htm" aria-label="OverDrive API Integration Library" title="OverDrive API Integration Library" class="logo-link" target="_self"><h1 id="logoHeading"><img class="logo-img" src="system/spacer.gif" alt="OverDrive API Integration Library" /><span class="i-hide">OverDrive API Integration Library</span></h1></a>
-</div>
-
-<div class="six columns" id="headerNav">
-<div class="row">
-  <div class="twelve columns" id="navRow">
-  <div class="nav-container">
-<a name="mainNavSkipLink" id="mainNavSkipLink" tabindex="-1"></a><div class="skip">Main Navigation</div>
-    <div class="two mobile-one columns push-two" id="navMenu"><a name="mainNavA" class="navMenu" href="javascript:void(0);"><img src="system/spacer.gif" alt="Navigation" /><span>Menu</span></a></div>
-<div class="two mobile-one columns push-two" id="navProfile">
-<a href="BANGAuthenticate.dll?Action=AuthCheck&amp;URL=MyAccount.htm?PerPage=40&amp;ForceLoginFlag=0" class="navProfile"><img src="system/spacer.gif" alt="Navigation - Account" /><span>Account</span></a>
-</div>
-<div class="two mobile-one columns push-two help-link-small"><a href="Help.htm" class="navHelp"><img src="system/spacer.gif" alt="Navigation - Help" /><span>Help</span></a></div>
-<div class="four mobile-one columns push-two" id="headSearch1">
-<script language="JavaScript"><!--
-    function searchFormValidate(f)
-    {
-        if (f.FullTextCriteria.value == "" || f.FullTextCriteria.value == "Search")
-        {
-            alert("Please enter a search term!");
-            f.FullTextCriteria.focus();
-            return false;
-        }
-        else return true;
-    }
-    function searchFormTextCheck(t, dirn)
-    {
-        if (dirn == 1 && t.value == "Search") t.value= "";
-        if (dirn == 0 && t.value == "") t.value= "Search";
-    }
-// -->
-</script>
-<a name="searchSkipLink" id="searchSkipLink" tabindex="-1">Search</a><div class="skip">Digital Media Search</div>
-      <form style="padding: 0px;" method="post" onsubmit="return searchFormValidate(this);" action="BANGSearch.dll?Type=FullText&PerPage=24" id="headerSearch1" class="secondary" alt="This search box is for large screen resolutions"><input type="hidden" value="SortBy=Relevancy" name="Sort" /><input type="hidden" value="All" name="FullTextField"><label for="searchText1" class="skip" alt="This search box is for large screen resolutions">Search</label><input tabindex="0" type="text" name="FullTextCriteria" id="searchText1" class="input-text" placeholder="Search..." /><input type="image" class="quickbutton1" src="system/spacer.gif" alt="Submit search" title="Submit search" /><img alt="Submit search" class="quickbutton2" src="system/spacer.gif" /><img alt="image" class="quickbuttonClose" src="system/spacer.gif" /><a href="AdvancedSearch.htm">Advanced Search</a></form>
-</div>
-<div class="four mobile-four columns" id="headSearch2" style="display:none;">
-      <form style="padding: 0px;" method="post" onsubmit="return searchFormValidate(this);" action="BANGSearch.dll?Type=FullText&PerPage=24" id="headerSearch2" class="secondary" alt="This search box is for smaller screen resolutions"><input type="hidden" value="SortBy=Relevancy" name="Sort" /><input type="hidden" value="All" name="FullTextField"><label for="searchText2" class="skip" alt="This search box is for smaller screen resolutions">Search</label><input tabindex="0" type="text" name="FullTextCriteria" id="searchText2" class="input-text" placeholder="Search..." /><input type="image" class="quickbutton3" src="searchMobile.png" alt="Submit search" title="Submit search" /><a href="AdvancedSearch.htm">Advanced Search</a></form>
-</div>
-</div></div>
-</div>
-</div>
-</div>
-</section>
-</header>
-<!-- #mainHead --><div id="mainContainer" class="container"><style>
-#mainNav{display:none;}
-</style>
-<a id="menuAnchor">&nbsp;</a>
-<a href="#mainNavA" style="display:none;">Main Nav</a>
-<nav id="mainNav" class="container">
-<a name="subjectNavSkipLink" id="subjectNavSkipLink" tabindex="-1"></a><div class="skip">Subject Navigation</div>
-<section class="row">
-<div class="three mobile-four columns" id="homeSub06" style="display:block;">
-<h6>Featured Collections</h6>
-<div id="homeSub06arrows" style="display:none;"><img src="system\spacer.gif" alt="" /></div>
-<ul><li id="ProfessionalReading">
-<a href="ProfessionalReading.htm">Professional Reading</a>
-</li>
-
-<li id="CSAF_Collection">
-<a href="CSAFReadingList.htm">CSAF Reading List</a>
-</li>
-
-<li>
-<a href="BANGSearch.dll?Type=ContentList&amp;ID=229322&amp;PerPage=24&amp;IsCuratedList=0" data-curated="0">New Releases</a>
-</li><li>
-<a href="BANGSearch.dll?Type=ContentList&amp;ID=229323&amp;PerPage=24&amp;IsCuratedList=0" data-curated="0">Our Favorites</a>
-</li><li>
-<a href="BANGSearch.dll?Type=ContentList&amp;ID=229324&amp;PerPage=24&amp;IsCuratedList=0" data-curated="0">Trending Titles</a>
-</li><li>
-<a href="BANGSearch.dll?Type=ContentList&amp;ID=229325&amp;PerPage=24&amp;IsCuratedList=0" data-curated="0">Just Returned</a>
-</li><!--
-<li><a href="BrowseChildren.htm">Children Collections</a></li>
-<li><a href="HiddenGems.htm">Hidden Gems</a></li>
---><li id="featAllLink">
-<a href="BrowseCollections.htm">All Collections...</a>
-</li>
-
-</ul>
-</div><div class="two mobile-four columns" id="homeSub01" style="display:block;">
-<h6>eBook Fiction</h6>
-<div id="homeSub01arrows" style="display:none;"><img src="system\spacer.gif" alt="" /></div>
-<ul><li>
-<a href="BANGSearch.dll?Type=SubjectList&amp;ID=21504&amp;PerPage=24&amp;SortBy=CollDate">All Fiction</a>
-</li><li>
-<a href="BANGSearch.dll?Type=SubjectList&amp;ID=21505&amp;PerPage=24&amp;SortBy=CollDate">Classic Literature</a>
-</li><li>
-<a href="BANGSearch.dll?Type=SubjectList&amp;ID=21506&amp;PerPage=24&amp;SortBy=CollDate">Mystery & Suspense</a>
-</li><li>
-<a href="Subjects01.htm" aria-label="View more... eBook Fiction">View more...</a>
-</li>
-</ul>
-</div><div class="three mobile-four columns" id="homeSub02" style="display:block;">
-<h6>eBook Nonfiction</h6>
-<div id="homeSub02arrows" style="display:none;"><img src="system\spacer.gif" alt="" /></div>
-<ul><li>
-<a href="BANGSearch.dll?Type=SubjectList&amp;ID=21507&amp;PerPage=24&amp;SortBy=CollDate">All Nonfiction</a>
-</li><li>
-<a href="BANGSearch.dll?Type=SubjectList&amp;ID=21508&amp;PerPage=24&amp;SortBy=CollDate">Biography</a>
-</li><li>
-<a href="BANGSearch.dll?Type=SubjectList&amp;ID=21509&amp;PerPage=24&amp;SortBy=CollDate">Self Help</a>
-</li><li>
-<a href="Subjects02.htm" aria-label="View more... eBook Nonfiction">View more...</a>
-</li>
-</ul>
-</div><div class="two mobile-four columns" id="homeSub03" style="display:block;">
-<h6>Audiobook Fiction</h6>
-<div id="homeSub03arrows" style="display:none;"><img src="system\spacer.gif" alt="" /></div>
-<ul><li>
-<a href="BANGSearch.dll?Type=SubjectList&amp;ID=21510&amp;PerPage=24&amp;SortBy=CollDate">All Fiction</a>
-</li><li>
-<a href="Subjects03.htm" aria-label="View more... Audiobook Fiction">View more...</a>
-</li>
-</ul>
-</div><div class="two mobile-four columns" id="homeSub04" style="display:block; float:left;">
-<h6>Audiobook Nonfiction</h6>
-<div id="homeSub04arrows" style="display:none;"><img src="system\spacer.gif" alt="" /></div>
-<ul><li>
-<a href="BANGSearch.dll?Type=SubjectList&amp;ID=21798&amp;PerPage=24&amp;SortBy=CollDate">All Nonfiction</a>
-</li><li>
-<a href="Subjects04.htm" aria-label="View more... Audiobook Nonfiction">View more...</a>
-</li>
-</ul>
-</div><span style="display:none;"></span><span style="display:none;"></span>
-
-<script>
-$('.lang-li').each(function(){
-  var thisLang = $(this).find('a').html();
-  if(thisLang == 'Spanish'){
-    $(this).find('a').html('Español');
-  }else if(thisLang == 'Russian'){
-    $(this).find('a').html('русский');
-  }else if(thisLang == 'Chinese'){
-    $(this).find('a').html('中文');
-  };
-});
-</script>
-
-</section>
-</nav>
-<!-- #mainNav -->
-<div class="container" id="pageContentContainer">
-
-<div id="contentContainer" class="row"><section id="mainContent" class="twelve columns">
-<noscript><p class="wishlist-js-off" style="width:100%; text-align:center; padding:0; margin:0;" aria-live="polite" role="contentinfo">The Wish List function is disabled with javascript off.</p></noscript>
-<a name="mainContentSkipLink" id="mainContentSkipLink" tabindex="-1"></a><div class="skip">Main Content</div>
-
-<div class="row">
-<div  id="detailsTitleMobile" class="twelve columns">
-<h3>The Border Legion</h3>
-</div>
-</div><div class="row" id="allTheDetails"><script language="JavaScript" type="text/javascript">
-    var szFirstWMAExcerpt = null;
-    var szFirstMP3Excerpt = null;
-    var szFirstWMMExcerpt = null;
-    var szFirstWMVExcerpt = null;
-    var szFirst50Excerpt = null;
-    var szFirst410Excerpt = null;
-    var szFirst810Excerpt = null;
-    var szFirst450Excerpt = null;
-    var szFirst302Excerpt = null;
-    var szFirst900Excerpt = null;
-    var DrmInfo420 = null;
-    var szLibOwned = 1;
-    var nIsRecommended = 0;
-    var nIsRecLimit = 0;
-    var g_bFutureOnSaleDate = "0";
-    
-</script>
-<style>.readmore-js-toggle{margin-bottom:30px;}</style>
-
-<div class="four mobile-two columns" style="float:left;" id="coverContain">
-<div class="row">
-<noscript><style>#coverFrame{height:100% !important;}</style></noscript>
-<div class="twelve mobile-four columns" id="coverFrame" data-contentstatus="0" data-isownedbylib="1">
-<span class="tcc-icon-span" data-iconformat="eBook"><i class="icon-eBook avail-0"></i></span>
-<a href="ContentDetails-Cover.htm?ID=BF635D7C-3F0B-43FC-AC5B-AB527ACA77A5" title="Click here for a full size cover image of The Border Legion" target="_blank"><img class="wtil-cover" src="//images.contentreserve.com/ImageType-400/2389-1/BF6/35D/7C/%7BBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5%7DImg400.jpg" alt="Cover of The Border Legion" style="border:solid 1px #ddd;" /></a>
-<noscript><img class="wtil-cover" src="//images.contentreserve.com/ImageType-400/2389-1/BF6/35D/7C/%7BBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5%7DImg400.jpg" alt="Cover of The Border Legion" title="Click here for a full size cover image of The Border Legion" style="border:solid 1px #ddd;" /></noscript>
-</div>
-
-
-<div class="results-enhanced" style="display:none; margin-right: 16px; bottom:40px;">
-<div class="enhanced-link">
-<script language="JavaScript" type="text/javascript"><!--
-DisplayEnhancedTitleIcon("0", "BF635D7C-3F0B-43FC-AC5B-AB527ACA77A5");
-//--></script></div>
-</div>
-<script language="JavaScript" type="text/javascript"><!--
-var szAdvInPrivate = "0";
-var szAdvInShared = "1";
-var szAdvMyPrivate = "0";
-if(szLoginStatus == 0 && szAdvInPrivate == 1 && szAdvInShared == 0)
-    document.write("<a href=\"BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=ContentDetails.htm%3fid%3dBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5#\"><img class=\"png supernote_hover_advsignin details-advantage-cover\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"Sign in to check availability\"></a>");
-if(szLoginStatus == 0 && szAdvInPrivate == 1 && szAdvInShared == 1)
-    document.write("<a href=\"BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=ContentDetails.htm%3fid%3dBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5#\"><img class=\"png supernote_hover_cons details-advantage-cover\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"Sign in to check availability\"></a>");
-if(szLoginStatus == 1 && szAdvMyPrivate == 1)
-    document.write("<a href=\"#\"  class=\"supernote_hover_advyes details-advantage-cover\"><img class=\"png\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"OverDrive Advantage title\"></a>");
-//--></script><script language="JavaScript" type="text/javascript"><!--
-var szAdvInPrivate = "0";
-var szAdvInShared = "1";
-var szAdvMyPrivate = "0";
-if(szLoginStatus == 0 && szAdvInPrivate == 1 && szAdvInShared == 0)
-    document.write("<a href=\"BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=ContentDetails.htm%3fid%3dBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5#\"><img class=\"png supernote_hover_advsignin details-advantage-cover\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"Sign in to check availability\"></a>");
-if(szLoginStatus == 0 && szAdvInPrivate == 1 && szAdvInShared == 1)
-    document.write("<a href=\"BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=ContentDetails.htm%3fid%3dBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5#\"><img class=\"png supernote_hover_cons details-advantage-cover\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"Sign in to check availability\"></a>");
-if(szLoginStatus == 1 && szAdvMyPrivate == 1)
-    document.write("<a href=\"#\"  class=\"supernote_hover_advyes details-advantage-cover\"><img class=\"png\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"OverDrive Advantage title\"></a>");
-//--></script><script language="JavaScript" type="text/javascript"><!--
-var szAdvInPrivate = "0";
-var szAdvInShared = "1";
-var szAdvMyPrivate = "0";
-if(szLoginStatus == 0 && szAdvInPrivate == 1 && szAdvInShared == 0)
-    document.write("<a href=\"BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=ContentDetails.htm%3fid%3dBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5#\"><img class=\"png supernote_hover_advsignin details-advantage-cover\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"Sign in to check availability\"></a>");
-if(szLoginStatus == 0 && szAdvInPrivate == 1 && szAdvInShared == 1)
-    document.write("<a href=\"BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=ContentDetails.htm%3fid%3dBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5#\"><img class=\"png supernote_hover_cons details-advantage-cover\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"Sign in to check availability\"></a>");
-if(szLoginStatus == 1 && szAdvMyPrivate == 1)
-    document.write("<a href=\"#\"  class=\"supernote_hover_advyes details-advantage-cover\"><img class=\"png\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"OverDrive Advantage title\"></a>");
-//--></script><script language="JavaScript" type="text/javascript"><!--
-var szAdvInPrivate = "0";
-var szAdvInShared = "1";
-var szAdvMyPrivate = "0";
-if(szLoginStatus == 0 && szAdvInPrivate == 1 && szAdvInShared == 0)
-    document.write("<a href=\"BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=ContentDetails.htm%3fid%3dBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5#\"><img class=\"png supernote_hover_advsignin details-advantage-cover\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"Sign in to check availability\"></a>");
-if(szLoginStatus == 0 && szAdvInPrivate == 1 && szAdvInShared == 1)
-    document.write("<a href=\"BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=ContentDetails.htm%3fid%3dBF635D7C-3F0B-43FC-AC5B-AB527ACA77A5#\"><img class=\"png supernote_hover_cons details-advantage-cover\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"Sign in to check availability\"></a>");
-if(szLoginStatus == 1 && szAdvMyPrivate == 1)
-    document.write("<a href=\"#\"  class=\"supernote_hover_advyes details-advantage-cover\"><img class=\"png\" src=\"advProgIconLRG.png\" border=\"0\" alt=\"OverDrive Advantage title\"></a>");
-//--></script></div>
-<div class="row">
-<div class="eight mobile-four columns centered"><a href="https://samples.overdrive.com/?crid=BF635D7C-3F0B-43FC-AC5B-AB527ACA77A5&.epub-sample.overdrive.com&themeprofile=DLR-100300&retailerid=odapilib" onclick="dcsMultiTrack('WT.dl','20','DCSext.excerpt','BF635D7C-3F0B-43FC-AC5B-AB527ACA77A5');" alt="Sample this title" title="Click here for a(n) eBook sample of The Border Legion" target="_blank" class="radius dtls-sample-button">Sample</a></div>
-</div>
-</div>
-
-<script type="text/javascript">
-var hazSampleHref = $(".dtls-sample-button").attr("href");
-if (hazSampleHref == "") {
-  $("#wlDtlsMobile").css("bottom","-48px");
-  $(".dtls-sample-button").remove();
-};
-var rtlWishList = $("#wlDtlsMobile").attr("data-rtlwl");
-if(rtlWishList == 0){
-  $("#wlDtlsMobile").remove();
-};
-</script><div class="five mobile-two columns" style="float:left;" id="titleInfo"><div class="row">
-<div  id="detailsTitle" class="twelve columns">
-<h3>The Border Legion</h3>
-</div>
-</div><div class="row">
-<div id="subtitleDetails" class="twelve columns">
-<h6></h6>
-
-
-<div class="enhanced-link">
-<script language="JavaScript" type="text/javascript"><!--
-DisplayEnhancedTitleLink("0", "BF635D7C-3F0B-43FC-AC5B-AB527ACA77A5");
-//--></script></div>
-</div>
-</div>
-
-
-
-
-<div class="row" id="seriesRow" style="display:none;">
-<!--<div class="twelve columns">
-<div class="twelve mobile-four columns">
-<div id="seriesExpand" class="details-expand">
-<h6>Series<span class="series-plus-minus tog-plus-minus details-plus-minus-exp" style="float:right; margin-right:5px; cursor:pointer; font-weight:bold;" tabindex="0" title="Open/Close Series">-</span></h6>
-<ul class="series-expand tog-close details-ul-exp" style="display:block;">
-
-<li>-->
-<script language="JavaScript" type="text/javascript">
-var szSeries = "";
-    if(szSeries.length > 0 && szLibOwned == 1)
-      document.write("<h6>Series: <a href=\"BANGSearch.dll?Type=Series&amp;ID={BF635D7C-3F0B-43FC-AC5B-AB527ACA77A5}&amp;SortBy=CollDate&amp;PerPage=24\" class=\"seriesColbox\">" + szSeries + "</a></h6>\n");
-    if(szSeries.length > 0 && szLibOwned == 0)
-      document.write("<div class=\"seriesColbox\">Series: " + szSeries + "</div>\n");
-</script>
-<!--</li>
-
-</ul>
-</div>
-</div>-->
-</div>
-
-<script type="text/javascript">
-var szSeries = "";
-  if(szSeries.length > 0){
-    $("#seriesRow").css("display","block");
-  };
-</script><div class="row">          
-<div id="creatorDetails" class="twelve columns">
-<h6>by&nbsp;<a href="BANGSearch.dll?Type=Creator&amp;ID=388037&amp;PerPage=24&SortBy=CollDate" title="Search for other content by Zane Grey">Zane Grey</a></h6>
-</div>
-</div>
-
+                   <a class="link_to_overdrive" href="/process_hold_lists, book=book" >Put book on Hold</a>
+                   <a class="link_to_overdrive" href="/process_wish_lists, book=book" > Put book on Wish list</a>
+                   <a class="link_to_overdrive" href="/process_checked_outs, book=book" > Check out book</a>
+                   <br><br>
+                   <a class="btn btn-danger" href="/process_search" > Back</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+{% endblock %}

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block title%}
-    <title>Main Page<</title>
+    <title>Main Page</title>
+
 {% endblock %}
 {% block body %}
 {{ session }}
@@ -11,7 +12,7 @@
     </div>
     <div class="container">
       <form action="/process_search?source=newbooks" method="GET">
-        <div class="login-wrapper">
+        <div class="text-wrapper">
           <div class="box">
             <div class="content-wrap">
               <h4> Hi {{ session['fname'] }}, What can I help you with?</h4>
@@ -20,20 +21,19 @@
                   <li><a class="btn btn-primary" 
                           href="/process_books_read_by_patron">
                                 Books you've read</a></li><br>
-                  <li><a >To search for a new book to read, <br>
-                            please enter some search criteria.<br>
-                            Author's First and Last name work best. </a></li>
+                  <li><a >To search for a new book to read, 
+                            please enter some search criteria.</a>
+                            <a class="notes"; >(Author's First and Last name work best.) </a></li>
                     <br>
                     <input type="text" title="Search" name="search" 
                            class="form-control" 
                            placeholder="Key words, author, title" 
                            autofocus />
                     <a class="btn btn-primary" ><button>Search</button></a>
-                    <br><br>
+                    <br>
                     <ul><li><a class="btn btn-primary" 
                                href="/process_suggestions">
                                May I make a recommendation? </a></li>
-                        <br>
                     </ul>
                   <li><a class="btn bth-primary" 
                          href="/process_checked_outs">
@@ -43,7 +43,7 @@
                       <br>
                   <li><a class="btn bth-primary" 
                          href="/process_hold_lists">Books on hold </a></li>
-                      <br><br><br>
+                      <br><br>
                   <li><a class="btn bth-primary" 
                          href="/patron">Manage MyLibElf Account</a></li>
                       <br>
@@ -51,10 +51,10 @@
                          href="/library">Manage My Library Access </a></li>
                 </ul>
               </div>
+              <div class="action">
+                <a  href="/logout">Log out</a>   
+              </div>
             </div>
-          </div>
-          <div class="action">
-            <a  href="/logout">Log out</a>   
           </div>
         </div>
       </form>

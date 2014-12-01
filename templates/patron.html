@@ -7,61 +7,61 @@
 {% block body %}
 {{ session }}
 {{ patron_fields }}
-    <div class="header">
-        <a href="/patron" title="Update Patron" 
-           style="font-size:30px; text-decoration:none;"></a>
-    </div>
+
     <div class="container">
       <form action="/patron" method="POST" ><div class="login-wrapper">
-        <div class="box">
-          <div class="content-wrap">
-             <h4>Update Your Account Information</h4>
-             <div class="text-left">
-               <div class="editor-label">
-                 <label for="email">Email Address</label>
-               </div>
-               <div class="editor-field">
-                 <input class="form-control" 
-                      id="email" name="email" placeholder="Enter Email" 
-                      type="text" value="{{ patron_fields['email'] }}" />
-              </div>
-              <div class="editor-label">
-                <label for="fname">First Name</label>
-              </div>
-              <div class="editor-field">
-                <input class="form-control" 
-                    id="fname" name="fname" type="text" 
-                    value="{{ patron_fields['fname'] }}" />
-              </div>
-              <div class="editor-label">
-                <label for="lname">Last Name</label>
-              </div>
-              <div class="editor-field">
-                <input class="form-control" 
-                    id="lname" name="lname" placeholder="Enter Last Name" 
-                    type="text" value="{{ patron_fields['lname'] }}" />
-              </div>
-              <div class="editor-label">
-                <label for="phone">Cell Phone</label>
-              </div>
-              <div class="editor-field">
-                <input class="form-control" 
-                    id="cell" name="cell" 
-                    placeholder="Enter Cell Phone Number" 
-                    type="text" value="{{ patron_fields['cell'] }}" />
-              </div>
+        <div class="text-wrapper">
+          <div class="box">
+            <div class="content-wrap">
+               <h2>Update Your Account Information</h2>
+               <div class="text-left">
+                 <div class="editor-label">
+                   <label for="email">Email Address</label>
+                 </div>
+                 <div class="editor-field">
+                   <input class="form-control" 
+                        id="email" name="email" placeholder="Enter Email" 
+                        type="text" value="{{ patron_fields['email'] }}" />
+                </div>
+                <div class="editor-label">
+                  <label for="fname">First Name</label>
+                </div>
+                <div class="editor-field">
+                  <input class="form-control" 
+                      id="fname" name="fname" type="text" 
+                      value="{{ patron_fields['fname'] }}" />
+                </div>
+                <div class="editor-label">
+                  <label for="lname">Last Name</label>
+                </div>
+                <div class="editor-field">
+                  <input class="form-control" 
+                      id="lname" name="lname" placeholder="Enter Last Name" 
+                      type="text" value="{{ patron_fields['lname'] }}" />
+                </div>
+                <div class="editor-label">
+                  <label for="phone">Cell Phone</label>
+                </div>
+                <div class="editor-field">
+                  <input class="form-control" 
+                      id="cell" name="cell" 
+                      placeholder="Enter Cell Phone Number" 
+                      type="text" value="{{ patron_fields['cell'] }}" />
+                </div>
 
-            </div>
-            <div class="action">
-              <input type="submit" value="Update" class="btn btn-primary" 
-                     name="update_account" id="update_account" 
-                     > 
+              </div>
+              <div class="action">
+                <input type="submit" value="Update" class="btn btn-primary" 
+                       name="update_account" id="update_account" 
+                       > 
 
-              <a class="btn btn-danger" href="/main" >Back</a>   
+                <a class="btn btn-danger" href="/main" >Back</a>   
+              </div>
             </div>
           </div>
         </div>
       </div>
-      </form>
+    </form>
+  </div>
 
 {% endblock %}

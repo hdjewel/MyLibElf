@@ -7,7 +7,7 @@ def get_bookshare_books(search_criteria):
 
      """
     print "\n in bookshare_apis.py \n"
-    limit = 10
+    limit = 300
     bs_url=('https://api.bookshare.org/book/search/author/%s/page/1/limit/%d/format/json?api_key=%s'
         % (search_criteria, limit,  BS_API_KEY))
     status = requests.get(bs_url)
@@ -16,15 +16,18 @@ def get_bookshare_books(search_criteria):
 
     # look for a convert from unicode 
     response_data = status.json
-    list_of_books = response_data['bookshare']['book']['list']['result']
-    for i in range(0,len(list_of_books)):
+    # print "response data =", response_data, "\n"
+    print "book count from search = ", response_data['bookshare']['book']['list']['totalResults']
+    book_list = response_data['bookshare']['book']['list']['result']
+    for i in range(0,len(book_list)):
         author = ''
-        for n in list_of_books[i]['author']:
+        for n in book_list[i]['author']:
             author = author + ", " + n
         #end for
-        list_of_books[i]['origin'] = 'BSORG'
-        list_of_books[i]['author'] = author.lstrip(',')
+        book_list[i]['origin'] = 'BSORG'
+        book_list[i]['author'] = author.lstrip(',')
     #end for
+    print "Bookshare book count = ", len(book_list), "\n"
     """ The returned list of books are a dictionary of the following keys:
     
          publisher ,  isbn13 ,  author ,  availableToDownload ,  title , 
@@ -40,6 +43,6 @@ def get_bookshare_books(search_criteria):
     #         count = count + 1
     # print "\n\n"
     # This sorts the list of books "in place"
-    list_of_books.sort()    
-    return list_of_books
+    book_list.sort()    
+    return book_list
 #end def

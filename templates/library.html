@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title%}
-    <title>Main Page<</title>
+    <title>Setup Libraries</title>
 {% endblock %}
 {% block body %}
 {{ session }}
@@ -11,10 +11,10 @@
     </div>
     <div class="container">
       <form class="form-library" method="POST" action="/add_library">
-        <div class="login-wrapper">
+        <div class="library-wrapper">
           <div class="box">
             <div class="content-wrap">
-              <h4> Here is the list of configured Library/Libraies information</h4>
+              <h4> Here is the list of configured Library/Libraries information</h4>
               <div class="text-left">
                 <table class="table" class="table table-striped">
                   <thead>
@@ -80,7 +80,7 @@
                        name="add_library_card" id="add_library" 
                        > 
               </div>
-            </div>
+            </div><br>
           <div class="action">
             <a  href="/main" >Back</a>   
           </div>
@@ -89,7 +89,4 @@
     </div>
 
 {% endblock %}
-
-
-
 

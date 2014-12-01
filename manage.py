@@ -1,6 +1,8 @@
 """ This module manage.py is the server module that handles all the call, 
       put, and post request for the web app.                              """
 from flask import Flask, render_template, redirect, request, flash, session
+from flask import Blueprint
+from flask.ext.paginate import Pagination
 import requests
 from sqlalchemy import desc
 import itertools
@@ -29,7 +31,14 @@ match, the password is correct. Otherwise, the password is incorrect.
 
 app = Flask(__name__)
 app.secret_key=APP_SECRET_KEY
-od_client_app_access_token = ""
+
+mod = Blueprint('list_of_books', __name__)
+""" ***********************************************  
+The routess between these starred lines are for testing purposes.
+
+"""
+
+
 """ test of api calls """
 @app.route('/token', methods=['POST'])
 def test_api():
@@ -37,6 +46,28 @@ def test_api():
     print "\n data == ", request.values
 #end def
 
+@app.route("/status") 
+def get_status():
+    return "<i>Working</i>"
+
+@app.route("/new-student", methods=['POST']) 
+def add_student():
+    name = request.form.get("name") 
+    """ add to database here """
+    return "Added " + name
+
+@app.route("/main") 
+def index_page():
+    return render_template("index.html")
+
+@app.route("/color") 
+def color():
+    name = request.args.get("name")
+    color = request.args.get("color")
+
+
+
+""" ***********************************************  """
 
 @app.route("/", methods=['GET'])
 def get_patron_login():
@@ -49,7 +80,6 @@ def get_patron_login():
 @app.route('/', methods=['POST'])
 def process_patron_login():
     error = None
-    response = None #need this definition of response because it's first used in an 'else' block.
     patron_email = request.form.get('email')
     patron_password = request.form.get('password')
 
@@ -62,8 +92,9 @@ def process_patron_login():
     # print "patron = ", patron
 
     if patron is None:
-        flash("Please enter a valid email and password.", "error")
-        return render_template('login.html')
+        flash("Please enter a valid email and password.")
+        error = "Invalid credentials"
+        return render_template('login.html', error=error)
     else:
         # print "patron id = ", patron.id
         # print "patron password = ", patron.password
@@ -72,25 +103,9 @@ def process_patron_login():
         session['fname'] = patron.fname
         # print "session --> ", session
         # print "first name == ", patron.fname
-        print "session dictionary === ", session, "\n"
-        overdrive_client_app_fields, response = overdrive_apis.log_into_overdrive()
-        print "app fields = ", overdrive_client_app_fields, "\n"
-        od_client_app_access_token = overdrive_client_app_fields['access_token']
     #end if
 
-    print response.status_code, "  ==  ", response.reason
-    if response.status_code > 201:
-        flash(("Action was not successful. %s == %s\n") % 
-                (response.status_code, response.reason))
-        return render_template('login.html')
-    elif response.status_code == 200:
-        return redirect('/main')
-        client_credentials = response.content
-    elif response.status_code == 201:
-        print "Post to get access token was successful"
-        return redirect('/main')
-
-    #end if
+    return redirect('/main')
 
 #end app.route
 
@@ -117,8 +132,9 @@ def redirect_to_overdrive_url():
 
 @app.route('/oauth_overdrive')
 def process_overdrive_response():
-
+    print "in process_overdrive response", "\n"
     session['patron_access_token'] = requests.args.get("code")
+    print "patron access token = ", session['patron_access_token'], "\n"
     if requests.args.get("state") != 'turtlebutt':
         flash(" Patron Access Token comprimised!")
     
@@ -181,47 +197,98 @@ def logout():
 @app.route('/process_books_read_by_patron')
 def get_books_read_by_patron():
 
+    search = False
+    if session['patron']:
+        search = False
+    try:
+        page = int(request.args.get('page', 1))
+    except ValueError:
+        page = 1
+
     list_of_books = model.get_finished_books(session['patron'])
-    return render_template('finished_book_list.html', 
-                            list_of_books=list_of_books)
+
+    pagination = Pagination(page=page, 
+                            total=list_of_books.count(len(list_of_books)), 
+                            search=search, 
+                            record_name='list_of_books')
+    print "dir of pagination", (dir(pagination)), "\name"
+    return render_template('finished_book_list.html',
+                           books=list_of_books,
+                           pagination=pagination,
+                           )
+
 #end app.route
 
 @app.route('/process_books_read')
 def get_books_read():
+    search = False
+    if session['patron']:
+        search = False
+    try:
+        page = int(request.args.get('page', 1))
+    except ValueError:
+        page = 1
 
     search_criteria = request.args.get('search')
     print "search == ", search_criteria
     if search_criteria == "":
-        flash("Please enter a Key word(s), author, or title.")
+        flash("Please enter an author, or a title.")
         return render_template('finished_book_list.html')
     else:
         print "get a selection of books"
         list_of_books = model.get_finished_books_by_criteria(search_criteria, 
                                                              session['patron'])
-    return render_template('finished_book_list.html', 
-                            list_of_books=list_of_books)
-  
+        pagination = Pagination(page=page, 
+                                total=list_of_books.count(len(list_of_books)), 
+                                search=search, 
+                                record_name='list_of_books')
+        print "dir of pagination", (dir(pagination)), "\name"
+        return render_template('finished_book_list.html',
+                               books=list_of_books,
+                               pagination=pagination,
+                               )
+#end app.route
+
+@app.route('/process_checked_outs', methods="GET")
+def get_checked_outs():
+
+    list_of_books = overdrive_apis.get_list_of_checkouts()
+    return render_template('hold_list.html', books=list_of_books, what='checkout')   
 #end app.route
 
 @app.route('/process_checked_outs')
-def get_checked_outs():
-
-    flash("The Check out process is under construction! Please check back soon!")
-    return render_template('index.html')
+def check_out_book(book):
+    success_code = overdrive_apis.checkout_book(book)
+    flash('The book was successfully checked out and is ready to be downloaded.')
+    return render_template('hold_list.html', books=book, what='checkout')
 #end app.route
 
-@app.route('/process_wish_lists')
+@app.route('/process_wish_lists', methods="GET")
 def get_wish_lists():
 
     flash("The Wish list feature is under construction! Please check back soon!")
     return render_template('index.html')
 #end app.route
 
-@app.route('/process_hold_lists')
+@app.route('/process_wish_lists')
+def put_on_wish_list(book):
+
+    flash("The Wish list feature is under construction! Please check back soon!")
+    return render_template('book_details.html', book=book)
+#end app.route
+
+@app.route('/process_hold_lists', methods="GET")
 def get_hold_lists():
 
-    flash("The Hold list feature is under construction! Please check back soon!")
-    return render_template('index.html')
+    list_of_books = overdrive_apis.get_hold_list()
+    return render_template('hold_list.html', books=list_of_books, what='hold')
+#end app.route
+
+@app.route('/process_hold_lists')
+def put_on_hold(book):
+    success_code = overdrive_apis.put_book_on_hold(book)
+    flash('The book was successfully put on hold.')
+    return render_template('hold_list.html', books=book, what='hold')
 #end app.route
 
 @app.route('/process_suggestions')
@@ -255,12 +322,12 @@ def search_results():
         return render_template('index.html')
 
 #end app.route
-@app.route("/book_details/<int:book>")
+@app.route("/book_details/book=<book>")
 def show_book(book):
     """This page shows the details of a given book, as well as giving an
     option to put the book on hold, on a wish list, or check out"""
     return render_template("book_details.html",
-                  display_book = book)
+                  book = book)
 
 #end app.route
 
