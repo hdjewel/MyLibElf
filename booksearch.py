@@ -44,9 +44,11 @@ def search(search_criteria, patron_id):
 		"""
 		book_list = []
 		if library_row['url'] == 'www.bookshare.org':
+			print "getting bookshare books\n"
 			# print "no bs search done. = testing only"
 			list_of_books = get_bs_books(list_of_books, search_criteria)
 		elif library_row['url'] == 'sfpl.org':
+			print "getting sfpl books\n"
 			# print "no sfpl search done. = testing only"
 			list_of_books = get_parsed_library_books(list_of_books, 
 													  search_criteria)
@@ -54,13 +56,14 @@ def search(search_criteria, patron_id):
 			if re.match('^api\.overdrive\.com', library_row['url']):
 				od_library_rows.append(library_row)
 			#end if
-		#end if		
-		if len(od_library_rows) > 0:
-			book_list =[]	
-			list_of_books = get_overdrive_books(list_of_books, search_criteria,
-												od_library_rows)
 		#end if
 	#end for
+	if len(od_library_rows) > 0:
+		book_list =[]	
+		list_of_books = get_overdrive_books(list_of_books, search_criteria,
+											od_library_rows)
+	#end if
+
 
 
 	list_of_books.sort()

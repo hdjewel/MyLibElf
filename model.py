@@ -208,12 +208,10 @@ def add_patron(db_session, patron_fields):
     db_session.commit()
 
     print "in add_patron"
-    print "\npatron_fields = ", patron_fields, "\n\n\n"
+
 #end def
 
 def update_patron(db_session, patron_fields):
-
-    print "fields are === ", patron_fields
 
     patron = Patron.query.filter_by(id=patron_fields['id']).first()
 
@@ -232,7 +230,7 @@ def update_patron(db_session, patron_fields):
         flash_msg = "Your account information was succesfully updated!"
     #end if
     return flash_msg
-    print "after an update = ", patron_fields, "\n"
+
 #end def
 
 def check_for_patron(db_session, patron_email, patron_password):
@@ -244,7 +242,6 @@ def check_for_patron(db_session, patron_email, patron_password):
 #end def
 
 def get_patron_info(patron_id):
-    # print "patron id = ", patron_id, "\n"
     patron = (db_session.query(Patron)
                 .filter_by(id=patron_id)
                 .first())
@@ -274,11 +271,6 @@ def get_finished_books_by_criteria(search_criteria, patron_id):
                                            Book.title.like(criteria) |
                                            Author.name.like(criteria))
                                    .order_by(Book.title).all())    
-    for finished_book, book, book_author, author in search_result:
-        print book.title
-        print author.name
-        print finished_book.date
-    #end for
 
     books_grouped_by_id = itertools.groupby(search_result, lambda x: x[1].id)
 
@@ -289,7 +281,6 @@ def get_finished_books_by_criteria(search_criteria, patron_id):
         for d in result_set:
             list_of_books += [(d[1].title, d[1].cover_png, d[0].date, d[3].name,
                       "".join(r[3].name for r in result_set))]
-            print "new author field = ", d[3], "\n"
         #end for
     #end for
 
@@ -305,11 +296,11 @@ def get_finished_books(patron_id):
                                            Patron.id == Patron_Library.patron_id,
                                            Patron_Library.library_id == Library.id)
                                    .all())
-    for patron, library, patron_library in search_result:
-        print "List of Library = ", patron.id, patron.lname,
-        print library.name, library.url
-        print "\n"
-    #end for
+    # for patron, library, patron_library in search_result:
+    #     print "List of Library = ", patron.id, patron.lname,
+    #     print library.name, library.url
+    #     print "\n"
+    # #end for
 
     search_result = (db_session.query(Finished_Book,
                                          Book,
@@ -320,14 +311,6 @@ def get_finished_books(patron_id):
                                            Book.id == Book_Author.book_id,
                                            Book_Author.author_id == Author.id)
                                    .order_by(Book.title).all())
-
-
-    
-    for finished_book, book, book_author, author in search_result:
-        print book.title
-        print author.name
-        print finished_book.date
-    #end for
 
     books_grouped_by_id = itertools.groupby(search_result, lambda x: x[1].id)
     list_of_books = []
@@ -359,7 +342,6 @@ def get_patron_libraries(patron_id):
         library_dict['patron'] = patron_id
         library_dict['name'] = library.name
         library_dict['access_token'] = library.access_token
-        print "library dictionary = ", library_dict, "\n"
         list_of_libraries.append(library_dict)
     #end for
 
@@ -369,8 +351,6 @@ def get_patron_libraries(patron_id):
 
 def get_libraries_info(db_session, session):
     library_list = (db_session.query(Library)
-                # .filterby(Patron_Library.patron == session['patron'],
-                            # Library.id == Patron_Library.library_id)
                 .all())
     print "in setup library info \n"
     return library_list

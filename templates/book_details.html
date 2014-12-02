@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="editor-label">
-                    <label for="synpsis">Synopsis   : </label>{{ book['synopsis'] }}
+                    <label for="breifSynopsis">breifSynopsis   : </label>{{ book['breifSynopsis'] }}
                 </div>
 
                 <div class="editor-label">
@@ -54,10 +54,11 @@
                           data-title="{{ book['title'] }}"
                           data-images="{{ book['images'] }}"
                           data-id="{{ book['id'] }}"
-                          data-synopsis="{{ book['synopsis'] }}"
+                          data-breifSynopsis="{{ book['breifSynopsis'] }}"
                           data-expires="{{ book['expires'] }}"
                           data-metadata="{{ book['metadata'] }}"                    
                           href="/process_hold_lists" >Put book on Hold</a>
+                       <a href="/process_wish_lists" > Put book on Wish list</a>
                        <a class="link_to_overdrive" 
                           data-origin="{{ book['origin'] }}"
                           data-author="{{ book['author'] }}"
@@ -65,18 +66,7 @@
                           data-title="{{ book['title'] }}"
                           data-images="{{ book['images'] }}"
                           data-id="{{ book['id'] }}"
-                          data-synopsis="{{ book['synopsis'] }}"
-                          data-expires="{{ book['expires'] }}"
-                          data-metadata="{{ book['metadata'] }}"   
-                          href="/process_wish_lists" > Put book on Wish list</a>
-                       <a class="link_to_overdrive" 
-                          data-origin="{{ book['origin'] }}"
-                          data-author="{{ book['author'] }}"
-                          data-avaiableToDownload="{{ book['avaiableToDownload'] }}"
-                          data-title="{{ book['title'] }}"
-                          data-images="{{ book['images'] }}"
-                          data-id="{{ book['id'] }}"
-                          data-synopsis="{{ book['synopsis'] }}"
+                          data-breifSynopsis="{{ book['breifSynopsis'] }}"
                           data-expires="{{ book['expires'] }}"
                           data-metadata="{{ book['metadata'] }}"   
                           href="/process_checked_outs" > Check out book</a>
@@ -99,7 +89,7 @@
         <input id="id", type='hidden', name='id' value="" >
         <input id="metadata", type='hidden', name='metadata' value="" >
         <input id="expires", type='hidden', name='expires' value="" >
-        <input id="synopsis", type='hidden', name='synopsis' value="" >
+        <input id="breifSynopsis", type='hidden', name='breifSynopsis' value="" >
       </form>
     </div>
     <!-- jpaginate-jquery -->
@@ -108,9 +98,9 @@
 
 <SCRIPT LANGUAGE="JavaScript">
 
-$('.bookDetailLink').click(function(e) {
+$('.link_to_overdrive').click(function(e) {
   e.preventDefault();
-  var bookData = e.currentTarget.dataset;
+    var bookData = e.currentTarget.dataset;
   $('#origin').val(bookData.origin);
   $('#author').val(bookData.author);
   $('#availableToDownload').val(bookData.availableToDownload);
@@ -119,7 +109,7 @@ $('.bookDetailLink').click(function(e) {
   $('#id').val(bookData.id);
   $('#metadata').val(bookData.metadata);
   $('#expires').val(bookData.expires);
-  $('#synopsis').val(bookData.synopsis);
+  $('#breifSynopsis').val(bookData.breifSynopsis);
   $('#bookDataForm').submit();
   console.log("in bookDetailLink function");
 } );

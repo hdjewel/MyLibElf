@@ -24,6 +24,7 @@ def get_bookshare_books(search_criteria):
         book_list[i]['origin'] = 'BSORG'
         book_list[i]['author'] = author.lstrip(',')
     #end for
+    print "book list == ", book_list[0], "\n"
     print "Bookshare book count = ", len(book_list), "\n"
     """ The returned list of books are a dictionary of the following keys:
     

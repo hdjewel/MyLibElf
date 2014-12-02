@@ -73,6 +73,7 @@ def get_book_details(sfpl_book_detail_url):
 	response_data = requests.get(sfpl_book_detail_url)
 	book_detail_html = pq(response_data.content)
 
+	print "book_detail_html = ", book_detail_html, "\n"
 	book_data = parse_title_author(book_detail_html)
 	book_data = parse_book_cover(book_detail_html, book_data)
 	book_data['availableToDownload'] = '1'
@@ -131,7 +132,6 @@ def get_books(search_criteria):
 		print "no books found at SF Public Library"
 	else:
 		list_of_books = get_author_books(sfpl_books_list_html)
-		print "\n\n"
 		print "nbr of books in list", len(list_of_books), "\n"
 
 	""" add logic to check the number of books parsed against the

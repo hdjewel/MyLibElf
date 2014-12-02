@@ -101,7 +101,7 @@ def redirect_to_overdrive_url():
     """ This is the url to the OverDrive integration test system 
 
     """
-    od_url = 'https://oauth.overdrive.com/auth?clientid=LORETTAPOWELL&redirect_uri=http://localhost:5000/oauth_overdrive&scope=accountId:4425&response_type=code&state=turtle'
+    od_url = 'https://oauth.overdrive.com/auth?client_id=LORETTAPOWELL&redirect_uri=http%3A%2F%2F10.1.10.175%3A5000%2Foauth_overdrive&scope=accountId:4425&response_type=code&state=turtle'
     # od_url = 'https://berkeleyca.libraryreserve.com/10/50/en/SignIn.htm?URL=SignOutConfirm%2ehtm'
     return redirect(od_url)
 
@@ -113,12 +113,14 @@ def process_overdrive_response():
     """
 
     print "in process_overdrive response", "\n"
-    session['patron_access_token'] = requests.args.get("code")
+    session['patron_access_token'] = request.args.get("code")
     print "patron access token = ", session['patron_access_token'], "\n"
-    if requests.args.get("state") != 'turtle':
+    if request.args.get("state") != 'turtle':
         flash(" Patron Access Token comprimised!")
+    else:
+        flash(" Patron Access Token received!")
     
-    return redirect('/library')
+    return redirect('/')
 
     """
     {redirectUri}?code={authorizationCode}[&state={optionalStateParameter}
@@ -320,14 +322,14 @@ def get_hold_lists():
     return render_template('hold_list.html', list_of_books=list_of_books, what='hold')
 #end app.route
 
-@app.route('/process_hold_lists')
+@app.route('/process_hold_lists', methods=['POST'])
 def put_on_hold():
     """ This route is calls the black box OverDrive route that is being used
          because the patron_access_token is not yet available to this app.
     """
     book = request.form
     print "book from request.form in process_hold_lists = ", book, "\n"
-    success_code = overdrive_apis.put_book_on_hold(book)
+    # success_code = overdrive_apis.put_book_on_hold(book)
     flash('The book was successfully put on hold.')
     return render_template('book_details.html', list_of_books=book, what='hold')
 #end app.route
@@ -464,4 +466,4 @@ def log_the_patron_in():
 #end def
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = True, host='0.0.0.0')
