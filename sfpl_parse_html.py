@@ -73,7 +73,6 @@ def get_book_details(sfpl_book_detail_url):
 	response_data = requests.get(sfpl_book_detail_url)
 	book_detail_html = pq(response_data.content)
 
-	print "book_detail_html = ", book_detail_html, "\n"
 	book_data = parse_title_author(book_detail_html)
 	book_data = parse_book_cover(book_detail_html, book_data)
 	book_data['availableToDownload'] = '1'
