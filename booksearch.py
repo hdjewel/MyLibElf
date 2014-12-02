@@ -53,22 +53,15 @@ def search(search_criteria, patron_id):
 		else: 
 			if re.match('^api\.overdrive\.com', library_row['url']):
 				od_library_rows.append(library_row)
-
-	if len(od_library_rows) > 0:
-		book_list =[]	
-		list_of_books = get_overdrive_books(list_of_books, search_criteria,
-											od_library_rows)
+			#end if
+		#end if		
+		if len(od_library_rows) > 0:
+			book_list =[]	
+			list_of_books = get_overdrive_books(list_of_books, search_criteria,
+												od_library_rows)
 		#end if
 	#end for
-	# print "all books = \n", list_of_books
-	
-	# print "\n book list page fields = "
-	# for row in list_of_books:
-	# 	print "\n row = \n", row
-	# 	print "image = ", row['images'], 
-	# 	print "title = ", row['title'], 
-	# 	print "author = ", row['author'],
-	# 	print "available = ", row['availableToDownload']
+
 
 	list_of_books.sort()
 

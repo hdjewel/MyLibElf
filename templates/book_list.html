@@ -4,9 +4,9 @@
     <title>Book list</title>
 {% endblock %}
 {% block body %}
-{{ session }}
+
     <div class="container-fluid">
-      <form action="/process_search?source=newbooks" method="get">
+      <form NAME="cf" action="/process_search?source=newbooks" method="get">
         <div class="book-wrapper">
           <div class="box">
             <div class="content-wrap">
@@ -38,14 +38,40 @@
                           </td>
                           <td>
                             {% if book['origin'] == "ODCOM" %} 
-
-                            <a href="{{ url_for('show_book', book=book) }}">{{ book['title'] }}</a>
+                             <a class="bookDetailLink" NAME="cfd" 
+                                data-origin="{{ book['origin'] }}"
+                                data-author="{{ book['author'] }}"
+                                data-avaiableToDownload="{{ book['avaiableToDownload'] }}"
+                                data-title="{{ book['title'] }}"
+                                data-images="{{ book['images'] }}"
+                                data-id="{{ book['id'] }}"
+                                data-metadata="{{ book['metadata'] }}"
+                                data-synopsis="{{ book['synopsis'] }}"
+                                data-expires="{{ book['expires'] }}"
+                                href="{{ url_for('show_book') }}">{{ book['title'] }}</a>
                             {% else %}
                               {{ book['title'] }}
                             {% endif %}
                           </td>
                           <td>{{ book['author'] }}</td>
-                          <td>{{ book['origin'] }}</td>
+                          <td>
+                            {% if book['origin'] == "ODCOM" %} 
+                             <img class='OverDriveLogo' width=42px height=42px
+                                  src="https://developerportaldev.blob.core.windows.net/media/Default/images/Logos/O_42x42.jpg" 
+                                  border="0" >
+                            {% elif book['origin'] == "BSORG" %}
+                            <img class='BookShareLogo' width=42px height=42px
+                                  src="https://www.bookshare.org/cms/sites/default/files/favicon_0.ico" 
+                                  border="0" >
+                            {% elif book['origin'] == "SFPL" %}
+                            <img class='OverDriveLogo' width=42px height=42px
+                                  src="/static/img/SFPL.png" 
+                                  border="0" >
+                            {% else %}
+                              {{ book['origin'] }}
+                            }
+                            {% endif %}
+                          </td>
                         </tr>
                       {% endfor %}
                     {% else %}
@@ -54,6 +80,7 @@
                     {% endfor %}
                   </tbody>
                 </table>
+                {{ pagination.links|safe }}
               </div>
           <div>
             <h3>Search Again</h3> 
@@ -64,38 +91,55 @@
             <a class="btn btn-primary" ><button>Search</button></a><br><br>
           </div>
           <div class="action">
-            <a class="btn btn-danger" href="/main" >Back</a>  
-            <a class="link_to_overdrive" href="{{ url_for('show_book', book=book) }}" >Detail</a>   
+            <a class="btn btn-danger" href="/main" >Back</a>
+            <br><br>   
+            <div align="center">
+            <!-- flask pagination -->
+            {{ pagination.info|safe }}
+            {{ pagination.links|safe }}
+            </div>  
           </div>
-
             </div>
           </div>
         </div>
       </form>
+     <form action="/book_details" method="POST" id="bookDataForm">
+        <input id="bookDataField" type="hidden" name="bookData" value="" >
+        <input id="origin", type='hidden', name='origin' value="" >
+        <input id="author", type='hidden', name='author' value="" >
+        <input id="availableToDownload", type='hidden', 
+               name='availableToDownload' value="" >
+        <input id="title", type='hidden', name='title' value="" >
+        <input id="images", type='hidden', name='images' value="" >
+        <input id="id", type='hidden', name='id' value="" >
+        <input id="expires", type='hidden', name='expires' value="" >
+        <input id="synopsis", type='hidden', name='synopsis' value="" >
+        <input id="metadata", type='hidden', name='metadata' value="" >
+      </form>
+ 
     </div>
     <!-- jpaginate-jquery -->
 <script src="http://c.fzilla.com/1286136086-jquery.js"></script>  
 <script src="http://c.fzilla.com/1291523190-jpaginate.js"></script>  
-<script>  
-$(document).ready(function(){  
-    $("#content").jPaginate((items: 5, pagination_class: "table",
-                              position: "both"));                         
-});  
-</script>  
+
+<SCRIPT LANGUAGE="JavaScript">
+
+$('.bookDetailLink').click(function(e) {
+  e.preventDefault();
+  var bookData = e.currentTarget.dataset;
+  $('#origin').val(bookData.origin);
+  $('#author').val(bookData.author);
+  $('#availableToDownload').val(bookData.availableToDownload);
+  $('#title').val(bookData.title);
+  $('#images').val(bookData.images);
+  $('#id').val(bookData.id);
+  $('#metadata').val(bookData.metadata);
+  $('#expires').val(bookData.expires);
+  $('#synopsis').val(bookData.synopsis);
+  $('#bookDataForm').submit();
+  console.log("in bookDetailLink function");
+} );
+
+</SCRIPT>
 {% endblock %}
 
-          <div>
-            <!-- DC Pagination:A1 Start -->
-            <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
-              <li><a href="#" class="first">First</a></li>
-              <li><a href="#" class="previous">Previous</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#" class="current">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#" class="next">Next</a></li>
-              <li><a href="#" class="last">Last</a></li>
-            </ul>
-            <!-- DC Pagination:A1 End -->
-          </div>

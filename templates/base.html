@@ -1,10 +1,10 @@
 <html>
     <head>
-    This is from the base
+
     {% block title%}{% endblock %}
     <style>
-      body {
-          /*background-image: url("/static/img/library_pataskala_026.jpg");*/
+          body {
+          background-image: url("/static/img/library_pataskala_026.jpg");
           background-size: cover;
           -webkit-background-size: cover;
           -moz-background-size: cover;
@@ -13,20 +13,18 @@
           width: 150px;
       }
 
-
-
     </style>
 
     </head>
     <body>
 
-<style type="static/css"> </style>
+    <style type="static/css"> </style>
         {% block body_header %}
 
 
         {% endblock %}
 
-<style>
+    <style>
 
         .library-wrapper {
             position: absolute;
@@ -68,6 +66,10 @@
 
         .book-wrapper .table td.date {
             white-space: nowrap;
+        }
+
+        .book-wrapper li.noresults {
+            list-style-type: none;
         }
 
         .book-wrapper .link_to_overdrive {
@@ -235,7 +237,6 @@
 
         .text-wrapper .already p {
           display: inline-block;
-
           color: #222;
         }
 
@@ -281,18 +282,22 @@
             padding: .1em .25em;
             font-size: 150%;
         }
-/* jpaginate-jquery*/
-        .pagination {list-style:none; margin:0px; padding:0px;}  
-        .pagination li{float:left; margin:3px;}  
-        .pagination li a{   display:block; padding:3px 5px; color:#fff; background-color:#44b0dd; text-decoration:none;}  
-        .pagination li a.active {border:1px solid #000; color:#000; background-color:#fff;}  
-        .pagination li a.inactive {background-color:#eee; color:#777; border:1px solid #ccc;}  
+
+        .flashes {
+            background-color: lightcyan;
+            width: 630px;
+            text-align: center;
+            list-style-type: none;
+            top: 90px;
+        }
+
 
 </style>
 
         {% block body %}{% endblock %}
-        {% block trailer %}
-          <div class="container">
+
+          <div class="content-wrap">
+            <div class="alert alert-info" role="alert">
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
@@ -302,8 +307,9 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
+            </div>
           </div>
-        {% endblock %}
+
 
     </body>
 </html>

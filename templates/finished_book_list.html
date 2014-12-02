@@ -5,8 +5,7 @@
 
 {% endblock %}
 {% block body %}
-{{ session }}
-{{ books }}
+
     <div class="container">
       <form action="/process_books_read" method="GET" >
         <div class="book-wrapper">
@@ -14,14 +13,10 @@
             <div class="content-wrap">
               <h4>  These are the books that you have finished reading, {{ session['fname'] }}: </h4>
               <div class="text-left">
-              <!-- flask pagination -->
-                {{ pagination.info|safe }}
-                {{ pagination.links|safe }}
                 <table class="table" cellspacing="10">
                   <thead>
                     <tr>
                       <th>Cover</th>
-                      <th>#</th>
                       <th>Title</th>
                       <th>Author</th>
                       <th>Read Date</th>
@@ -29,7 +24,7 @@
                   </thead>
                   <tbody class="table-striped">
                   {% for book in list_of_books %}
-                    <tr>{{ loop.index + list_of_books.skip }}</td>
+                    <tr>
                       <td>{% if book[1] == None %} 
                             <img class='bookImage' width=40px height=65px
                                src="http://bestclipartblog.com/clipart-pics/book-clip-art-12.jpg" 
@@ -40,7 +35,6 @@
                                src='{{ book[1] }}'>
                           {% endif %}
                       </td>
-                      <td>
                       <td>{{ book[0] }}</td>
                       <td>
                           {% if book[4] != "" %}
@@ -52,7 +46,7 @@
                       <td class="date">{{ book[2] }}</td>
                     </tr>
                   {% else %}
-                    <li>No results :(</li>
+                    <li class="noresults" >No results :(</li>
                     <br>
                   {% endfor %}
                   </tbody>
@@ -71,29 +65,21 @@
               </div>
               <br>
               <div class="action">
-                <a class="btn btn-danger" href="/main" >Back</a>   
+                <a class="btn btn-danger" href="/main" >Back</a>
+                <br><br>   
+                <div align="center">
+                <!-- flask pagination -->
+                {{ pagination.info|safe }}
+                {{ pagination.links|safe }}
+                </div>
               </div>
 
             </div>
+
           </div>
         </div>
       </form>
     </div>
 
 {% endblock %}
-
-
-              <div>
-              <!-- DC Pagination:A1 Start -->
-              <ul class="tsc_pagination tsc_paginationA tsc_paginationA01" >
-                <li><a href="#" class="first">First</a></li><li><a href="#" class="previous">Previous</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#" class="current">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#" class="next">Next</a></li>
-                <li><a href="#" class="last">Last</a></li>
-              </ul>
-              <!-- DC Pagination:A1 End -->
-              </div>
+=

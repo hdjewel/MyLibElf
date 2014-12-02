@@ -34,13 +34,11 @@ def parse_title_author(book_detail_html):
 	saved_data = ''
 	name = ''
 	html_tags = book_detail_html('td .bibInfoData strong')
-	# print "html tags for title and author are ==> ", html_tags, "\n"
 	for i in html_tags:
 		if i.text == 'eBook':
 			loop_cnt = loop_cnt - 1
 
 		elif loop_cnt == 1 or saved_data == i.text:
-			# print "in the if statment \n"
 			saved_data = i.text	
 			i.text = i.text.strip(' / ')
 			i.text = i.text.replace(' [electronic resource]', '')
@@ -50,39 +48,23 @@ def parse_title_author(book_detail_html):
 			book_data['title'] = i.text
 			loop_cnt = 1
 		elif loop_cnt == 2:
-			# print "in 2 == ", book_data, "\n"
-			# print i.text, "\n"
-			# print saved_data, "\n"
 			i.text = i.text.replace(' [electronic resource]', '')
 			i.text = i.text.replace('ebook', '')
 			i.text = i.text.replace('eBook', '')		
 			name = i.text
 		elif loop_cnt == 3:
-			# print "in 3 == ", book_data, "\n"
-			# print i.text, "\n"
-			# print saved_data, "\n"
 			i.text = i.text.replace(' [electronic resource]', '')
 			i.text = i.text.replace(' ebook', '')
 			i.text = i.text.replace(' eBook', '')
 			book_data['author'] = name + " " + i.text
-		# elif loop_cnt == 4:
-		# 	print "==%s==" % i.text
-		# 	print "==%s==" % book_data['author']
-		# 	book_data['author'] = book_data['author'].lstrip()
-		# 	i.text = i.text.replace(' [electronic resource]', '')
-		# 	i.text = i.text.replace(' ebook', '')
-		# 	i.text = i.text.replace(' eBook', '')
-		# 	book_data['author'] = name + " " + i.text
 		#end if
 		loop_cnt = loop_cnt + 1
-	# print "author title = ", book_data, "\n"
 	return book_data
 #end def
 
 def parse_book_cover(book_detail_html, book_data):
 	i_tags = book_detail_html('div .resourcebox img[src]')
 	book_data['images'] = i_tags[0].attrib['src']
-	# print "images =", book_data, '\n'
 	return book_data	
 #end def
 
@@ -115,9 +97,7 @@ def get_author_books(sfpl_books_list_html):
 			else:
 				sfpl_book_detail_url = "http://sflib1.sfpl.org%s" % book_url_in_href.attrib['href']
 				sfpl_book_cnt = sfpl_book_cnt + 1
-				# print sfpl_book_detail_url, "\n"
 				book_dict = get_book_details(sfpl_book_detail_url)
-				# print "book row = ", book_dict
 				list_book = [book_dict]
 				list_of_books.extend(list_book)
 			#end if
@@ -139,7 +119,6 @@ def get_books(search_criteria):
 	sfpl_url = 'http://sflib1.sfpl.org/search~S1/?searchtype=X&searcharg='
 	sfpl_url = sfpl_url + preped_search_criteria
 	sfpl_url = sfpl_url + '+ebook&searchscope=1&sortdropdown=-&SORT=DZ&extended=0&SUBMIT=Search&availlim=1&searchlimits='
-	print sfpl_url, "\n"
 
 	# make a get call to SF Public Library
 	response_data = requests.get(sfpl_url)

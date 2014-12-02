@@ -1,5 +1,7 @@
-""" This module manage.py is the server module that handles all the call, 
-      put, and post request for the web app.                              """
+""" This route manage.py is the server module that handles all the call, 
+      put, and post request for the web app.  
+
+"""
 from flask import Flask, render_template, redirect, request, flash, session
 from flask import Blueprint
 from flask.ext.paginate import Pagination
@@ -10,9 +12,13 @@ import model
 from local_settings import APP_SECRET_KEY
 import overdrive_apis
 import booksearch
+import json
 
 # for salting passwords use os.urandom
 """
+The following security logic will be implemented if this app ever is used by 
+    persons other than the original developer.
+
 To Store a Password
 
 1 Generate a long random salt using a CSPRNG.
@@ -32,42 +38,7 @@ match, the password is correct. Otherwise, the password is incorrect.
 app = Flask(__name__)
 app.secret_key=APP_SECRET_KEY
 
-mod = Blueprint('list_of_books', __name__)
-""" ***********************************************  
-The routess between these starred lines are for testing purposes.
-
-"""
-
-
-""" test of api calls """
-@app.route('/token', methods=['POST'])
-def test_api():
-    print "\n headers == ", request.headers
-    print "\n data == ", request.values
-#end def
-
-@app.route("/status") 
-def get_status():
-    return "<i>Working</i>"
-
-@app.route("/new-student", methods=['POST']) 
-def add_student():
-    name = request.form.get("name") 
-    """ add to database here """
-    return "Added " + name
-
-@app.route("/main") 
-def index_page():
-    return render_template("index.html")
-
-@app.route("/color") 
-def color():
-    name = request.args.get("name")
-    color = request.args.get("color")
-
-
-
-""" ***********************************************  """
+mod = Blueprint('books', __name__)
 
 @app.route("/", methods=['GET'])
 def get_patron_login():
@@ -79,6 +50,10 @@ def get_patron_login():
  
 @app.route('/', methods=['POST'])
 def process_patron_login():
+    """ This route allows the patron to log into the app if their 
+         information is configured in the database.
+
+    """
     error = None
     patron_email = request.form.get('email')
     patron_password = request.form.get('password')
@@ -86,23 +61,15 @@ def process_patron_login():
     patron = model.check_for_patron(model.db_session, 
                                     patron_email, 
                                     patron_password)
-    # print "entered email = ", patron_email
-    # print "password = ", patron_password
-    # print "\n\n"
-    # print "patron = ", patron
 
     if patron is None:
         flash("Please enter a valid email and password.")
         error = "Invalid credentials"
         return render_template('login.html', error=error)
     else:
-        # print "patron id = ", patron.id
-        # print "patron password = ", patron.password
         session['logged_in'] = True
         session['patron'] = patron.id
         session['fname'] = patron.fname
-        # print "session --> ", session
-        # print "first name == ", patron.fname
     #end if
 
     return redirect('/main')
@@ -111,6 +78,13 @@ def process_patron_login():
 
 @app.route('/overdrive_login')
 def redirect_to_overdrive_url():
+    """ This route gets the patron_access_token from OverDrive after the patron
+         "logs into" the library using OverDrive Oauthentication.
+
+         The level of access this app has is for the OverDrive integration 
+          system and this app does not have the authority from OverDrive to
+          access patron information yet.
+    """
     from local_settings import OD_API_CLIENT_KEY
 
     # od_url_clientid = OD_API_CLIENT_KEY
@@ -127,15 +101,21 @@ def redirect_to_overdrive_url():
     """ This is the url to the OverDrive integration test system 
 
     """
-    od_url = 'https://oauth.overdrive.com/auth?clientid=LORETTAPOWELL&redirect_uri=http://localhost:5000/oauth_overdrive&scope=accountId:4425&response_type=code&state=turtlebutt'
+    od_url = 'https://oauth.overdrive.com/auth?clientid=LORETTAPOWELL&redirect_uri=http://localhost:5000/oauth_overdrive&scope=accountId:4425&response_type=code&state=turtle'
+    # od_url = 'https://berkeleyca.libraryreserve.com/10/50/en/SignIn.htm?URL=SignOutConfirm%2ehtm'
     return redirect(od_url)
 
 @app.route('/oauth_overdrive')
 def process_overdrive_response():
+    """ This route will be used by the OverDrive APIs to redirect the patron's 
+         when they have closed the external OverDrive library login screen.
+
+    """
+
     print "in process_overdrive response", "\n"
     session['patron_access_token'] = requests.args.get("code")
     print "patron access token = ", session['patron_access_token'], "\n"
-    if requests.args.get("state") != 'turtlebutt':
+    if requests.args.get("state") != 'turtle':
         flash(" Patron Access Token comprimised!")
     
     return redirect('/library')
@@ -146,47 +126,57 @@ def process_overdrive_response():
 
 @app.route('/main')
 def main():
+    """ This route displays the main/index page.
+
+    """
     return render_template('index.html')
 #end app.route
 
 @app.route('/library', methods=['GET'])
 def display_library_info():
-    print "in route library \n"
+    """ This route gets the list of libraries and displays the list.
+
+    """
+    print "in display library info \n"
     library_list = model.get_libraries_info(model.db_session, session)
     return render_template('library.html', libraries=library_list)
 #end app.route
 
 @app.route('/add_library', methods=['POST'])
 def process_add_library():
+    """ This route allows the patron to add libraries to the app.
+
+    """
     print "in route add_library \n"
 
     library_fields = []
-
     library_name = request.form.get('libraryname')
     library_card_nbr = request.form.get('librarycardnbr')
     library_pin = request.form.get('librarypin')
     library_url = request.form.get('url')
     library_fields = (library_name, library_card_nbr, library_pin,  library_url)
-    print "library row after join -- ", library_fields, "\n"
-    print "library card nbr = ", library_card_nbr, "\n"
-    library = model.check_for_library(model.db_session, 
-                                    library_card_nbr)
+    if (library_name == "" or library_card_nbr == "" 
+    or library_pin == "" or library_url == ""):
+        flash("Please enter all four fields: Library name, card number, " + 
+            "pin and Library URL.")
+    else:
+        library = model.check_for_library(model.db_session, 
+                                        library_card_nbr)
 
-    # for n in library:
-    print library.name
-    print library.card_nbr
-    print library.pin
-    print library.url
-
-    if library is None:
-        model.add_library(model.db_session, library_fields)
-    
+        if library is None:
+            model.add_library(model.db_session, library_fields)
+        fLash('The library was successfully added.')
+        #end if
+    #end if
     return redirect('/library')
 
 #end app.route
 
 @app.route('/logout')
 def logout():
+    """ This route logs the patron off the app.
+
+    """
     session.pop('logged_in', None)
     session.pop('fname', None)
     session.pop('patron', None)
@@ -196,7 +186,9 @@ def logout():
 
 @app.route('/process_books_read_by_patron')
 def get_books_read_by_patron():
-
+    """ This route get all the "finished reading" books for a given patron and 
+         displays the list of books.
+    """
     search = False
     if session['patron']:
         search = False
@@ -208,19 +200,21 @@ def get_books_read_by_patron():
     list_of_books = model.get_finished_books(session['patron'])
 
     pagination = Pagination(page=page, 
-                            total=list_of_books.count(len(list_of_books)), 
+                            total=len(list_of_books), 
                             search=search, 
                             record_name='list_of_books')
-    print "dir of pagination", (dir(pagination)), "\name"
     return render_template('finished_book_list.html',
-                           books=list_of_books,
+                           list_of_books=list_of_books,
                            pagination=pagination,
                            )
-
 #end app.route
 
 @app.route('/process_books_read')
 def get_books_read():
+    """ This route gets the list of books in the "finished reading" data set
+         for the given search criteria and displays it.
+
+    """
     search = False
     if session['patron']:
         search = False
@@ -230,69 +224,119 @@ def get_books_read():
         page = 1
 
     search_criteria = request.args.get('search')
-    print "search == ", search_criteria
     if search_criteria == "":
-        flash("Please enter an author, or a title.")
-        return render_template('finished_book_list.html')
+        list_of_books = []
+        pagination = Pagination(page=page, 
+                        total=len(list_of_books), 
+                        search=search, 
+                        record_name='list_of_books')
+
+        flash("Please enter an author or a title.")
+
+        return render_template('finished_book_list.html',
+                           list_of_books=list_of_books,
+                           pagination=pagination,
+                           )
     else:
         print "get a selection of books"
         list_of_books = model.get_finished_books_by_criteria(search_criteria, 
                                                              session['patron'])
+
         pagination = Pagination(page=page, 
-                                total=list_of_books.count(len(list_of_books)), 
+                                total=len(list_of_books), 
                                 search=search, 
                                 record_name='list_of_books')
-        print "dir of pagination", (dir(pagination)), "\name"
+
         return render_template('finished_book_list.html',
-                               books=list_of_books,
+                               list_of_books=list_of_books,
                                pagination=pagination,
                                )
 #end app.route
 
-@app.route('/process_checked_outs', methods="GET")
+@app.route('/get_checked_outs')
 def get_checked_outs():
-
-    list_of_books = overdrive_apis.get_list_of_checkouts()
-    return render_template('hold_list.html', books=list_of_books, what='checkout')   
+    """ This route is calls white box OverDrive module that is being used
+         because the patron_access_token is not yet available to this app.
+    
+         This white box route will return a list as if the remote library 
+          had been accessed.
+    """
+    no_token = 'Y'
+    list_of_books = overdrive_apis.get_list_of_checkouts(no_token)
+    return render_template('hold_list.html', list_of_books=list_of_books, what='checkout')   
 #end app.route
 
 @app.route('/process_checked_outs')
-def check_out_book(book):
+def check_out_book():
+    """ This route is calls the black box OverDrive module that is being used
+         because the patron_access_token is not yet available to this app.
+    """
+    book = request.form
     success_code = overdrive_apis.checkout_book(book)
     flash('The book was successfully checked out and is ready to be downloaded.')
-    return render_template('hold_list.html', books=book, what='checkout')
+    return render_template('book_details.html', list_of_books=book, what='checkout')
 #end app.route
 
-@app.route('/process_wish_lists', methods="GET")
-def get_wish_lists():
+@app.route('/process_checked_ins')
+def check_in_book():
+    """ This route is calls the black box OverDrive module that is being used
+         because the patron_access_token is not yet available to this app.
+    """
+    book = request.form
+    success_code = overdrive_apis.checkin_book(book)
+    flash('The book was successfully checked in and is ready to be downloaded.')
+    return render_template('book_details.html', list_of_books=book, what='checkout')
+#end app.route
 
+@app.route('/get_wish_lists', methods=["GET"])
+def get_wish_lists():
+    """ OverDrive does not yet provide an API to retrieve books on patron's
+         wish list.
+    """
     flash("The Wish list feature is under construction! Please check back soon!")
     return render_template('index.html')
 #end app.route
 
 @app.route('/process_wish_lists')
-def put_on_wish_list(book):
-
+def put_on_wish_list():
+    """ OverDrive does not yet provide an API to retrieve books on patron's
+         wish list.
+    """
+    book = request.form
     flash("The Wish list feature is under construction! Please check back soon!")
-    return render_template('book_details.html', book=book)
+    return render_template('book_details.html', list_of_books=book)
 #end app.route
 
-@app.route('/process_hold_lists', methods="GET")
+@app.route('/get_hold_lists', methods=["GET"])
 def get_hold_lists():
-
-    list_of_books = overdrive_apis.get_hold_list()
-    return render_template('hold_list.html', books=list_of_books, what='hold')
+    """ This route is calls white box OverDrive route that is being used
+         because the patron_access_token is not yet available to this app.
+    
+         This white box module will return a list as if the remote library 
+          had been accessed.
+    """
+    no_token = 'Y'
+    list_of_books = overdrive_apis.get_hold_list(no_token)
+    return render_template('hold_list.html', list_of_books=list_of_books, what='hold')
 #end app.route
 
 @app.route('/process_hold_lists')
-def put_on_hold(book):
+def put_on_hold():
+    """ This route is calls the black box OverDrive route that is being used
+         because the patron_access_token is not yet available to this app.
+    """
+    book = request.form
+    print "book from request.form in process_hold_lists = ", book, "\n"
     success_code = overdrive_apis.put_book_on_hold(book)
     flash('The book was successfully put on hold.')
-    return render_template('hold_list.html', books=book, what='hold')
+    return render_template('book_details.html', list_of_books=book, what='hold')
 #end app.route
 
 @app.route('/process_suggestions')
 def get_suggestions():
+    """ This route would get the 'recommendations' from the Libraries 
+         configured with OverDrive and display the list.
+    """
 
     flash("The Recommendation feature is under construction! Please check back soon!")
     return render_template('index.html')
@@ -300,42 +344,51 @@ def get_suggestions():
 
 @app.route('/process_search')
 def search_results():
+    """ This module gets the search criteria from the form and calls the 
+         external search modules to get lists of books to then display.
+
+    """
+    search = False
+    if session['patron']:
+        search = False
+    try:
+        page = int(request.args.get('page', 1))
+    except ValueError:
+        page = 1
+
     search_criteria = request.args.get('search')
     patron_id = session['patron']
-    print "search == ", search_criteria
+    session['search_criteria'] = search_criteria
+
     if search_criteria != '':
         print "do a search"
-        # list_of_books = search_for_books_by_criteria(search_criteria)
         list_of_books = booksearch.search(search_criteria, patron_id)
-        
-        # for row in list_of_books:
-        #   print "\n row = \n", row
-        #   print "image = ", row['images'], 
-        #   print "title = ", row['title'], 
-        #   print "author = ", row['author'],
-        #   print "available = ", row['availableToDownload']
-        
+        pagination = Pagination(page=page, 
+                                total=len(list_of_books), 
+                                search=search, 
+                                record_name='list_of_books')
         return render_template('book_list.html', search=search_criteria,
-                                list_of_books=list_of_books)
+                                list_of_books=list_of_books,
+                                pagination=pagination,
+                               )
     else:
-        flash("Please enter a Key word(s), author, or title.")
+        flash("Please enter an author or a title.")
         return render_template('index.html')
 
 #end app.route
-@app.route("/book_details/book=<book>")
-def show_book(book):
+@app.route("/book_details", methods=["POST"])
+def show_book():
     """This page shows the details of a given book, as well as giving an
     option to put the book on hold, on a wish list, or check out"""
+    book = request.form
+    print "book from request.form in show_book = ", book, "\n"
     return render_template("book_details.html",
                   book = book)
-
 #end app.route
 
 @app.route('/patron', methods=['GET'])
 def display_patron():
-    print session
     patron_fields = model.get_patron_info(session['patron'])
-    print '\n patron fields = \n', patron_fields
     return render_template('patron.html', patron_fields=patron_fields)
 #end app.route
 
@@ -368,14 +421,21 @@ def process_register():
     patron_cell = request.form.get('phone')
     patron_fields = (patron_email, patron_password, patron_fname, patron_lname,
                     patron_cell)
-    # print "patron row after join -- ", patron_fields
-    patron = model.check_for_patron(model.db_session, 
-                                    patron_email, 
-                                    patron_password)
+    if (patron_email == "" or patron_password == "" 
+    or patron_fname == "" or patron_cell == ""):
+        flash("Please enter all 5 fields: Email address, Password, " + 
+            "First and Last name, and Cell phone number.")
+        return render_template('register.html')
+    else:
+        patron = model.check_for_patron(model.db_session, 
+                                        patron_email, 
+                                        patron_password)
 
-    if patron is None:
-        model.add_patron(model.db_session, patron_fields)
-        return redirect('/')
+        if patron is None:
+            model.add_patron(model.db_session, patron_fields)
+            return redirect('/')
+        #end if
+    #end if
 #end app.route
 
 @app.route('/get_password', methods=['GET'])
@@ -391,9 +451,10 @@ def forgot_password():
 #end app.route
 
 def get_bookshare_user_info(patron):
-
-    print "this still needs to be coded."
-    return username
+    """ not sure if getting information from Bookshare adds to this app. The 
+         only checkouts and 1 month history of checkouts.
+    """
+    pass
 
 #end def
 

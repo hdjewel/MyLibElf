@@ -255,7 +255,6 @@ def get_patron_info(patron_id):
     patron_fields['fname'] = patron.fname
     patron_fields['lname'] = patron.lname
     patron_fields['cell'] = patron.cell
-    print "\n\n fields = ", patron_fields
 
     return patron_fields
 #end def
@@ -282,25 +281,12 @@ def get_finished_books_by_criteria(search_criteria, patron_id):
     #end for
 
     books_grouped_by_id = itertools.groupby(search_result, lambda x: x[1].id)
-    # x[1] is the book object 
-    # [ (1, [fb, b, ba, a]),
-    #   (2, [fb, b, ba, a])]
-    # where fb = finished_book
-    #       b = book
-    #       ba = book_author
-    #       a = author
+
     list_of_books = []
     for book_id, result_set in books_grouped_by_id:
 
-        # r[3] in the result_set is the author object.
-
-        # print book_id, ", ".join(r[3].name for r in result_set)
 
         for d in result_set:
-            # list_of_books += [(str(d[1].title), str(d[0].date), str(d[3].name),
-            #           str("".join(r[3].name for r in result_set)))]
-            # list_of_books += [(d[1].title, d[0].date, d[3].name,
-            # print "name = ", d[3].name
             list_of_books += [(d[1].title, d[1].cover_png, d[0].date, d[3].name,
                       "".join(r[3].name for r in result_set))]
             print "new author field = ", d[3], "\n"
@@ -344,28 +330,12 @@ def get_finished_books(patron_id):
     #end for
 
     books_grouped_by_id = itertools.groupby(search_result, lambda x: x[1].id)
-    # x[1] is the book object 
-    # [ (1, [fb, b, ba, a]),
-    #   (2, [fb, b, ba, a])]
-    # where fb = finished_book
-    #       b = book
-    #       ba = book_author
-    #       a = author
     list_of_books = []
     for book_id, result_set in books_grouped_by_id:
 
-        # r[3] in the result_set is the author object.
-
-        # print book_id, ", ".join(r[3].name for r in result_set)
-
         for d in result_set:
-            # list_of_books += [(str(d[1].title), str(d[0].date), str(d[3].name),
-            #           str("".join(r[3].name for r in result_set)))]
-            # list_of_books += [(d[1].title, d[0].date, d[3].name,
-            # print "name = ", d[3].name
             list_of_books += [(d[1].title, d[1].cover_png, d[0].date, d[3].name,
                       "".join(r[3].name for r in result_set))]
-            print "list_of_books  = ", list_of_books, "\n"
         #end for
     #end for
 
@@ -403,7 +373,6 @@ def get_libraries_info(db_session, session):
                             # Library.id == Patron_Library.library_id)
                 .all())
     print "in setup library info \n"
-    print "\n library list \n", library_list
     return library_list
 
 #end def
@@ -413,7 +382,6 @@ def check_for_library(db_session, library_card_nbr):
     library = (db_session.query(Library)
                          .filter_by(card_nbr=library_card_nbr))
 
-    print "\n Library = ", library, "\n"
     return library
 #end def
 
@@ -428,7 +396,6 @@ def add_library(db_session, library_fields):
     db_session.commit()
 
     print "in add_patron"
-    print "\npatron_fields = ", patron_fields, "\n\n\n"
 #end def
 
 def connect():

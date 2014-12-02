@@ -10,8 +10,6 @@ import re
 def import_read_books(db_session, patron, input_login_id):
 
     filename = './seed_data/test_books.txt'
-    # filename = './seed_data/books.txt'
-    # filename = './seed_data/booklist.csv'
 
     with open(filename, 'rb') as f:
         reader = csv.reader(f, delimiter ='\t')
@@ -28,9 +26,6 @@ def import_read_books(db_session, patron, input_login_id):
                     """
                     data_ok = edit_imported_book_data(row)
                     if data_ok == True:
-
-                        # print "\nbook title -> ", row[6]
-                        # print "\n"
 
                         book = check_for_book(db_session, row)
                         
@@ -55,12 +50,7 @@ def import_read_books(db_session, patron, input_login_id):
 
                         patron_note = check_for_patron_note(db_session, 
                                         input_login_id, book)
-                        
-                        # print "\n\n patron_note = ", patron_note
-                        # print "\npatron = ", patron
-                        # print "\n\n"
-                        # print "dir of patron.Patron ===> ", patron.Patron
-                        # print "patron.Patron.login_id =", patron.Patron.login_id
+
 
                         if patron_note is None:
                             """ finished """
@@ -120,30 +110,15 @@ def add_book(db_session, row):
 def add_book_author(db_session, book, author):
     # This is the logic to get data into the associative data set when
     #  the relationship is a many to many.
-    # print "author - ", dir(author)
-    # book_author = Book_Author()
-    # print "dir of book_author  === ",
-    # dir(book_author)
-    # print"\n\n\n"
-    # print "dir of book  === ",
-    # dir(book)
 
     with db_session.no_autoflush:
         book.authors.append(author)
-        # author.books.append(book_author)
     #end with
     db_session.add(book)
     return book
 #end def
 
 def add_finished_record_to_database(db_session, book, patron):
-    # print "book.finished book = ", book.finished_book
-    # print "\n\n dir of book ----> ", dir(book)
-    # print "\n\n"
-    # print "dir of book.patrons ---> ", dir(book.patrons)
-    # print "\n patron id === ", patron.id
-    # print "\n book id === ", book.id
-    # print "\n\n\n"
     
     finished_book = Finished_Book()
     date = "2014-01-01"
@@ -154,7 +129,6 @@ def add_finished_record_to_database(db_session, book, patron):
 
     with db_session.no_autoflush:
         book.finished_book = finished_book
-        # book.append(finished_book)
     #end with
     db_session.add(book)
     return book

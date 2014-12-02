@@ -6,12 +6,7 @@
 {% endblock %}
 {% block body %}
 <body>
-<br>
-session =
-{{ session }}
-<br>
-book = 
-{{ book }}
+
     <div class="container">
       <form action="/register" method="post">
         <div class="text-wrapper">
@@ -19,60 +14,118 @@ book =
             <div class="content-wrap">
               <h2>Show Book Details</h2>
               <div class="text-left">
-                {% if book['images'] == 1 
-                   or book['images'] == 0 
-                   or book['images'] != 5 %} 
-                   <img class='bookImage' width=80px height=130px
-                        src="http://bestclipartblog.com/clipart-pics/book-clip-art-12.jpg" 
-                        border="0" alt="book jacket" >
-                {% else %}
-                  <img class='bookImage' width=80px height=130px
+                <div class="bookCover">
+                  {% if book['images'] == 1 
+                     or book['images'] == 0  %} 
+                    <img class='bookImage' width=80px height=130px
+                          src="http://bestclipartblog.com/clipart-pics/book-clip-art-12.jpg" 
+                          border="0" alt="book jacket" >
+                  {% else %}
+                    <img class='bookImage' width=80px height=130px
                            src='{{ book['images'] }}'>
-                {% endif %}
-                <div class="editor-label">
-                    <label for="title">Title</label>
-                </div>
-                <div class="editor-field">
-                    <input class="form-control" id="title" name="title" 
-                           type="text" value={{ book['title'] }} />
+                  {% endif %}
                 </div>
                 <div class="editor-label">
-                    <label for="author">Author</label>
+                    <label for="title">Title   : </label>{{ book['title'] }} 
                 </div>
-                <div class="editor-field">
-                    <input class="form-control" 
-                    id="author" 
-                    name="author" 
-                    type="text" value={{ book['author'] }} />
-                </div>
+                
                 <div class="editor-label">
-                    <label for="synpsis">Synopsis</label>
+                    <label for="author">Author   : </label>{{ book['author'] }}
                 </div>
-                <div class="editor-field">
-                    <input class="form-control" id="synpsis" name="synpsis" 
+
+                <div class="editor-label">
+                    <label for="synpsis">Synopsis   : </label>{{ book['synopsis'] }}
+                </div>
+
+                <div class="editor-label">
+                    <label for="notes">Notes</label>
+                </div>
+                <div class="editor-note-field">
+                    <input class="form-control" id="notes" name="notes" 
                            type="text" value="" />
                 </div>
-                <div class="editor-label">
-                    <label for="synpsis">Notes</label>
-                </div>
-                <div class="editor-field">
-                    <input class="form-control" id="synpsis" name="synpsis" 
-                           type="text" value="" />
-
-                </div>
-                <br>
-                <div class="action">
-
-                   <a class="link_to_overdrive" href="/process_hold_lists, book=book" >Put book on Hold</a>
-                   <a class="link_to_overdrive" href="/process_wish_lists, book=book" > Put book on Wish list</a>
-                   <a class="link_to_overdrive" href="/process_checked_outs, book=book" > Check out book</a>
-                   <br><br>
-                   <a class="btn btn-danger" href="/process_search" > Back</a>
+                    {% if book['expires'] == "" %}
+                    <br>
+                    <div class="action">
+                       <a class="link_to_overdrive"
+                          data-origin="{{ book['origin'] }}"
+                          data-author="{{ book['author'] }}"
+                          data-avaiableToDownload="{{ book['avaiableToDownload'] }}"
+                          data-title="{{ book['title'] }}"
+                          data-images="{{ book['images'] }}"
+                          data-id="{{ book['id'] }}"
+                          data-synopsis="{{ book['synopsis'] }}"
+                          data-expires="{{ book['expires'] }}"
+                          data-metadata="{{ book['metadata'] }}"                    
+                          href="/process_hold_lists" >Put book on Hold</a>
+                       <a class="link_to_overdrive" 
+                          data-origin="{{ book['origin'] }}"
+                          data-author="{{ book['author'] }}"
+                          data-avaiableToDownload="{{ book['avaiableToDownload'] }}"
+                          data-title="{{ book['title'] }}"
+                          data-images="{{ book['images'] }}"
+                          data-id="{{ book['id'] }}"
+                          data-synopsis="{{ book['synopsis'] }}"
+                          data-expires="{{ book['expires'] }}"
+                          data-metadata="{{ book['metadata'] }}"   
+                          href="/process_wish_lists" > Put book on Wish list</a>
+                       <a class="link_to_overdrive" 
+                          data-origin="{{ book['origin'] }}"
+                          data-author="{{ book['author'] }}"
+                          data-avaiableToDownload="{{ book['avaiableToDownload'] }}"
+                          data-title="{{ book['title'] }}"
+                          data-images="{{ book['images'] }}"
+                          data-id="{{ book['id'] }}"
+                          data-synopsis="{{ book['synopsis'] }}"
+                          data-expires="{{ book['expires'] }}"
+                          data-metadata="{{ book['metadata'] }}"   
+                          href="/process_checked_outs" > Check out book</a>
+                       <br><br>
+                   {% endif %}
+                   <a class="btn btn-danger" href="" onclick="window.history.go(-1); return false;" > Back</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </form>
+      <form action="/book_details" method="POST" id="bookDataForm">
+        <input id="bookDataField" type="hidden" name="bookData" value="" >
+        <input id="origin", type='hidden', name='origin' value="" >
+        <input id="author", type='hidden', name='author' value="" >
+        <input id="availableToDownload", type='hidden', name='availableToDownload' value="" >
+        <input id="title", type='hidden', name='title' value="" >
+        <input id="images", type='hidden', name='images' value="" >
+        <input id="id", type='hidden', name='id' value="" >
+        <input id="metadata", type='hidden', name='metadata' value="" >
+        <input id="expires", type='hidden', name='expires' value="" >
+        <input id="synopsis", type='hidden', name='synopsis' value="" >
+      </form>
     </div>
+    <!-- jpaginate-jquery -->
+<script src="http://c.fzilla.com/1286136086-jquery.js"></script>  
+<script src="http://c.fzilla.com/1291523190-jpaginate.js"></script>  
+
+<SCRIPT LANGUAGE="JavaScript">
+
+$('.bookDetailLink').click(function(e) {
+  e.preventDefault();
+  var bookData = e.currentTarget.dataset;
+  $('#origin').val(bookData.origin);
+  $('#author').val(bookData.author);
+  $('#availableToDownload').val(bookData.availableToDownload);
+  $('#title').val(bookData.title);
+  $('#images').val(bookData.images);
+  $('#id').val(bookData.id);
+  $('#metadata').val(bookData.metadata);
+  $('#expires').val(bookData.expires);
+  $('#synopsis').val(bookData.synopsis);
+  $('#bookDataForm').submit();
+  console.log("in bookDetailLink function");
+} );
+
+</SCRIPT>
+
 {% endblock %}
+
+                   <input action="action" type="button" value="Back no search" onclick="window.history.go(-1); return false;" />

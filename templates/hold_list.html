@@ -1,24 +1,19 @@
 {% extends "base.html" %}
 
-{% block title%}
+{% block title %}
     <title>Hold list</title>
 {% endblock %}
+
 {% block body %}
-<br>
-session - {{ session }}
-<br>
-books - {{ books }}
-<br>
-calling from - {{ what }}
     <div class="container-fluid">
       <form action="/process_search?source=newbooks" method="get">
         <div class="book-wrapper">
           <div class="box">
             <div class="content-wrap">
-              <h4>  {% what == hold %}
+              <h4>  {% if what == 'hold' %}
                       List of books on hold:  
                     {% else %}
-                      The books checkecd out are:
+                      Books that are checked out are:
                     {% endif %}
               </h4>
               <div class="text-left">
@@ -28,10 +23,10 @@ calling from - {{ what }}
                       <th>Cover</th>
                       <th>Title</th>
                       <th>Author</th>
-                      <th>{% what == hold %}
-                            Hold Expires  
+                      <th>{% if what == 'hold' %}
+                            Hold period  
                           {% else %}
-                            Checkecd Expires
+                            Check out period expires
                           {% endif %}
                       </th>
                     </tr>
@@ -53,14 +48,23 @@ calling from - {{ what }}
                           </td>
                           <td>
                             {% if book['origin'] == "ODCOM" %} 
-
-                            <a href="{{ url_for('show_book', book=book) }}">{{ book['title'] }}</a>
+                              <a class="bookDetailLink" NAME="cfd" 
+                                data-origin="{{ book['origin'] }}"
+                                data-author="{{ book['author'] }}"
+                                data-avaiableToDownload="{{ book['avaiableToDownload'] }}"
+                                data-title="{{ book['title'] }}"
+                                data-images="{{ book['images'] }}"
+                                data-id="{{ book['id'] }}"
+                                data-synopsis="{{ book['synopsis'] }}"
+                                data-expires="{{ book['expires'] }}"
+                                data-metadata="{{ book['metadata'] }}"
+                                href="{{ url_for('show_book') }}">{{ book['title'] }}</a>
                             {% else %}
                               {{ book['title'] }}
                             {% endif %}
                           </td>
                           <td>{{ book['author'] }}</td>
-                          <td>{{ book['expires'] }}</td>
+                          <td align="center" >{{ book['expires'] }}</td>
                         </tr>
                       {% endfor %}
                     {% else %}
@@ -70,47 +74,50 @@ calling from - {{ what }}
                   </tbody>
                 </table>
               </div>
-          <div>
-            <h3>Search Again</h3> 
-            <input type="text" title="Search" name="search" 
-                   class="form-control" 
-                   placeholder="Key words, author, title" 
-                   autofocus >
-            <a class="btn btn-primary" ><button>Search</button></a><br><br>
-          </div>
-          <div class="action">
-            <a class="btn btn-danger" href="/main" >Back</a>  
-            <a class="link_to_overdrive" href="{{ url_for('show_book', book=book) }}" >Detail</a>   
-          </div>
+              <div class="action">
+                  <a class="btn btn-danger" href="/main" >Back</a>  
+              </div>
 
             </div>
           </div>
         </div>
       </form>
+      <form action="/book_details" method="POST" id="bookDataForm">
+        <input id="bookDataField" type="hidden" name="bookData" value="" >
+        <input id="origin", type='hidden', name='origin' value="" >
+        <input id="author", type='hidden', name='author' value="" >
+        <input id="availableToDownload", type='hidden', name='availableToDownload' value="" >
+        <input id="title", type='hidden', name='title' value="" >
+        <input id="images", type='hidden', name='images' value="" >
+        <input id="id", type='hidden', name='id' value="" >
+        <input id="metadata", type='hidden', name='metadata' value="" >
+        <input id="expires", type='hidden', name='expires' value="" >
+        <input id="synopsis", type='hidden', name='synopsis' value="" >
+      </form>
     </div>
     <!-- jpaginate-jquery -->
 <script src="http://c.fzilla.com/1286136086-jquery.js"></script>  
 <script src="http://c.fzilla.com/1291523190-jpaginate.js"></script>  
-<script>  
-$(document).ready(function(){  
-    $("#content").jPaginate((items: 5, pagination_class: "table",
-                              position: "both"));                         
-});  
-</script>  
+
+<SCRIPT LANGUAGE="JavaScript">
+
+$('.bookDetailLink').click(function(e) {
+  e.preventDefault();
+  var bookData = e.currentTarget.dataset;
+  $('#origin').val(bookData.origin);
+  $('#author').val(bookData.author);
+  $('#availableToDownload').val(bookData.availableToDownload);
+  $('#title').val(bookData.title);
+  $('#images').val(bookData.images);
+  $('#id').val(bookData.id);
+  $('#metadata').val(bookData.metadata);
+  $('#expires').val(bookData.expires);
+  $('#synopsis').val(bookData.synopsis);
+  $('#bookDataForm').submit();
+  console.log("in bookDetailLink function");
+} );
+
+</SCRIPT>
+
 {% endblock %}
 
-          <div>
-            <!-- DC Pagination:A1 Start -->
-            <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
-              <li><a href="#" class="first">First</a></li>
-              <li><a href="#" class="previous">Previous</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#" class="current">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#" class="next">Next</a></li>
-              <li><a href="#" class="last">Last</a></li>
-            </ul>
-            <!-- DC Pagination:A1 End -->
-          </div>

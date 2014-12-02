@@ -5,11 +5,7 @@
 
 {% endblock %}
 {% block body %}
-{{ session }}
-    <div class="header" method="GET" 
-          action="/main" title="Main page" 
-           style="font-size:30px; text-decoration:none;">
-    </div>
+
     <div class="container">
       <form action="/process_search?source=newbooks" method="GET">
         <div class="text-wrapper">
@@ -23,11 +19,11 @@
                                 Books you've read</a></li><br>
                   <li><a >To search for a new book to read, 
                             please enter some search criteria.</a>
-                            <a class="notes"; >(Author's First and Last name work best.) </a></li>
+                      <a class="notes"; >(Author's First and Last name work best.) </a></li>
                     <br>
                     <input type="text" title="Search" name="search" 
                            class="form-control" 
-                           placeholder="Key words, author, title" 
+                           placeholder="Author or title" 
                            autofocus />
                     <a class="btn btn-primary" ><button>Search</button></a>
                     <br>
@@ -36,13 +32,13 @@
                                May I make a recommendation? </a></li>
                     </ul>
                   <li><a class="btn bth-primary" 
-                         href="/process_checked_outs">
+                         href="/get_checked_outs">
                                Checked out books</a></li><br>
                   <li><a class="btn bth-primary" 
-                         href="/process_wish_lists">Wish list </a></li>
+                         href="/get_wish_lists">Wish list </a></li>
                       <br>
                   <li><a class="btn bth-primary" 
-                         href="/process_hold_lists">Books on hold </a></li>
+                         href="/get_hold_lists">Books on hold </a></li>
                       <br><br>
                   <li><a class="btn bth-primary" 
                          href="/patron">Manage MyLibElf Account</a></li>
