@@ -51,13 +51,12 @@
                   {% endfor %}
                   </tbody>
                 </table>
-                {{ pagination.links|safe }}
               </div>
               <div>
                 <h3>Search Again</h3> 
                 <input type="text" title="Search" name="search" 
                        class="form-control" 
-                       placeholder="Key words, author, title" 
+                       placeholder="Author or Title" 
                        autofocus >
                 <a class="btn btn-primary" href="/process_books_read"  >
                     <button>Search</button></a>
@@ -68,9 +67,6 @@
                 <a class="btn btn-danger" href="/main" >Back</a>
                 <br><br>   
                 <div align="center">
-                <!-- flask pagination -->
-                {{ pagination.info|safe }}
-                {{ pagination.links|safe }}
                 </div>
               </div>
 

@@ -25,40 +25,36 @@
                            src='{{ book['images'] }}'>
                   {% endif %}
                 </div>
-                <div class="editor-label">
-                    <label for="title">Title   : </label>{{ book['title'] }} 
+                <div>
+                    <label class="editor-label" for="title">Title   : 
+                    </label>{{ book['title'] }} 
                 </div>
                 
-                <div class="editor-label">
-                    <label for="author">Author   : </label>{{ book['author'] }}
+                <div>
+                    <label class="editor-label" for="author">Author   : 
+                    </label>{{ book['author'] }}
                 </div>
 
-                <div class="editor-label">
-                    <label for="breifSynopsis">breifSynopsis   : </label>{{ book['breifSynopsis'] }}
+                <div>
+                    <table> 
+                    <td>
+                      <label class="editor-label" 
+                             for="synopsis">Synopsis:
+                      </label>
+                      </td>
+                      <td class=text>{{ book['synopsis'] }}
+                      </td>
+                    </table>
                 </div>
 
-                <div class="editor-label">
-                    <label for="notes">Notes</label>
-                </div>
-                <div class="editor-note-field">
-                    <input class="form-control" id="notes" name="notes" 
+                <div>
+                    <label class="editor-label" for="notes">Notes   :</label>
+                    <input class="editor-note-field" id="notes" name="notes" 
                            type="text" value="" />
                 </div>
                     {% if book['expires'] == "" %}
                     <br>
                     <div class="action">
-                       <a class="link_to_overdrive"
-                          data-origin="{{ book['origin'] }}"
-                          data-author="{{ book['author'] }}"
-                          data-avaiableToDownload="{{ book['avaiableToDownload'] }}"
-                          data-title="{{ book['title'] }}"
-                          data-images="{{ book['images'] }}"
-                          data-id="{{ book['id'] }}"
-                          data-breifSynopsis="{{ book['breifSynopsis'] }}"
-                          data-expires="{{ book['expires'] }}"
-                          data-metadata="{{ book['metadata'] }}"                    
-                          href="/process_hold_lists" >Put book on Hold</a>
-                       <a href="/process_wish_lists" > Put book on Wish list</a>
                        <a class="link_to_overdrive" 
                           data-origin="{{ book['origin'] }}"
                           data-author="{{ book['author'] }}"
@@ -66,30 +62,44 @@
                           data-title="{{ book['title'] }}"
                           data-images="{{ book['images'] }}"
                           data-id="{{ book['id'] }}"
-                          data-breifSynopsis="{{ book['breifSynopsis'] }}"
+                          data-synopsis="{{ book['synopsis'] }}"
+                          data-expires="{{ book['expires'] }}"
+                          data-metadata="{{ book['metadata'] }}"                    
+                          href="/process_hold_lists" >Put book on Hold</a>
+                       <!-- <a href="/process_wish_lists" > Put book on Wish list</a> -->
+                       <a class="link_to_overdrive" 
+                          data-origin="{{ book['origin'] }}"
+                          data-author="{{ book['author'] }}"
+                          data-avaiableToDownload="{{ book['avaiableToDownload'] }}"
+                          data-title="{{ book['title'] }}"
+                          data-images="{{ book['images'] }}"
+                          data-id="{{ book['id'] }}"
+                          data-synopsis="{{ book['synopsis'] }}"
                           data-expires="{{ book['expires'] }}"
                           data-metadata="{{ book['metadata'] }}"   
                           href="/process_checked_outs" > Check out book</a>
                        <br><br>
                    {% endif %}
-                   <a class="btn btn-danger" href="" onclick="window.history.go(-1); return false;" > Back</a>
+                   <a class="btn btn-danger" href="" 
+                      onclick="window.history.go(-1); return false;" > Back</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </form>
-      <form action="/book_details" method="POST" id="bookDataForm">
+      <form action="/process_hold_lists" method="POST" id="bookDataForm">
         <input id="bookDataField" type="hidden" name="bookData" value="" >
         <input id="origin", type='hidden', name='origin' value="" >
         <input id="author", type='hidden', name='author' value="" >
-        <input id="availableToDownload", type='hidden', name='availableToDownload' value="" >
+        <input id="availableToDownload", type='hidden', 
+               name='availableToDownload' value="" >
         <input id="title", type='hidden', name='title' value="" >
         <input id="images", type='hidden', name='images' value="" >
         <input id="id", type='hidden', name='id' value="" >
         <input id="metadata", type='hidden', name='metadata' value="" >
         <input id="expires", type='hidden', name='expires' value="" >
-        <input id="breifSynopsis", type='hidden', name='breifSynopsis' value="" >
+        <input id="synopsis", type='hidden', name='synopsis' value="" >
       </form>
     </div>
     <!-- jpaginate-jquery -->
@@ -100,7 +110,11 @@
 
 $('.link_to_overdrive').click(function(e) {
   e.preventDefault();
-    var bookData = e.currentTarget.dataset;
+  var bookData = e.currentTarget.dataset;
+  // working on logic to call the correct action on this submit.  
+  // needs an if statement in JavaScript.
+  // $('#bookDataForm')
+
   $('#origin').val(bookData.origin);
   $('#author').val(bookData.author);
   $('#availableToDownload').val(bookData.availableToDownload);
@@ -109,7 +123,7 @@ $('.link_to_overdrive').click(function(e) {
   $('#id').val(bookData.id);
   $('#metadata').val(bookData.metadata);
   $('#expires').val(bookData.expires);
-  $('#breifSynopsis').val(bookData.breifSynopsis);
+  $('#synopsis').val(bookData.synopsis);
   $('#bookDataForm').submit();
   console.log("in bookDetailLink function");
 } );

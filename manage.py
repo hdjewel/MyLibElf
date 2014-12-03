@@ -114,7 +114,6 @@ def process_overdrive_response():
 
     print "in process_overdrive response", "\n"
     session['patron_access_token'] = request.args.get("code")
-    print "patron access token = ", session['patron_access_token'], "\n"
     if request.args.get("state") != 'turtle':
         flash(" Patron Access Token comprimised!")
     else:
@@ -191,23 +190,10 @@ def get_books_read_by_patron():
     """ This route get all the "finished reading" books for a given patron and 
          displays the list of books.
     """
-    search = False
-    if session['patron']:
-        search = False
-    try:
-        page = int(request.args.get('page', 1))
-    except ValueError:
-        page = 1
-
     list_of_books = model.get_finished_books(session['patron'])
 
-    pagination = Pagination(page=page, 
-                            total=len(list_of_books), 
-                            search=search, 
-                            record_name='list_of_books')
     return render_template('finished_book_list.html',
-                           list_of_books=list_of_books,
-                           pagination=pagination,
+                           list_of_books=list_of_books
                            )
 #end app.route
 
@@ -217,41 +203,22 @@ def get_books_read():
          for the given search criteria and displays it.
 
     """
-    search = False
-    if session['patron']:
-        search = False
-    try:
-        page = int(request.args.get('page', 1))
-    except ValueError:
-        page = 1
-
     search_criteria = request.args.get('search')
     if search_criteria == "":
         list_of_books = []
-        pagination = Pagination(page=page, 
-                        total=len(list_of_books), 
-                        search=search, 
-                        record_name='list_of_books')
 
         flash("Please enter an author or a title.")
 
         return render_template('finished_book_list.html',
-                           list_of_books=list_of_books,
-                           pagination=pagination,
+                           list_of_books=list_of_books
                            )
     else:
         print "get a selection of books"
         list_of_books = model.get_finished_books_by_criteria(search_criteria, 
                                                              session['patron'])
 
-        pagination = Pagination(page=page, 
-                                total=len(list_of_books), 
-                                search=search, 
-                                record_name='list_of_books')
-
         return render_template('finished_book_list.html',
-                               list_of_books=list_of_books,
-                               pagination=pagination,
+                               list_of_books=list_of_books
                                )
 #end app.route
 
@@ -328,10 +295,9 @@ def put_on_hold():
          because the patron_access_token is not yet available to this app.
     """
     book = request.form
-    print "book from request.form in process_hold_lists = ", book, "\n"
     # success_code = overdrive_apis.put_book_on_hold(book)
     flash('The book was successfully put on hold.')
-    return render_template('book_details.html', list_of_books=book, what='hold')
+    return render_template('book_list.html', list_of_books=book, what='hold')
 #end app.route
 
 @app.route('/process_suggestions')
@@ -383,7 +349,6 @@ def show_book():
     """This page shows the details of a given book, as well as giving an
     option to put the book on hold, on a wish list, or check out"""
     book = request.form
-    print "book from request.form in show_book = ", book, "\n"
     return render_template("book_details.html",
                   book = book)
 #end app.route

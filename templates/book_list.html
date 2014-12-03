@@ -24,6 +24,7 @@
                   <tbody>
                     {% for title, books in list_of_books | groupby('title') %}
                       {% for book in books %}
+
                         <tr>
                           <td>
                             {% if book['images'] == 1 
@@ -85,7 +86,7 @@
             <h3>Search Again</h3> 
             <input type="text" title="Search" name="search" 
                    class="form-control" 
-                   placeholder="Key words, author, title" 
+                   placeholder="Author or Title" 
                    autofocus >
             <a class="btn btn-primary" ><button>Search</button></a><br><br>
           </div>
@@ -93,8 +94,6 @@
             <a class="btn btn-danger" href="/main" >Back</a>
             <br><br>   
             <div align="center">
-            <!-- flask pagination -->
-            {{ pagination.info|safe }}
             </div>  
           </div>
             </div>
@@ -116,7 +115,7 @@
       </form>
  
     </div>
-    <!-- jpaginate-jquery -->
+
 <script src="http://c.fzilla.com/1286136086-jquery.js"></script>  
 <script src="http://c.fzilla.com/1291523190-jpaginate.js"></script>  
 

@@ -158,7 +158,7 @@ def get_checkout_data():
 			  u'availability': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/dc14453f-d6b4-436a-a3e9-2526c33ca47d/availability', u'type': u'application/vnd.overdrive.api+json'}, 
 			  u'metadata': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/dc14453f-d6b4-436a-a3e9-2526c33ca47d/metadata', u'type': u'application/vnd.overdrive.api+json'}, 
 			  u'title': u'The Woman in White', 
-			  u'breifSynopsis': u'The Woman in White is credited with being the first of the sensation novels, and one of the finest examples of the genre. A young woman\'s husband defrauds her of her fortune, her identity and eventually her sanity. She is saved by her sister and a loyal man who loves her, and her two rescuers attempt to expose her husband. They meet a woman dressed all in white whose fate seems curiously intertwined with that of the young woman. In the tradition of the sensation novel, the story contravenes boundaries of class, identity and the private and public spheres.',
+			  u'briefSynopsis': u'The Woman in White is credited with being the first of the sensation novels, and one of the finest examples of the genre. A young woman\'s husband defrauds her of her fortune, her identity and eventually her sanity. She is saved by her sister and a loyal man who loves her, and her two rescuers attempt to expose her husband. They meet a woman dressed all in white whose fate seems curiously intertwined with that of the young woman. In the tradition of the sensation novel, the story contravenes boundaries of class, identity and the private and public spheres.',
 			  u'images': {u'thumbnail': {u'href': u'http://images.contentreserve.com/ImageType-200/2389-1/{DC14453F-D6B4-436A-A3E9-2526C33CA47D}Img200.jpg', u'type': u'image/jpeg'}}, 
 			  u'id': u'dc14453f-d6b4-436a-a3e9-2526c33ca47d',
 			  u'expires': u'17 days' 
@@ -167,7 +167,7 @@ def get_checkout_data():
 			  u'availability': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/0a8b4d8e-fd32-41ae-b6a1-6fb87362622c/availability', u'type': u'application/vnd.overdrive.api+json'}, 
 			  u'metadata': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/0a8b4d8e-fd32-41ae-b6a1-6fb87362622c/metadata', u'type': u'application/vnd.overdrive.api+json'}, 
 			  u'title': u'Breath of Scandal', 
-			  u'breifSynopsis': u'On a rainy Southern night, Jade Sperry endured a young woman\'s worst nightmare at the hands of three local hell-raisers. Robbed of her youthful ideals and at the center of scandal and tragedy, Jade ran as far and as fast as she could. But she never forgot the sleepy "company town" where every man, woman, and child was dependent on one wealthy family. And she never forgot their spoiled son, who, with his two friends, changed her life forever. Someday, somehow, she would return, exact a just revenge and free herself from fear, and the powerful family that could destroy her.',
+			  u'briefSynopsis': u'On a rainy Southern night, Jade Sperry endured a young woman\'s worst nightmare at the hands of three local hell-raisers. Robbed of her youthful ideals and at the center of scandal and tragedy, Jade ran as far and as fast as she could. But she never forgot the sleepy "company town" where every man, woman, and child was dependent on one wealthy family. And she never forgot their spoiled son, who, with his two friends, changed her life forever. Someday, somehow, she would return, exact a just revenge and free herself from fear, and the powerful family that could destroy her.',
 			  u'images': {u'thumbnail': {u'href': u'http://images.contentreserve.com/ImageType-200/0017-1/{0A8B4D8E-FD32-41AE-B6A1-6FB87362622C}Img200.jpg', u'type': u'image/jpeg'}}, 
 			  u'id': u'0a8b4d8e-fd32-41ae-b6a1-6fb87362622c',
 			  u'expires': u'17 days'
@@ -177,7 +177,7 @@ def get_checkout_data():
 			   u'availability': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/bf635d7c-3f0b-43fc-ac5b-ab527aca77a5/availability', u'type': u'application/vnd.overdrive.api+json'}, 
 			   u'metadata': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/bf635d7c-3f0b-43fc-ac5b-ab527aca77a5/metadata', u'type': u'application/vnd.overdrive.api+json'}, 
 			   u'title': u'The Border Legion', 
-			   u'breifSynopsis': u'The inspiration for several Western movies, Zane Grey\'s The Border Legion tells the tale of hardened gunslinger Jack Kells, who finds his gruff facade melting when he encounters Joan Randle, a spunky heroine who has been captured by a militia stationed near the Idaho border.',
+			   u'briefSynopsis': u'The inspiration for several Western movies, Zane Grey\'s The Border Legion tells the tale of hardened gunslinger Jack Kells, who finds his gruff facade melting when he encounters Joan Randle, a spunky heroine who has been captured by a militia stationed near the Idaho border.',
 			   u'images': {u'thumbnail': {u'href': u'http://images.contentreserve.com/ImageType-200/2389-1/{BF635D7C-3F0B-43FC-AC5B-AB527ACA77A5}Img200.jpg', u'type': u'image/jpeg'}}, 
 			   u'id': u'bf635d7c-3f0b-43fc-ac5b-ab527aca77a5',
 			   u'expires': u'16 days'			   
@@ -187,7 +187,7 @@ def get_checkout_data():
 			   u'availability': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/66732855-8205-4aa3-80a7-bcbcbbe75266/availability', u'type': u'application/vnd.overdrive.api+json'}, 
 			   u'metadata': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/66732855-8205-4aa3-80a7-bcbcbbe75266/metadata', u'type': u'application/vnd.overdrive.api+json'},
 			   u'title': u'The Litigators', 
-			   u'breifSynopsis': u'The partners at Finley & Figg often refer to themselves as a "boutique law firm." Boutique, as in chic, selective, and prosperous. Oscar Finley and Wally Figg are none of these things. They are a two-bit operation of ambulance chasers who bicker like an old married couple. Until change comes their way--or, more accurately, stumbles in. After leaving a fast-track career and going on a serious bender, David Zinc is sober, unemployed, and desperate enough to take a job at Finley & Figg.\nNow the firm is ready to tackle a case that could make the partners rich--without requiring them to actually practice much law. A class action suit has been brought against Varrick Labs, a pharmaceutical giant with annual sales of $25 billion, alleging that Krayoxx, its most popular drug, causes heart attacks. Wally smells money. All Finley & Figg has to do is find a handful of Krayoxx users to join the suit. It almost seems too good to be true . . . and it is.',
+			   u'briefSynopsis': u'The partners at Finley & Figg often refer to themselves as a "boutique law firm." Boutique, as in chic, selective, and prosperous. Oscar Finley and Wally Figg are none of these things. They are a two-bit operation of ambulance chasers who bicker like an old married couple. Until change comes their way--or, more accurately, stumbles in. After leaving a fast-track career and going on a serious bender, David Zinc is sober, unemployed, and desperate enough to take a job at Finley & Figg.\nNow the firm is ready to tackle a case that could make the partners rich--without requiring them to actually practice much law. A class action suit has been brought against Varrick Labs, a pharmaceutical giant with annual sales of $25 billion, alleging that Krayoxx, its most popular drug, causes heart attacks. Wally smells money. All Finley & Figg has to do is find a handful of Krayoxx users to join the suit. It almost seems too good to be true . . . and it is.',
 			   u'images': {u'thumbnail': {u'href': u'http://images.contentreserve.com/ImageType-200/0111-1/{66732855-8205-4AA3-80A7-BCBCBBE75266}Img200.jpg', u'type': u'image/jpeg'}},
 			   u'id': u'66732855-8205-4aa3-80a7-bcbcbbe75266',
 			   u'expires': u'16 days'			   
@@ -196,7 +196,7 @@ def get_checkout_data():
 			   u'availability': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/e536770a-3227-47b8-b2ec-b8f988c10b53/availability', u'type': u'application/vnd.overdrive.api+json'},
 			   u'metadata': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/e536770a-3227-47b8-b2ec-b8f988c10b53/metadata', u'type': u'application/vnd.overdrive.api+json'},
 			   u'title': u'Innocence (with bonus short story Wilderness)',
-			   u'breifSynopsis': u'In Innocence, Dean Koontz blends mystery, suspense, and acute insight into the human soul in a masterfully told tale that will resonate with readers forever.\nHe lives in solitude beneath the city, an exile from society, which will destroy him if he is ever seen.\nShe dwells in seclusion, a fugitive from enemies who will do her harm if she is ever found.\nBut the bond between them runs deeper than the tragedies that have scarred their lives. Something more than chance--and nothing less than destiny--has brought them together in a world whose hour of reckoning is fast approaching.',
+			   u'briefSynopsis': u'In Innocence, Dean Koontz blends mystery, suspense, and acute insight into the human soul in a masterfully told tale that will resonate with readers forever.\nHe lives in solitude beneath the city, an exile from society, which will destroy him if he is ever seen.\nShe dwells in seclusion, a fugitive from enemies who will do her harm if she is ever found.\nBut the bond between them runs deeper than the tragedies that have scarred their lives. Something more than chance--and nothing less than destiny--has brought them together in a world whose hour of reckoning is fast approaching.',
 			   u'images': {u'thumbnail': {u'href': u'http://images.contentreserve.com/ImageType-200/0111-1/{E536770A-3227-47B8-B2EC-B8F988C10B53}Img200.jpg', u'type': u'image/jpeg'}}, 
 			   u'id': u'e536770a-3227-47b8-b2ec-b8f988c10b53',
 			   u'expires': u'16 days'
@@ -208,7 +208,7 @@ def get_checkout_data():
 		book_data['id'] = book_on_check_out['id']
 		book_data['author'] = book_on_check_out['primaryCreator']['name']
 		book_data['metadata'] = book_on_check_out['metadata']['href']
-		book_data['breifSynopsis'] = book_on_check_out['breifSynopsis']
+		book_data['synopsis'] = book_on_check_out['briefSynopsis']
 		book_data['title'] = book_on_check_out['title']
 		book_data['expires'] = book_on_check_out['expires']
 		book_data['images'] = book_on_check_out['images']['thumbnail']['href']
@@ -257,7 +257,7 @@ def get_list_of_checkouts(no_token):
 					book_data['id'] = book_on_check_out['id']
 					book_data['author'] = book_on_check_out['primaryCreator']['name']
 					book_data['metadata'] = book_on_check_out['metadata']['href']
-					book_data['breifSynopsis'] = book_on_check_out['breifSynopsis']
+					book_data['synopsis'] = book_on_check_out['briefSynopsis']
 					book_data['title'] = book_on_check_out['title']
 					book_data['expires'] = book_on_check_out['expires']
 					book_data['images'] = book_on_check_out['images']['thumbnail']['href']
@@ -396,7 +396,7 @@ def get_hold_data():
 			  u'availability': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/98267aaa-9898-4ce3-86f8-678136cf5031/availability', u'type': u'application/vnd.overdrive.api+json'}, 
 			  u'metadata': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/98267aaa-9898-4ce3-86f8-678136cf5031/metadata', u'type': u'application/vnd.overdrive.api+json'},
 			  u'title': u'The Little Friend', 
-			  u'breifSynopsis': u'The second novel by Donna Tartt, bestselling author of The Goldfinch (winner of the 2014 Pulitzer Prize), The Little Friend is a grandly ambitious and utterly riveting novel of childhood, innocence and evil. ',
+			  u'briefSynopsis': u'The second novel by Donna Tartt, bestselling author of The Goldfinch (winner of the 2014 Pulitzer Prize), The Little Friend is a grandly ambitious and utterly riveting novel of childhood, innocence and evil. ',
 			  u'images': {u'thumbnail': {u'href': u'http://images.contentreserve.com/ImageType-200/0111-1/{98267AAA-9898-4CE3-86F8-678136CF5031}Img200.jpg', u'type': u'image/jpeg'}}, 
 			  u'id': u'98267aaa-9898-4ce3-86f8-678136cf5031',
 			  u'expires': u'#1 on 5 copies'
@@ -405,7 +405,7 @@ def get_hold_data():
 			  u'availability': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/a43f3999-8237-461c-83fe-1f70589bd3f4/availability', u'type': u'application/vnd.overdrive.api+json'}, 
 			  u'metadata': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/a43f3999-8237-461c-83fe-1f70589bd3f4/metadata', u'type': u'application/vnd.overdrive.api+json'}, 
 			  u'title': u'The Bridge: The Life and Rise of Barack Obama', 
-			  u'breifSynopsis': 'In this nuanced and complex portrait of Barack Obama, Pulitzer Prize-winner David Remnick offers a thorough, intricate, and riveting account of the unique experiences that shaped our nation\'s first African American president.',
+			  u'briefSynopsis': 'In this nuanced and complex portrait of Barack Obama, Pulitzer Prize-winner David Remnick offers a thorough, intricate, and riveting account of the unique experiences that shaped our nation\'s first African American president.',
 			  u'images': {u'thumbnail': {u'href': u'http://images.contentreserve.com/ImageType-200/0111-1/{A43F3999-8237-461C-83FE-1F70589BD3F4}Img200.jpg', u'type': u'image/jpeg'}},
 			  u'id': u'a43f3999-8237-461c-83fe-1f70589bd3f4',
 			  u'expires': u'#2 on 5 copies' 			  
@@ -414,7 +414,7 @@ def get_hold_data():
 			  u'availability': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/c0a4c5dc-4cb9-481b-aa03-6a0b8ca3cdff/availability', u'type': u'application/vnd.overdrive.api+json'}, 
 			  u'metadata': {u'href': u'http://api.overdrive.com/v1/collections/v1L1BBQ0AAA2_/products/c0a4c5dc-4cb9-481b-aa03-6a0b8ca3cdff/metadata', u'type': u'application/vnd.overdrive.api+json'}, 
 			  u'title': u'Beautiful Redemption',
-			  u'breifSynopsis': u'Ethan Wate has spent most of his life longing to escape the stiflingly small Southern town of Gatlin. He never thought he would meet the girl of his dreams, Lena Duchannes, who unveiled a secretive, powerful, and cursed side of Gatlin, hidden in plain sight. And he never could have expected that he would be forced to leave behind everyone and everything he cares about. So when Ethan awakes after the chilling events of the Eighteenth Moon, he has only one goal: to find a way to return to Lena and the ones he loves.\nBack in Gatlin, Lena is making her own bargains for Ethan\'s return, vowing to do whatever it takes -- even if that means trusting old enemies or risking the lives of the family and friends Ethan left to protect.\nWorlds apart, Ethan and Lena must once again work together to rewrite their fate, in this stunning finale to the Beautiful Creatures series.',
+			  u'briefSynopsis': u'Ethan Wate has spent most of his life longing to escape the stiflingly small Southern town of Gatlin. He never thought he would meet the girl of his dreams, Lena Duchannes, who unveiled a secretive, powerful, and cursed side of Gatlin, hidden in plain sight. And he never could have expected that he would be forced to leave behind everyone and everything he cares about. So when Ethan awakes after the chilling events of the Eighteenth Moon, he has only one goal: to find a way to return to Lena and the ones he loves.\nBack in Gatlin, Lena is making her own bargains for Ethan\'s return, vowing to do whatever it takes -- even if that means trusting old enemies or risking the lives of the family and friends Ethan left to protect.\nWorlds apart, Ethan and Lena must once again work together to rewrite their fate, in this stunning finale to the Beautiful Creatures series.',
 			  u'images': {u'thumbnail': {u'href': u'http://images.contentreserve.com/ImageType-200/0017-1/{C0A4C5DC-4CB9-481B-AA03-6A0B8CA3CDFF}Img200.jpg', u'type': u'image/jpeg'}}, 
 			  u'id': u'c0a4c5dc-4cb9-481b-aa03-6a0b8ca3cdff',
 			  u'expires': u'#2 on 1 copies'
@@ -426,7 +426,7 @@ def get_hold_data():
 		book_data['id'] = book_on_hold['id']
 		book_data['author'] = book_on_hold['primaryCreator']['name']
 		book_data['metadata'] = book_on_hold['metadata']['href']
-		book_data['breifSynopsis'] = book_on_hold['breifSynopsis']
+		book_data['synopsis'] = book_on_hold['briefSynopsis']
 		book_data['title'] = book_on_hold['title']
 		book_data['expires'] = book_on_hold['expires']
 		book_data['images'] = book_on_hold['images']['thumbnail']['href']
@@ -477,7 +477,7 @@ def get_hold_list(no_token):
 					book_data['id'] = book_on_hold['id']
 					book_data['author'] = book_on_hold['primaryCreator']['name']
 					book_data['metadata'] = book_on_hold['metadata']['href']
-					book_data['breifSynopsis'] = book_on_hold['breifSynopsis']
+					book_data['synopsis'] = book_on_hold['briefSynopsis']
 					book_data['title'] = book_on_hold['title']
 					book_data['expires'] = book_on_hold['expires']
 					book_data['images'] = book_on_hold['images']['thumbnail']['href']
