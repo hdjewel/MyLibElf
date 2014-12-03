@@ -1,0 +1,66 @@
+
+<style 
+        .text-wrapper {
+            position: absolute;
+            top: 90px;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+
+        .text-wrapper .box {
+            margin: 0 auto;
+            padding: 35px 15px 30px;
+            float: none;
+            width: 600px;
+            box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+
+        .text-wrapper .box .content-wrap {
+            width: 82%;
+            margin: 0 auto;
+        }
+
+        .text-wrapper .box h6 {
+            text-transform: uppercase;
+            margin: 0 0 30px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+
+
+
+
+#status {
+	border: solid 1px black; height: 2.5em; width: 11em; position: absolute;
+	top: 30px;
+	}
+.important { color: red; }
+	section {
+	padding: 0.1em 0 0.1em 0.5em; position: absolute;
+	left: 450px;
+	}
+form {
+	position: absolute; left: 230px;
+	top: 10px;
+	}

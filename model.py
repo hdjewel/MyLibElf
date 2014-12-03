@@ -6,7 +6,7 @@ from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship, backref, scoped_session
 import itertools
 
-engine = create_engine('sqlite:///bookblend.db', echo=True)
+engine = create_engine('sqlite:///MyLibElf.db', echo=True)
 
 db_session = scoped_session(sessionmaker(bind=engine,
                                       autocommit = False,
@@ -380,7 +380,7 @@ def add_library(db_session, library_fields):
 
 def connect():
     print "in connect"
-    ENGINE = create_engine("sqlite:///bookblend.db", echo=True)
+    ENGINE = create_engine("sqlite:///MyLibElf.db", echo=True)
     Session = sessionmaker(bind=ENGINE)
     Base.metadata.create_all(ENGINE)
 
